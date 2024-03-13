@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { HotelServiceService } from '../hotel-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-hotel',
@@ -38,7 +39,7 @@ export class AddHotelComponent {
   isFacility: boolean = false;
   isImage: boolean = false;
 
-  constructor(private hotelService: HotelServiceService){}
+  constructor(private hotelService: HotelServiceService, private router: Router){}
 
   // addHotel(){
   //   const hotel = {
@@ -112,6 +113,7 @@ export class AddHotelComponent {
       }
   
       console.log(htl); // This will log the final response after all operations are completed
+      this.router.navigate([`/adminOneHotel/${htl.id}`]);
     } catch (error) {
       console.error('Error:', error);
     }

@@ -1,0 +1,63 @@
+<p>admin-one-hotel works!</p>
+<div *ngIf="hotel$ | async as hotel">
+    <h1> Hotel Name: {{ hotel.name }} </h1>
+    <h3> Hotel Country: {{ hotel.country }} </h3>
+    <h3> Hotel District: {{ hotel.district }} </h3>
+    <h3> Hotel Street: {{ hotel.street }} </h3>
+    <h3> Hotel Contact: {{ hotel.contact }} </h3>
+    <div>
+        <h3>Facilities</h3>
+        <button type="button" (click)="showAddFacility()">Add Facility</button>
+        <div *ngIf="isFacility">
+            <br><br>
+            Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
+            <br><br>
+            Facility Description <input type="text" [(ngModel)]="facilityDescription" name="facilityDescription">
+            <br><br>
+            <button type="button" (click)="addFacility()">Add</button>
+        </div>
+        <ul *ngIf="hotel.facilities.length > 0">
+            <li *ngFor="let facility of hotel.facilities">
+                <h6>{{ facility.name}}</h6>
+                <p>{{ facility.description}}</p>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h3>Images</h3>
+        <button type="button" (click)="showAddImage()">Add Image</button>
+        <div *ngIf="isImage">
+            <br><br>
+            Image Name: <input type="text" [(ngModel)]="imageName" name="imageName">
+            <br><br>
+            Image url <input type="text" [(ngModel)]="imageUrl" name="imageUrl">
+            <br><br>
+            <button type="button" (click)="addImage()">Add</button>
+        </div>
+        <ul *ngIf="hotel.images.length > 0">
+            <li *ngFor="let image of hotel.images">
+                <h6>{{ image.name}}</h6>
+                <p>{{ image.url}}</p>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h3>Contracts</h3>
+        <button type="button" (click)="showAddImage()">Add Contract</button>
+        <div *ngIf="isImage">
+            <br><br>
+            Image Name: <input type="text" [(ngModel)]="imageName" name="imageName">
+            <br><br>
+            Image url <input type="text" [(ngModel)]="imageUrl" name="imageUrl">
+            <br><br>
+            <button type="button" (click)="addImage()">Add</button>
+        </div>
+        <ul *ngIf="hotel.contracts.length > 0">
+            <li *ngFor="let contract of hotel.contracts">
+                <h6>{{ contract.id}}</h6>
+                <p>{{ contract.startDate}}</p>
+                <p>{{ contract.endDate}}</p>
+            </li>
+        </ul>
+    </div>
+</div>
