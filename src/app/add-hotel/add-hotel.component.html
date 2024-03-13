@@ -1,0 +1,49 @@
+<form action="">
+    Hotel Name: <input type="text" [(ngModel)]="name" name="name">
+    <br><br>
+    Country: <input type="text" [(ngModel)]="country" name="country">
+    <br><br>
+    District: <input type="text" [(ngModel)]="district" name="district">
+    <br><br>
+    Street: <input type="text" [(ngModel)]="street" name="street">
+    <br><br>
+    Contact: <input type="text" [(ngModel)]="contact" name="contact">
+    <br><br>
+    Descriptoin: <input type="text" [(ngModel)]="description" name="description">
+    <br><br>
+    Facilities: <button type="button" (click)="showAddFacility()">Add Facility</button>
+    <div *ngIf="isFacility">
+        <br><br>
+        Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
+        <br><br>
+        Facility Description <input type="text" [(ngModel)]="facilityDescription" name="facilityDescription">
+        <br><br>
+        <button type="button" (click)="addFacility()">Add</button>
+    </div>
+    <ul *ngIf="facilities.length > 0">
+        <li *ngFor="let facility of facilities;let i = index">
+            <p>{{facility.name}}</p>
+            <p>{{facility.description}}</p>
+            <button type="button" (click)="removeFacility(i)">remove</button>
+        </li>
+    </ul>
+    <br><br>
+    Images: <button type="button" (click)="showAddImage()">Add Image</button>
+    <div *ngIf="isImage">
+        <br><br>
+        Image Name: <input type="text" [(ngModel)]="imageName" name="imageName">
+        <br><br>
+        Image url <input type="text" [(ngModel)]="imageUrl" name="imageUrl">
+        <br><br>
+        <button type="button" (click)="addImage()">Add</button>
+    </div>
+    <ul *ngIf="images.length > 0">
+        <li *ngFor="let image of images;let i = index">
+            <p>{{image.name}}</p>
+            <p>{{image.url}}</p>
+            <button type="button" (click)="removeImage(i)">remove</button>
+        </li>
+    </ul>
+    <br><br>
+    <button type="submit" (click)="addHotel()">Add Hotel</button>
+</form>
