@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { NgIf, NgFor } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AddRoomtypeComponent } from '../add-roomtype/add-roomtype.component';
 
 @Component({
   selector: 'app-admin-one-hotel',
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     NgIf,
     NgFor,
     AsyncPipe,
-    FormsModule
+    FormsModule,
+    AddRoomtypeComponent
   ],
   templateUrl: './admin-one-hotel.component.html',
   styleUrl: './admin-one-hotel.component.scss'
@@ -30,6 +32,25 @@ export class AdminOneHotelComponent implements OnInit {
   isImage: boolean = false;
   imageName: string = '';
   imageUrl: string = '';
+
+  isRoomType: boolean = false;
+  roomTypeName: string = '';
+  roomTypeDescription: string = '';
+  roomTypeMaxAdult: number = 0;
+
+  roomTypeFacilities: Array<{
+    name: string,
+    description: string
+  }> = [];
+  isRoomTypeFacility: boolean = false;
+  roomTypeFacilityName: string = '';
+  roomTypeFacilityDescription: string = '';
+
+  isSupplement: boolean = false;
+  supplementName: string = '';
+  supplementDescription: string = '';
+
+  isContract: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -93,6 +114,115 @@ export class AdminOneHotelComponent implements OnInit {
   }
 
   removeImage(i: any){
+    // delete image from db
+  }
+
+  //Roomtype 
+  async addRoomType(){
+    let roomtype = {
+      name: this.roomTypeName,
+      description: this.roomTypeDescription,
+      maxAdult: this.roomTypeMaxAdult
+    };
+    this.roomTypeName = '';
+    this.roomTypeDescription = '';
+    this.roomTypeMaxAdult = 0;
+    let rt = await this.hotelService.addRoomType(roomtype).toPromise();
+
+    if (this.roomTypeFacilities.length > 0) {
+      await Promise.all(this.roomTypeFacilities.map(async (roomTypeFacility) => {
+        let fac = await this.hotelService.addRoomTypeFacility(roomTypeFacility).toPromise();
+        let r = await this.hotelService.addRoomTypeFacilityToRoomType(rt.id, fac.id).toPromise();
+        rt = r;
+
+      }));
+    }
+    this.roomTypeFacilities.splice(0, this.roomTypeFacilities.length);
+    this.hotel$ = await this.hotelService.addRoomTypeToHotel(this.id, rt.id);
+  }
+
+  showAddRoomType(){
+    if(this.isRoomType){
+      this.isRoomType = false;
+    }else{
+      this.isRoomType = true;
+    }
+    
+  }
+
+  removeRoomType(i: any){
+    // delete facility from db
+  }
+
+  addRoomTypeFacility(){
+    this.roomTypeFacilities.push({
+      name: this.roomTypeFacilityName,
+      description: this.roomTypeFacilityDescription
+    });
+    this.roomTypeFacilityName = '';
+    this.roomTypeFacilityDescription = '';
+  }
+
+  showAddRoomTypeFacility(){
+    if(this.isRoomTypeFacility){
+      this.isRoomTypeFacility = false;
+    }else{
+      this.isRoomTypeFacility = true;
+    }
+    
+  }
+
+  removeRoomTypeFacility(i: any){
+    this.roomTypeFacilities.splice(i, 1);
+  }
+
+  // Supplement
+
+  async addSupplement(){
+    let supplement = {
+      name: this.supplementName,
+      description: this.supplementDescription
+    };
+    this.supplementName = '';
+    this.supplementDescription = '';
+    let sup = await this.hotelService.addSupplement(supplement).toPromise();
+    this.hotel$ = await this.hotelService.addSupplementToHotel(this.id, sup.id);
+  }
+
+  showAddSupplement(){
+    if(this.isSupplement){
+      this.isSupplement = false;
+    }else{
+      this.isSupplement = true;
+    }
+    
+  }
+
+  removeSupplement(i: any){
+    // delete facility from db
+  }
+
+  async addContract(){
+    // let image = {
+    //   name: this.imageName,
+    //   url: this.imageUrl
+    // };
+    // this.imageName = '';
+    // this.imageUrl = '';
+    // let img = await this.hotelService.addImage(image).toPromise();
+    // this.hotel$ = await this.hotelService.addImageToHotel(this.id, img.id);
+  }
+
+  showAddContract(){
+    if(this.isContract){
+      this.isContract = false;
+    }else{
+      this.isContract = true;
+    }
+    
+  }
+
+  removeContract(i: any){
     // delete image from db
   }
 }

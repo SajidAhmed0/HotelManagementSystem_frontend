@@ -41,10 +41,71 @@
             </li>
         </ul>
     </div>
+    <!-- RoomType and Supplement -->
+    <div style="display: flex;">
+        <div>
+            <h3>RoomTypes</h3>
+            <button type="button" (click)="showAddRoomType()">Add RoomType</button>
+            <div *ngIf="isRoomType">
+                <br><br>
+                RoomType Name: <input type="text" [(ngModel)]="roomTypeName" name="roomTypeName">
+                <br><br>
+                RoomType Description: <input type="text" [(ngModel)]="roomTypeDescription" name="roomTypeDescription">
+                <br><br>
+                Maximum Adult: <input type="number" [(ngModel)]="roomTypeMaxAdult" name="roomTypeMaxAdult">
+                <br><br>
+                RoomType Facilities: <button type="button" (click)="showAddRoomTypeFacility()">Add RoomType Facility</button>
+                <div *ngIf="isRoomTypeFacility">
+                    <br><br>
+                    RoomType Facility Name: <input type="text" [(ngModel)]="roomTypeFacilityName" name="roomTypeFacilityName">
+                    <br><br>
+                    RoomType Facility Description <input type="text" [(ngModel)]="roomTypeFacilityDescription" name="roomTypeFacilityDescription">
+                    <br><br>
+                    <button type="button" (click)="addRoomTypeFacility()">Add</button>
+                </div>
+                <ul *ngIf="roomTypeFacilities.length > 0">
+                    <li *ngFor="let roomTypeFacility of roomTypeFacilities;let i = index">
+                        <p>{{roomTypeFacility.name}}</p>
+                        <p>{{roomTypeFacility.description}}</p>
+                        <button type="button" (click)="removeRoomTypeFacility(i)">remove</button>
+                    </li>
+                </ul>
+                <br><br>
+                <button type="button" (click)="addRoomType()">Add</button>
+            </div>
+            <ul *ngIf="hotel.roomTypes.length > 0">
+                <li *ngFor="let roomType of hotel.roomTypes">
+                    <h6>{{ roomType.name}}</h6>
+                    <p>{{ roomType.description}}</p>
+                    <p>{{ roomType.maxAdult}}</p>
+                    <p *ngIf="roomType.roomTypeFacilities.length>0">{{ roomType.roomTypeFacilities[0].name}}</p>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h3>Supplements</h3>
+        <button type="button" (click)="showAddSupplement()">Add Supplement</button>
+        <div *ngIf="isSupplement">
+            <br><br>
+            Supplement Name: <input type="text" [(ngModel)]="supplementName" name="supplementName">
+            <br><br>
+            Supplement Description <input type="text" [(ngModel)]="supplementDescription" name="supplementDescription">
+            <br><br>
+            <button type="button" (click)="addSupplement()">Add</button>
+        </div>
+        <ul *ngIf="hotel.supplements.length > 0">
+            <li *ngFor="let supplement of hotel.supplements">
+                <h6>{{ supplement.name}}</h6>
+                <p>{{ supplement.description}}</p>
+            </li>
+        </ul>
+        </div>
+    </div>
+    <!-- Contract -->
     <div>
         <h3>Contracts</h3>
-        <button type="button" (click)="showAddImage()">Add Contract</button>
-        <div *ngIf="isImage">
+        <button type="button" (click)="showAddContract()">Add Contract</button>
+        <div *ngIf="isContract">
             <br><br>
             Image Name: <input type="text" [(ngModel)]="imageName" name="imageName">
             <br><br>

@@ -31,4 +31,28 @@ export class HotelServiceService {
   addImageToHotel(hotelId: any, imageId: any){
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/images/${imageId}`, null);
   }
+
+  addRoomType(roomType: any){
+    return this.http.post<any>('http://localhost:8080/roomtypes', roomType);
+  }
+
+  addRoomTypeToHotel(hotelId: any, roomtypeId: any){
+    return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/roomtypes/${roomtypeId}`, null);
+  }
+
+  addRoomTypeFacility(facility: any){
+    return this.http.post<any>('http://localhost:8080/roomtypefacilities', facility)
+  }
+
+  addRoomTypeFacilityToRoomType(roomTypeId: any, facilityId: any){
+    return this.http.put<any>(`http://localhost:8080/roomtypes/${roomTypeId}/roomtypefacilities/${facilityId}`, null);
+  }
+
+  addSupplement(supplement: any){
+    return this.http.post<any>('http://localhost:8080/supplements', supplement)
+  }
+
+  addSupplementToHotel(hotelId: any, supplementId: any){
+    return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/supplements/${supplementId}`, null);
+  }
 }
