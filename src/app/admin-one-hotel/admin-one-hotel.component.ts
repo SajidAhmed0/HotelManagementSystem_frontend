@@ -51,6 +51,32 @@ export class AdminOneHotelComponent implements OnInit {
   supplementDescription: string = '';
 
   isContract: boolean = false;
+  contractStartDate: Date = new Date();
+  contractEndDate: Date = new Date();
+  contractPaymentPolicy: string = '';
+  contractCancelationPolicy: string = '';
+
+  isSeason: boolean = false;
+  seasons: Array<{
+    name: string,
+    startDate: Date,
+    endDate: Date,
+    markup: number
+  }> = [];
+  seasonName: string = '';
+  seasonStartDate: Date = new Date();
+  seasonEndDate: Date = new Date();
+  seasonMarkup: number = 0;
+
+  isDiscount: boolean = false;
+  discounts: Array<{
+    name: string,
+    description: string,
+    percentage: number,
+  }> = [];
+  discountName: string = '';
+  discountDescription: string = '';
+  discountPercentage: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -202,15 +228,41 @@ export class AdminOneHotelComponent implements OnInit {
     // delete facility from db
   }
 
+  // Contract
+
   async addContract(){
-    // let image = {
-    //   name: this.imageName,
-    //   url: this.imageUrl
-    // };
-    // this.imageName = '';
-    // this.imageUrl = '';
-    // let img = await this.hotelService.addImage(image).toPromise();
-    // this.hotel$ = await this.hotelService.addImageToHotel(this.id, img.id);
+    let contract = {
+      startDate: this.contractStartDate,
+      endDate: this.contractEndDate,
+      paymentPolicy: this.contractPaymentPolicy,
+      cancellationPolicy: this.contractCancelationPolicy
+    };
+    this.contractStartDate = new Date();
+    this.contractEndDate = new Date();
+    this.contractPaymentPolicy = '';
+    this.contractCancelationPolicy = '';
+    let con = await this.hotelService.addContract(contract).toPromise();
+
+    if (this.seasons.length > 0) {
+      await Promise.all(this.seasons.map(async (season) => {
+        let sea = await this.hotelService.addSeason(season).toPromise();
+        let c = await this.hotelService.addSeasonToContract(con.id, sea.id).toPromise();
+        con = c;
+      }));
+    }
+
+    if (this.discounts.length > 0) {
+      await Promise.all(this.discounts.map(async (discount) => {
+        let dis = await this.hotelService.addDiscount(discount).toPromise();
+        let c = await this.hotelService.addDiscountToContract(con.id, dis.id).toPromise();
+        con = c;
+      }));
+    }
+
+    this.seasons.splice(0, this.seasons.length);
+    this.discounts.splice(0, this.discounts.length);
+
+    this.hotel$ = await this.hotelService.addContractToHotel(this.id, con.id);
   }
 
   showAddContract(){
@@ -224,5 +276,57 @@ export class AdminOneHotelComponent implements OnInit {
 
   removeContract(i: any){
     // delete image from db
+  }
+
+  // Season
+  addSeason(){
+    this.seasons.push({
+      name: this.seasonName,
+      startDate: this.seasonStartDate,
+      endDate: this.seasonEndDate,
+      markup: this.seasonMarkup
+    });
+    this.seasonName = '';
+    this.seasonStartDate = new Date();
+    this.seasonEndDate = new Date();
+    this.seasonMarkup = 0;
+  }
+
+  showAddSeason(){
+    if(this.isSeason){
+      this.isSeason = false;
+    }else{
+      this.isSeason = true;
+    }
+    
+  }
+
+  removeSeason(i: any){
+    this.seasons.splice(i, 1);
+  }
+
+  //Discount
+  addDiscount(){
+    this.discounts.push({
+      name: this.discountName,
+      description: this.discountDescription,
+      percentage: this.discountPercentage
+    });
+    this.discountName = '';
+    this.discountDescription = '';
+    this.discountPercentage = 0;
+  }
+
+  showAddDiscount(){
+    if(this.isDiscount){
+      this.isDiscount = false;
+    }else{
+      this.isDiscount = true;
+    }
+    
+  }
+
+  removeDiscount(i: any){
+    this.discounts.splice(i, 1);
   }
 }

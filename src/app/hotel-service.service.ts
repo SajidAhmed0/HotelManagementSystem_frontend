@@ -55,4 +55,28 @@ export class HotelServiceService {
   addSupplementToHotel(hotelId: any, supplementId: any){
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/supplements/${supplementId}`, null);
   }
+
+  addContract(contract: any){
+    return this.http.post<any>('http://localhost:8080/contracts', contract);
+  }
+
+  addContractToHotel(hotelId: any, contractId: any){
+    return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/contracts/${contractId}`, null);
+  }
+
+  addSeason(season: any){
+    return this.http.post<any>('http://localhost:8080/seasons', season);
+  }
+
+  addSeasonToContract(contractId: any, seasonId: any){
+    return this.http.put<any>(`http://localhost:8080/contracts/${contractId}/seasons/${seasonId}`, null);
+  }
+
+  addDiscount(discount: any){
+    return this.http.post<any>('http://localhost:8080/discounts', discount);
+  }
+
+  addDiscountToContract(contractId: any, discountId: any){
+    return this.http.put<any>(`http://localhost:8080/contracts/${contractId}/discounts/${discountId}`, null);
+  }
 }

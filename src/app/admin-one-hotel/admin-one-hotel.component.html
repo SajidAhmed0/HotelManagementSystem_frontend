@@ -107,17 +107,65 @@
         <button type="button" (click)="showAddContract()">Add Contract</button>
         <div *ngIf="isContract">
             <br><br>
-            Image Name: <input type="text" [(ngModel)]="imageName" name="imageName">
+            Start Date: <input type="date" [(ngModel)]="contractStartDate" name="contractStartDate">
             <br><br>
-            Image url <input type="text" [(ngModel)]="imageUrl" name="imageUrl">
+            End Date: <input type="date" [(ngModel)]="contractEndDate" name="contractEndDate">
             <br><br>
-            <button type="button" (click)="addImage()">Add</button>
+            Payment Policy: <input type="text" [(ngModel)]="contractPaymentPolicy" name="contractPaymentPolicy">
+            <br><br>
+            Cancelation Policy: <input type="text" [(ngModel)]="contractCancelationPolicy" name="contractCancelationPolicy">
+            <br><br>
+            Seasons: <button type="button" (click)="showAddSeason()">Add Seasons</button>
+                <div *ngIf="isSeason">
+                    <br><br>
+                    name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
+                    <br><br>
+                    Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
+                    <br><br>
+                    End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
+                    <br><br>
+                    markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
+                    <br><br>
+                    <button type="button" (click)="addSeason()">Add</button>
+                </div>
+                <ul *ngIf="seasons.length > 0">
+                    <li *ngFor="let season of seasons;let i = index">
+                        <p>{{season.name}}</p>
+                        <p>{{season.startDate}}</p>
+                        <p>{{season.endDate}}</p>
+                        <p>{{season.markup}}</p>
+                        <button type="button" (click)="removeSeason(i)">remove</button>
+                    </li>
+                </ul>
+                <br><br>
+                Discounts: <button type="button" (click)="showAddDiscount()">Add Discounts</button>
+                <div *ngIf="isDiscount">
+                    <br><br>
+                    Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
+                    <br><br>
+                    Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
+                    <br><br>
+                    Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
+                    <br><br>
+                    <button type="button" (click)="addDiscount()">Add</button>
+                </div>
+                <ul *ngIf="discounts.length > 0">
+                    <li *ngFor="let discount of discounts;let i = index">
+                        <p>{{discount.name}}</p>
+                        <p>{{discount.description}}</p>
+                        <p>{{discount.percentage}}</p>
+                        <button type="button" (click)="removeRoomTypeFacility(i)">remove</button>
+                    </li>
+                </ul>
+                <br><br>
+            <button type="button" (click)="addContract()">Add</button>
         </div>
         <ul *ngIf="hotel.contracts.length > 0">
             <li *ngFor="let contract of hotel.contracts">
                 <h6>{{ contract.id}}</h6>
                 <p>{{ contract.startDate}}</p>
                 <p>{{ contract.endDate}}</p>
+                <a href="#">view</a>
             </li>
         </ul>
     </div>
