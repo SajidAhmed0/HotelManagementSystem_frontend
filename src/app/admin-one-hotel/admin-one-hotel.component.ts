@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { HotelServiceService } from '../hotel-service.service';
 import { Observable } from 'rxjs';
@@ -16,7 +16,8 @@ import { AddRoomtypeComponent } from '../add-roomtype/add-roomtype.component';
     NgFor,
     AsyncPipe,
     FormsModule,
-    AddRoomtypeComponent
+    AddRoomtypeComponent,
+    RouterModule
   ],
   templateUrl: './admin-one-hotel.component.html',
   styleUrl: './admin-one-hotel.component.scss'

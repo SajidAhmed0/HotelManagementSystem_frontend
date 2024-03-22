@@ -16,6 +16,14 @@ export class HotelServiceService {
     return this.http.get<any>(`http://localhost:8080/hotels/${id}`);
   }
 
+  getAllRoomTypesOfHotel(hotelId: any){
+    return this.http.get<any>(`http://localhost:8080/hotels/${hotelId}/roomtypes`);
+  }
+
+  getAllSupplementsOfHotel(hotelId: any){
+    return this.http.get<any>(`http://localhost:8080/hotels/${hotelId}/supplements`);
+  }
+
   addFacility(facility: any){
     return this.http.post<any>('http://localhost:8080/facilities', facility)
   }
@@ -60,12 +68,20 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/contracts', contract);
   }
 
+  getContract(id: any){
+    return this.http.get<any>(`http://localhost:8080/contracts/${id}`);
+  }
+
   addContractToHotel(hotelId: any, contractId: any){
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/contracts/${contractId}`, null);
   }
 
   addSeason(season: any){
     return this.http.post<any>('http://localhost:8080/seasons', season);
+  }
+
+  getSeason(id: any){
+    return this.http.get<any>(`http://localhost:8080/seasons/${id}`);
   }
 
   addSeasonToContract(contractId: any, seasonId: any){
@@ -78,5 +94,9 @@ export class HotelServiceService {
 
   addDiscountToContract(contractId: any, discountId: any){
     return this.http.put<any>(`http://localhost:8080/contracts/${contractId}/discounts/${discountId}`, null);
+  }
+
+  addSeasonRoomTypePricing(contractId: any, seasonId: any, roomTypeId: any, pricing: any){
+    return this.http.post<any>(`http://localhost:8080/contracts/${contractId}/seasons/${seasonId}/roomtypes/${roomTypeId}`, pricing);
   }
 }

@@ -154,7 +154,7 @@
                         <p>{{discount.name}}</p>
                         <p>{{discount.description}}</p>
                         <p>{{discount.percentage}}</p>
-                        <button type="button" (click)="removeRoomTypeFacility(i)">remove</button>
+                        <button type="button" (click)="removeDiscount(i)">remove</button>
                     </li>
                 </ul>
                 <br><br>
@@ -165,7 +165,7 @@
                 <h6>{{ contract.id}}</h6>
                 <p>{{ contract.startDate}}</p>
                 <p>{{ contract.endDate}}</p>
-                <a href="#">view</a>
+                <a [routerLink]="['adminOneContract/', contract.id]">view</a>
             </li>
         </ul>
     </div>

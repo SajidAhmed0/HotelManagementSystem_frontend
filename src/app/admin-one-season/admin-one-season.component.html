@@ -1,0 +1,73 @@
+<p>admin-one-season works!</p>
+<p>admin-one-contract works!</p>
+<div *ngIf="season$ | async as season">
+    <h3> Season Name: {{ season.name }} </h3>
+    <h3> Season Start Date: {{ season.startDate }} </h3>
+    <h3> Season End Date: {{ season.endDate }} </h3>
+    <h3> Season Markup: {{ season.markup }} </h3>
+
+
+<div style="display: flex;">
+    <div>
+        <h3>RoomType Pricings</h3>
+        <button type="button" (click)="showAddRoomTypePring()">Add RoomType Pricing</button>
+        <div *ngIf="isRoomTypePricing">
+            <br><br>
+            RoomType: <select [(ngModel)]="roomType" id="">
+                <option *ngFor="let rt of roomTypes$ | async;" value={{rt.id}}>
+                    {{rt.name}}
+                </option>
+            </select>
+            <br><br>
+            Price: <input type="number" [(ngModel)]="roomTypePrice" name="roomTypePrice">
+            <br><br>
+            noOfRooms: <input type="number" [(ngModel)]="roomTypeRooms" name="roomTypeRooms">
+            <br><br>
+            <br><br>
+            <button type="button" (click)="addRoomTypePricing(roomType)">Add</button>
+        </div>
+        <ul *ngIf="season.seasonRoomTypePricings.length > 0">
+            <li *ngFor="let pricing of season.seasonRoomTypePricings;let i = index">
+                <p>{{season.name}}</p>
+                <p>{{pricing.id.roomTypeId}}</p>
+                <p>{{pricing.price}}</p>
+                <p>{{pricing.noOfRooms}}</p>
+            </li>
+        </ul>
+    </div>
+    <!-- <div>
+        <h3>Discounts</h3>
+        <button type="button" (click)="showAddDiscount()">Add Discounts</button>
+                <div *ngIf="isDiscount">
+                    <br><br>
+                    Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
+                    <br><br>
+                    Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
+                    <br><br>
+                    Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
+                    <br><br>
+                    <button type="button" (click)="addDiscount()">Add</button>
+                </div>
+                <ul *ngIf="contract.discounts.length > 0">
+                    <li *ngFor="let discount of contract.discounts;let i = index">
+                        <p>{{discount.name}}</p>
+                        <p>{{discount.description}}</p>
+                        <p>{{discount.percentage}}</p>
+                        <button type="button" (click)="removeDiscount(i)">remove</button>
+                    </li>
+                </ul>
+    </div> -->
+</div>
+
+    <!-- <br><br>
+    <button type="button" (click)="showAddRoomTypePricing()">Add RoomType Pricings</button>
+    <div *ngIf="isRoomTypePricing">
+        <div *ngIf="roomTypes$ | async as roomTypes">
+            <div *ngFor="let rt of roomTypes; let i = index">
+                
+            </div>
+        </div>
+        
+    </div> -->
+
+</div>
