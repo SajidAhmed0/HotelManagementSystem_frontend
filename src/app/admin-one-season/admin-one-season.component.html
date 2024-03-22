@@ -35,28 +35,29 @@
             </li>
         </ul>
     </div>
-    <!-- <div>
-        <h3>Discounts</h3>
-        <button type="button" (click)="showAddDiscount()">Add Discounts</button>
-                <div *ngIf="isDiscount">
-                    <br><br>
-                    Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
-                    <br><br>
-                    Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
-                    <br><br>
-                    Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
-                    <br><br>
-                    <button type="button" (click)="addDiscount()">Add</button>
-                </div>
-                <ul *ngIf="contract.discounts.length > 0">
-                    <li *ngFor="let discount of contract.discounts;let i = index">
-                        <p>{{discount.name}}</p>
-                        <p>{{discount.description}}</p>
-                        <p>{{discount.percentage}}</p>
-                        <button type="button" (click)="removeDiscount(i)">remove</button>
-                    </li>
-                </ul>
-    </div> -->
+    <div>
+        <h3>Supplement Pricings</h3>
+        <button type="button" (click)="showAddSupplementPring()">Add Supplement Pricing</button>
+        <div *ngIf="isSupplementPricing">
+            <br><br>
+            Supplement: <select [(ngModel)]="supplement" id="">
+                <option *ngFor="let sp of supplements$ | async;" value={{sp.id}}>
+                    {{sp.name}}
+                </option>
+            </select>
+            <br><br>
+            Price: <input type="number" [(ngModel)]="supplementPrice" name="supplementPrice">
+            <br><br>
+            <button type="button" (click)="addSupplementPricing(supplement)">Add</button>
+        </div>
+        <ul *ngIf="season.seasonSupplementPricings.length > 0">
+            <li *ngFor="let pricing of season.seasonSupplementPricings;let i = index">
+                <p>{{season.name}}</p>
+                <p>{{pricing.id.supplementId}}</p>
+                <p>{{pricing.price}}</p>
+            </li>
+        </ul>
+    </div>
 </div>
 
     <!-- <br><br>

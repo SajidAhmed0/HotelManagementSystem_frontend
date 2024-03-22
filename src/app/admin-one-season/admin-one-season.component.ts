@@ -25,9 +25,15 @@ export class AdminOneSeasonComponent implements OnInit{
   roomTypes$!: Observable<any>;
   roomType: any;
 
+  supplements$!: Observable<any>;
+  supplement: any;
+
   isRoomTypePricing: boolean = false;
   roomTypePrice: number = 0;
   roomTypeRooms: number = 0;
+
+  isSupplementPricing: boolean = false;
+  supplementPrice: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,8 +46,8 @@ export class AdminOneSeasonComponent implements OnInit{
         this.contractId = paramsMap.get('contractId');
         this.seasonId = paramsMap.get('seasonId');
         let season = this.hotelService.getSeason(this.seasonId);
-        this.roomTypes$ = this.hotelService.getAllRoomTypesOfHotel(this.hotelId);
-        // this.supplements$ = this.hotelService.getAllSupplementsOfHotel(this.hotelId);
+        this.roomTypes$ = this.hotelService.getUnPricedRoomTypes(this.hotelId, this.contractId, this.seasonId);
+        this.supplements$ = this.hotelService.getUnPricedSupplements(this.hotelId, this.contractId, this.seasonId);
         
         
         return season;
@@ -60,29 +66,24 @@ export class AdminOneSeasonComponent implements OnInit{
     this.roomTypeRooms = 0;
 
     this.hotelService.addSeasonRoomTypePricing(this.contractId, this.seasonId, roomTypeId, pricing).subscribe((con) => {
-      this.roomTypes$.pipe(
-        map(roomTypes => {
-          return roomTypes.filter((roomType: { id: any; }) => this.checkPriced(roomType.id));
-        })
-      );
       this.season$ = this.hotelService.getSeason(this.seasonId);
     });
     
   }
 
-  checkPriced(roomTypeId: any): boolean{
-    let check = true;
-    this.season$.subscribe(sea => {
-      for(let price of sea.seasonRoomTypePricings){
-        console.log(price);
+  // checkPriced(roomTypeId: any): boolean{
+  //   let check = true;
+  //   this.season$.subscribe(sea => {
+  //     for(let price of sea.seasonRoomTypePricings){
+  //       console.log(price);
         
-        if(price.id.roomTypeId == roomTypeId){
-          check = false;
-        }
-      }
-    })
-    return check;
-  }
+  //       if(price.id.roomTypeId == roomTypeId){
+  //         check = false;
+  //       }
+  //     }
+  //   })
+  //   return check;
+  // }
 
   showAddRoomTypePring(){
     if(this.isRoomTypePricing){
@@ -95,5 +96,32 @@ export class AdminOneSeasonComponent implements OnInit{
 
   removeRoomTypePricing(){
     // remove room type pricing
+  }
+
+  async addSupplementPricing(supplementId: any){
+    console.log(supplementId);
+    
+    let pricing = {
+      price: this.supplementPrice
+    }
+    this.supplementPrice = 0;
+
+    this.hotelService.addSeasonSupplementPricing(this.contractId, this.seasonId, supplementId, pricing).subscribe((con) => {
+      this.season$ = this.hotelService.getSeason(this.seasonId);
+    });
+    
+  }
+
+  showAddSupplementPring(){
+    if(this.isSupplementPricing){
+      this.isSupplementPricing = false;
+    }else{
+      this.isSupplementPricing = true;
+    }
+    
+  }
+
+  removeSupplementPricing(){
+    // remove supplement pricing
   }
 }

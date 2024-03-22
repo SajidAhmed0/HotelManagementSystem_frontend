@@ -20,19 +20,11 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 })
 export class AdminOneContractComponent implements OnInit {
   hotelId: string | null = '';
+  // hotel$!: Observable<any>;
   contractId: string | null = '';
   contract$!: Observable<any>;
-  roomTypes$!: Observable<Array<any>>;
-  supplements$!: Observable<Array<any>>;
-
-  roomTypesToPricing: Array<any> = [];
-  // roomTypePricings: Array<Array<{
-  //   price: number,
-  //   noOfRooms: number
-  // }>> = new Array(20);
-  roomTypePricings: boolean[][] = [[false]];
-
-  
+  roomTypes: any[] = [];
+  supplements: any[] = [];
 
   isSeason: boolean = false;
   seasonName: string = '';
@@ -45,24 +37,20 @@ export class AdminOneContractComponent implements OnInit {
   discountDescription: string = '';
   discountPercentage: number = 0;
 
-  isRoomTypePricing: boolean = false;
-  roomTypesWithoutPrice: Array<any> = [];
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private hotelService: HotelServiceService
-  ){
-    this.roomTypePricings.fill([false]);
-  }
+  ){}
 
   ngOnInit(): void {
     this.contract$ = this.activatedRoute.paramMap.pipe(
       switchMap((paramsMap) => {
         this.hotelId = paramsMap.get('hotelId');
+        // this.hotel$ = this.hotelService.getHotel(this.hotelId);
         this.contractId = paramsMap.get('contractId');
         let contract = this.hotelService.getContract(this.contractId);
-        this.roomTypes$ = this.hotelService.getAllRoomTypesOfHotel(this.hotelId);
-        this.supplements$ = this.hotelService.getAllSupplementsOfHotel(this.hotelId);
+        this.hotelService.getAllRoomTypesOfHotel(this.hotelId).subscribe((rooms) => this.roomTypes = rooms);
+        this.hotelService.getAllSupplementsOfHotel(this.hotelId).subscribe((sups) => this.supplements = sups);
         console.log(contract);
         
         return contract;
@@ -129,22 +117,22 @@ export class AdminOneContractComponent implements OnInit {
     // remove discount
   }
 
-  // RoomType Pricing
-  showAddRoomTypePricing(){
-    if(this.isRoomTypePricing){
-      this.isRoomTypePricing = false;
-    }else{
-      this.isRoomTypePricing = true;
-    }
-    
-  }
-  addRoomTypeToPricing(rt: any){
-    console.log(rt.name);
-    
-    this.roomTypesToPricing.push(rt);
+  getSeasonName(seasonId: any, seasons: any[]){
+    let season = seasons.filter((sea) => sea.id == seasonId)
+
+    return season[0].name;
   }
 
-  addSeasonRoomTypePricing(contractId: any, seasonId: any, roomTypeId: any, pricing: any){
-    this.hotelService.addSeasonRoomTypePricing(contractId, seasonId, roomTypeId, pricing);
+  getRoomTypeName(roomTypeId: any, roomTypes: any[]){
+    let roomType = roomTypes.filter((rt) => rt.id == roomTypeId)
+
+    return roomType[0].name;
   }
+
+  getSupplementName(supplementId: any, supplements: any[]){
+    let supplement = supplements.filter((sup) => sup.id == supplementId)
+
+    return supplement[0].name;
+  }
+  
 }
