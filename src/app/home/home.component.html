@@ -1,0 +1,18 @@
+<p>home works!</p>
+
+<form action="" (ngSubmit)="search()">
+    Location: <input type="text" [(ngModel)]="location" name="location" id=""><br>
+    Check in: <input type="date" [(ngModel)]="checkInDate" name="checkInDate" id=""><br>
+    Check out: <input type="date" [(ngModel)]="checkOutDate" name="checkOutDate" id=""><br>
+    No. of Adult: <input type="number" [(ngModel)]="noOfAdult" name="noOfAdult" id=""><br>
+    No. of Rooms: <input type="number" [(ngModel)]="noOfRooms" name="noOfRooms" id=""><br>
+    <button>Search</button>
+</form>
+
+<div *ngIf="hotels$ | async as hotels" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
+    <div style="border: 2px solid red;" *ngFor="let hotel of hotels;" [routerLink]="['hotels/', hotel.id]">
+        <h4>{{ hotel.name }}</h4>
+        <h6>{{ hotel.description }}</h6>
+        <p>{{hotel.district}}</p>
+    </div>
+</div>

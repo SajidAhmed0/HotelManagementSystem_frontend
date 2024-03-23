@@ -16,6 +16,10 @@ export class HotelServiceService {
     return this.http.get<any>(`http://localhost:8080/hotels/${id}`);
   }
 
+  getAllHotel(){
+    return this.http.get<any>(`http://localhost:8080/hotels`);
+  }
+
   getAllRoomTypesOfHotel(hotelId: any){
     return this.http.get<any>(`http://localhost:8080/hotels/${hotelId}/roomtypes`);
   }
@@ -110,5 +114,9 @@ export class HotelServiceService {
 
   addSeasonSupplementPricing(contractId: any, seasonId: any, supplementId: any, pricing: any){
     return this.http.post<any>(`http://localhost:8080/contracts/${contractId}/seasons/${seasonId}/supplements/${supplementId}`, pricing);
+  }
+
+  searchHotels(search: any){
+    return this.http.post<any>(`http://localhost:8080/searches?search=hotel`, search);
   }
 }
