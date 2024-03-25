@@ -43,6 +43,8 @@
                         <br><br>
                         Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
                         <br><br>
+                        Days Prior To Arrival <input type="number" [(ngModel)]="daysPriorToArrival" name="daysPriorToArrival">
+                        <br><br>
                         <button type="button" (click)="addDiscount()">Add</button>
                     </div>
                     <ul *ngIf="contract.discounts.length > 0">
@@ -50,6 +52,7 @@
                             <p>{{discount.name}}</p>
                             <p>{{discount.description}}</p>
                             <p>{{discount.percentage}}</p>
+                            <p>{{discount.daysPriorToArrival}}</p>
                             <button type="button" (click)="removeDiscount(i)">remove</button>
                         </li>
                     </ul>

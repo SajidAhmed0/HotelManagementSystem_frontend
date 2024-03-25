@@ -21,6 +21,9 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class HomeComponent implements OnInit {
   hotels$!: Observable<Array<any>>;
+  searchResults$!: Observable<Array<any>>;
+
+  isSearched: boolean = false;
 
   location: string = '';
   checkInDate: Date = new Date();
@@ -57,7 +60,14 @@ export class HomeComponent implements OnInit {
     console.log(this.cookieService.get('noOfAdult'));
     console.log(this.cookieService.get('noOfRooms'));
     
-    this.hotels$ = this.hotelService.searchHotels(search);
+    this.isSearched = true;
+    this.searchResults$ = this.hotelService.searchHotelsSummary(search);
+    this.searchResults$.subscribe((ress) => {
+      ress.forEach(res => {
+        console.log(res);
+        
+      })
+    })
   }
 
 }

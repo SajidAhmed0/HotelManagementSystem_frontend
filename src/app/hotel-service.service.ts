@@ -119,4 +119,12 @@ export class HotelServiceService {
   searchHotels(search: any){
     return this.http.post<any>(`http://localhost:8080/searches?search=hotel`, search);
   }
+
+  searchHotelsSummary(search: any){
+    return this.http.post<any>(`http://localhost:8080/searches/summary?search=hotel`, search);
+  }
+
+  getHotelDetails(hotelId: any, search: any){
+    return this.http.post<any>(`http://localhost:8080/searches/details/${hotelId}`, search);
+  }
 }

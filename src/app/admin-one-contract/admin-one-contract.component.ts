@@ -36,6 +36,7 @@ export class AdminOneContractComponent implements OnInit {
   discountName: string = '';
   discountDescription: string = '';
   discountPercentage: number = 0;
+  daysPriorToArrival: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -94,11 +95,13 @@ export class AdminOneContractComponent implements OnInit {
     let discount = {
       name: this.discountName,
       description: this.discountDescription,
-      percentage: this.discountPercentage
+      percentage: this.discountPercentage,
+      daysPriorToArrival: this.daysPriorToArrival
     };
     this.discountName = '';
     this.discountDescription = '';
     this.discountPercentage = 0;
+    this.daysPriorToArrival = 0;
 
     let dis = await this.hotelService.addDiscount(discount).toPromise();
     this.contract$ = await this.hotelService.addDiscountToContract(this.contractId, dis.id);

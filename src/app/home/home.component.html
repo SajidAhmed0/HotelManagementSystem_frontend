@@ -9,10 +9,23 @@
     <button>Search</button>
 </form>
 
-<div *ngIf="hotels$ | async as hotels" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
-    <div style="border: 2px solid red;" *ngFor="let hotel of hotels;" [routerLink]="['hotels/', hotel.id]">
-        <h4>{{ hotel.name }}</h4>
-        <h6>{{ hotel.description }}</h6>
-        <p>{{hotel.district}}</p>
+<div *ngIf="!isSearched">
+    <div *ngIf="hotels$ | async as hotels" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
+        <div style="border: 2px solid red;" *ngFor="let hotel of hotels;" [routerLink]="['hotels/', hotel.id]">
+            <h4>{{ hotel.name }}</h4>
+            <h6>{{ hotel.description }}</h6>
+            <p>{{hotel.district}}</p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isSearched">
+    <div *ngIf="searchResults$ | async as searches" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
+        <div style="border: 2px solid red;" *ngFor="let search of searches;" [routerLink]="['hotels/', search.hotelId]">
+            <h4>{{ search.hotelName }}</h4>
+            <h6>{{ search.baseRoomTypePrice }}</h6>
+            <h6>{{ search.discountPercentage}}</h6>
+            <p>{{search.hotelLocation}}</p>
+        </div>
     </div>
 </div>
