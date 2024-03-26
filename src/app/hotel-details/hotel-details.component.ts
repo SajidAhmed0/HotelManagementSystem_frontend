@@ -22,8 +22,10 @@ export class HotelDetailsComponent implements OnInit {
   id: string | null = '';
   hotel$!: Observable<any>;
 
-  selectedRoomTypeId: string = '';
+  selectedRoomType: any = {};
   isSupplements: boolean = false;
+
+  selectedSupplements: any[] = [];
 
   search: {
     location: string,
@@ -70,8 +72,12 @@ export class HotelDetailsComponent implements OnInit {
     );
   }
 
-  setSelectedRoomTypeId(id: string){
-    this.selectedRoomTypeId = id;
+  setSelectedRoomType(roomtype: any){
+
+    if(roomtype.id != this.selectedRoomType.id){
+      this.selectedSupplements = [];
+    }
+    this.selectedRoomType = roomtype;
   }
 
   showSupplements(){
@@ -80,6 +86,16 @@ export class HotelDetailsComponent implements OnInit {
     }else{
       this.isSupplements = true;
     }
+  }
+
+  selectSupplement(en: any, supp: any){
+    if(en.target.checked){
+      this.selectedSupplements.push(supp);
+    }else{
+      this.selectedSupplements = this.selectedSupplements.filter(sup => sup !== supp);
+    }
+    console.log(this.selectedSupplements);
+    
   }
   
   
