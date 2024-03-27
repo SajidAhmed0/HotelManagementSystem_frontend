@@ -127,4 +127,53 @@ export class HotelServiceService {
   getHotelDetails(hotelId: any, search: any){
     return this.http.post<any>(`http://localhost:8080/searches/details/${hotelId}`, search);
   }
+
+  addBooking(booking: any){
+    return this.http.post<any>(`http://localhost:8080/bookings`, booking);
+  }
+
+  addBookedRoomType(bookedRoomType: any){
+    return this.http.post<any>(`http://localhost:8080/bookedroomtypes`, bookedRoomType);
+  }
+
+  addBookedRoomTypeToBooking(bookingId: any, bookedroomtypeId: any){
+    return this.http.put<any>(`http://localhost:8080/bookings/${bookingId}/bookedroomtypes/${bookedroomtypeId}`, null);
+  }
+
+  addBookedSupplement(bookedSupplement: any){
+    return this.http.post<any>(`http://localhost:8080/bookedsupplements`, bookedSupplement);
+  }
+
+  addBookedSupplementToBooking(bookingId: any, bookedsupplementId: any){
+    return this.http.put<any>(`http://localhost:8080/bookings/${bookingId}/bookedsupplements/${bookedsupplementId}`, null);
+  }
+
+  addBookedDiscount(bookedDiscount: any){
+    return this.http.post<any>(`http://localhost:8080/bookeddiscounts`, bookedDiscount);
+  }
+
+  addBookedDiscountToBooking(bookingId: any, bookeddiscountId: any){
+    return this.http.put<any>(`http://localhost:8080/bookings/${bookingId}/bookeddiscounts/${bookeddiscountId}`, null);
+  }
+
+  addPassenger(passenger: any){
+    return this.http.post<any>(`http://localhost:8080/passengers`, passenger);
+  }
+
+  addPassengeroBooking(bookingId: any, passengerId: any){
+    return this.http.put<any>(`http://localhost:8080/bookings/${bookingId}/passengers/${passengerId}`, null);
+  }
+
+  addPayment(payment: any){
+    return this.http.post<any>(`http://localhost:8080/payments`, payment);
+  }
+
+  addBookingToUser(userId: any, bookingId: any){
+    return this.http.put<any>(`http://localhost:8080/users/${userId}/bookings/${bookingId}`, null);
+  }
+
+  addPaymentToUser(userId: any, paymentId: any){
+    return this.http.put<any>(`http://localhost:8080/users/${userId}/payments/${paymentId}`, null);
+  }
+
 }
