@@ -1,0 +1,58 @@
+<p>booking works!</p>
+
+<div *ngIf="selectedValue$ | async as selectedValue">
+    <div>
+        <h3>{{selectedValue.search.location}}</h3>
+        <h3>{{selectedValue.search.checkInDate}}</h3>
+        <h3>{{selectedValue.search.checkOutDate}}</h3>
+        <h3>{{selectedValue.search.noOfAdult}}</h3>
+        <h3>{{selectedValue.search.noOfRooms}}</h3>
+    </div>
+    <div>
+        roomType: <h4>{{ selectedValue.selectedRoomtype.roomType.name}} - {{ selectedValue.selectedRoomtype.pricing.price}}</h4>
+        supplements: <h4 *ngFor="let sup of selectedValue.selectedSupplements">{{sup.supplement.name}} - {{sup.pricing.price}}</h4>
+        discount: <h4 *ngIf="selectedValue.selectedDiscount != null">{{selectedValue.selectedDiscount.percentage}}</h4>
+        <br>
+        Total(added service charge and discount): <h4>dd</h4>
+    </div>
+    <div>
+        Passengers: 
+        <div *ngIf="passengers.length < selectedValue.search.noOfAdult">
+            Passenger Name: <input type="text" [(ngModel)]="passengerName" name=" passengerName">
+            <br><br>
+            Passenger Phone <input type="text" [(ngModel)]="passengerPhone" name="passengerPhone">
+            <br><br>
+            
+            <button type="button" (click)="addPassenger()">Add</button>
+        </div>
+        <ul *ngIf="passengers.length > 0">
+            <li *ngFor="let passengers of passengers;let i = index">
+                <p>{{passengers.name}}</p>
+                <p>{{passengers.phone}}</p>
+                <button type="button" (click)="removePassenger(i)">remove</button>
+            </li>
+        </ul>
+    </div>
+    <div>
+        Payment:
+        <select [(ngModel)]="paymentMethod" id="" >
+            <option value="card" ngValue="card">Card</option>
+        </select>
+        <br><br>
+        Card Number: <input type="text" [(ngModel)]="cardNumber" name="cardNumber"/>
+        <br>
+        Expiration: <input type="text" [(ngModel)]="expiration" name="expiration">
+        <br>
+        cvv: <input type="number" [(ngModel)]="cvv" name="cvv">
+
+        <br><br>
+        Billing address:
+        Address: <input type="text" [(ngModel)]="billingAddress" name="billingAddress">
+        city: <input type="text" [(ngModel)]="billingCity" name="billingCity">
+        zipcode: <input type="text" [(ngModel)]="zipcode" name="zipcode">
+    </div>
+
+    <div>
+        <button (click)="addBookig(selectedValue.selectedRoomtype, selectedValue.selectedSupplements, selectedValue.selectedDiscount, selectedValue.search, selectedValue.markup, selectedValue.hotel)">Book</button>
+    </div>
+</div>

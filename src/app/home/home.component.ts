@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
@@ -20,6 +20,9 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+
+  @Output() searched: EventEmitter<any> = new EventEmitter<any> ();
+
   hotels$!: Observable<Array<any>>;
   searchResults$!: Observable<Array<any>>;
 
@@ -48,11 +51,14 @@ export class HomeComponent implements OnInit {
       noOfAdult: this.noOfAdult,
       noOfRooms: this.noOfRooms
     }
-    this.cookieService.set('location', this.location);
-    this.cookieService.set('checkInDate', this.checkInDate.toString());
-    this.cookieService.set('checkOutDate', this.checkOutDate.toString());
-    this.cookieService.set('noOfAdult', this.noOfAdult.toString());
-    this.cookieService.set('noOfRooms', this.noOfRooms.toString());
+
+    this.cookieService.deleteAll();
+    
+    this.cookieService.set('location', this.location, undefined, '/');
+    this.cookieService.set('checkInDate', this.checkInDate.toString(), undefined, '/');
+    this.cookieService.set('checkOutDate', this.checkOutDate.toString(), undefined, '/');
+    this.cookieService.set('noOfAdult', this.noOfAdult.toString(), undefined, '/');
+    this.cookieService.set('noOfRooms', this.noOfRooms.toString(), undefined, '/');
 
     console.log(this.cookieService.get('location'));
     console.log(this.cookieService.get('checkInDate'));

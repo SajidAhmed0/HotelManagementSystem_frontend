@@ -5,6 +5,7 @@ import { AdminOneContractComponent } from './admin-one-contract/admin-one-contra
 import { AdminOneSeasonComponent } from './admin-one-season/admin-one-season.component';
 import { HomeComponent } from './home/home.component';
 import { HotelDetailsComponent } from './hotel-details/hotel-details.component';
+import { BookingComponent } from './booking/booking.component';
 
 export const routes: Routes = [
     {path: 'addhotel', component: AddHotelComponent},
@@ -13,5 +14,6 @@ export const routes: Routes = [
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent},
 
     {path: 'home', component: HomeComponent},
-    {path: 'home/hotels/:id', component: HotelDetailsComponent}
+    {path: 'home/hotels/:id', component: HotelDetailsComponent},
+    {path: 'booking', component: BookingComponent}
 ];

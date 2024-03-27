@@ -1,5 +1,6 @@
 <p>hotel-details works!</p>
 <div *ngIf="hotel$ | async as hotel">
+    
     <h4>Location: {{ search.location }}</h4>
     <h4>Check in: {{ search.checkInDate }}</h4>
     <h4>Check out: {{ search.checkOutDate }}</h4>
@@ -13,23 +14,23 @@
 
     <div>
         <div *ngFor="let roomType of hotel.roomTypeWithPricings">
-            <input type="radio" name="roomType" value="{{roomType.roomType.id}}" id="{{roomType.roomType.id}}" (click)="setSelectedRoomType(roomType.roomType)">
+            <input type="radio" name="roomType" value="{{roomType.roomType.id}}" id="{{roomType.roomType.id}}" (click)="setSelectedRoomType(roomType)">
             <label for="{{roomType.roomType.id}}">
                 <h5>{{roomType.roomType.name}}</h5>
                 <h6>{{roomType.pricing.price}}</h6>
                 <h6>avialable rooms: {{roomType.avialableRooms}}</h6>
             </label>
-            <div *ngIf="selectedRoomType.id == roomType.roomType.id">
+            <div *ngIf="selectedRoomType.roomType.id == roomType.roomType.id">
                 <button (click)="showSupplements()">Add Supplements</button>
                 <div *ngIf="isSupplements && hotel.supplementWithPricings.length > 0">
                     <div *ngFor="let supplement of hotel.supplementWithPricings">
                         <label for="{{supplement.supplement.name}}">
                             price: {{supplement.pricing.price}}
                         </label>
-                        {{supplement.supplement.name}} <input type="checkbox" name="{{supplement.supplement.name}}" id="{{supplement.supplement.name}}" (change)="selectSupplement($event, supplement.supplement)">
+                        {{supplement.supplement.name}} <input type="checkbox" name="{{supplement.supplement.name}}" id="{{supplement.supplement.name}}" (change)="selectSupplement($event, supplement)">
                     </div>
                 </div>
-                <button>Reserve</button>
+                <button type="button" (click)="whenClickReserve()">Reserve</button>
             </div>
         </div>
     </div>
