@@ -160,7 +160,7 @@ export class HotelServiceService {
     return this.http.post<any>(`http://localhost:8080/passengers`, passenger);
   }
 
-  addPassengeroBooking(bookingId: any, passengerId: any){
+  addPassengeToBooking(bookingId: any, passengerId: any){
     return this.http.put<any>(`http://localhost:8080/bookings/${bookingId}/passengers/${passengerId}`, null);
   }
 
@@ -176,4 +176,7 @@ export class HotelServiceService {
     return this.http.put<any>(`http://localhost:8080/users/${userId}/payments/${paymentId}`, null);
   }
 
+  addBookingToRoomType(roomtypeId: any, bookingId: any){
+    return this.http.put<any>(`http://localhost:8080/roomtypes/${roomtypeId}/bookings/${bookingId}`, null);
+  }
 }

@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { HotelServiceService } from '../hotel-service.service';
 
 @Component({
     selector: 'app-booking',
@@ -34,7 +35,8 @@ export class BookingComponent implements OnInit {
   zipcode: string = '';
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private hotelService: HotelServiceService
   ){}
 
   ngOnInit(): void {
@@ -62,7 +64,7 @@ export class BookingComponent implements OnInit {
     this.passengers.splice(i, 1);
   }
 
-  addBookig(roomType:any, supplements: any[], discount: any, search: any, markup: any, hotel: any){
+  async addBookig(roomType:any, supplements: any[], discount: any, search: any, markup: any, hotel: any){
     let bookedRoomType = {
       name: roomType.roomType.name,
       noOfRooms: roomType.pricing.noOfRooms,
@@ -88,6 +90,7 @@ export class BookingComponent implements OnInit {
         name: discount.name,
         description: discount.description,
         percentage: discount.percentage,
+        daysPriorToArrival: discount.daysPriorToArrival,
         originalId: discount.id
       }
     }
@@ -96,9 +99,9 @@ export class BookingComponent implements OnInit {
       checkInDate: search.checkInDate,
       checkOutDate: search.checkOutDate,
       noOfAdult: parseInt(search.noOfAdult),
-      Status: 'Booked',
+      status: 'Booked',
       noOfRooms: parseInt(search.noOfRooms),
-      total: '',
+      total: 0,
       bookingDate: new Date(),
       markup: markup,
       hotelName: hotel.name,
@@ -106,13 +109,15 @@ export class BookingComponent implements OnInit {
     }
 
     let payment = {
-      paymentMethod: this.paymentMethod,
+      date: new Date(),
+      amount: 0,
+      method: this.paymentMethod,
       cardNumber: this.cardNumber,
       expiration: this.expiration,
       cvv: this.cvv,
-      billingAddress: this. billingAddress,
-      billingCity: this.billingCity,
-      zipcode: this.zipcode
+      streetAddress: this. billingAddress,
+      city: this.billingCity,
+      zipCode: this.zipcode
     }
     console.log("booked roomtype: ");
     console.log(bookedRoomType);
@@ -127,6 +132,49 @@ export class BookingComponent implements OnInit {
     console.log("passengers: " );
     console.log(this.passengers);
     
+    try {
+      let response = await this.hotelService.addBooking(booking).toPromise();
+      let bkg = response;
+
+      bkg = await this.hotelService.addBookingToRoomType(bookedRoomType.originalId, bkg.id).toPromise();
+
+      let bktRoomType = await this.hotelService.addBookedRoomType(bookedRoomType).toPromise();
+      bkg = await this.hotelService.addBookedRoomTypeToBooking(response.id, bktRoomType.id).toPromise();
+
+      if (bookedDiscount != null) {
+        let bktDiscount = await this.hotelService.addBookedDiscount(bookedDiscount).toPromise();
+        bkg = await this.hotelService.addBookedDiscountToBooking(response.id, bktDiscount.id).toPromise();
+      }
+  
+      if (bookedSupplements.length > 0) {
+        await Promise.all(bookedSupplements.map(async (bs) => {
+          let bktSupplement = await this.hotelService.addBookedSupplement(bs).toPromise();
+          let bb = await this.hotelService.addBookedSupplementToBooking(response.id, bktSupplement.id).toPromise();
+          bkg = bb;
+        }));
+      }
+  
+      if (this.passengers.length > 0) {
+        await Promise.all(this.passengers.map(async (ps) => {
+          let pas = await this.hotelService.addPassenger(ps).toPromise();
+          let bb = await this.hotelService.addPassengeToBooking(response.id, pas.id).toPromise();
+          bkg = bb;
+        }));
+      }
+  
+      console.log(bkg); // This will log the final response after all operations are completed
+
+      //user id = 2 need to change with logged in user id
+      let user = await this.hotelService.addBookingToUser(2, bkg.id).toPromise();
+
+      let pay = await this.hotelService.addPayment(payment).toPromise();
+
+      user = await this.hotelService.addPaymentToUser(2, pay.id).toPromise();
+
+      // this.router.navigate([`/adminOneHotel/${htl.id}`]);
+    } catch (error) {
+      console.error('Error:', error);
+    }
     
     
     
