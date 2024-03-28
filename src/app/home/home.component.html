@@ -1,31 +1,87 @@
-<p>home works!</p>
-<app-navbar></app-navbar>
-<form action="" (ngSubmit)="search()">
-    Location: <input type="text" [(ngModel)]="location" name="location" id=""><br>
-    Check in: <input type="date" [(ngModel)]="checkInDate" name="checkInDate" id=""><br>
-    Check out: <input type="date" [(ngModel)]="checkOutDate" name="checkOutDate" id=""><br>
-    No. of Adult: <input type="number" [(ngModel)]="noOfAdult" name="noOfAdult" id=""><br>
-    No. of Rooms: <input type="number" [(ngModel)]="noOfRooms" name="noOfRooms" id=""><br>
-    <button>Search</button>
-</form>
+<div id="app-home">
+    <div id="hero-home">
+        <app-navbar></app-navbar>
+        <h1 id="hero-text">experience the incredible hotel experience</h1>
+        <a href="#" id="btn-booknow">Book Now</a>
+        <div id="hero-search">
+            <!-- <form action="" (ngSubmit)="search()">
+                Location: <input type="text" [(ngModel)]="location" name="location" id=""><br>
+                Check in: <input type="date" [(ngModel)]="checkInDate" name="checkInDate" id=""><br>
+                Check out: <input type="date" [(ngModel)]="checkOutDate" name="checkOutDate" id=""><br>
+                No. of Adult: <input type="number" [(ngModel)]="noOfAdult" name="noOfAdult" id=""><br>
+                No. of Rooms: <input type="number" [(ngModel)]="noOfRooms" name="noOfRooms" id=""><br>
+                <button>Search</button>
+            </form> -->
+            <form id="search-form" (ngSubmit)="search()">
+                <mat-form-field class="search-form-field">
+                    <mat-label>Location</mat-label>
+                    <input type="text"
+                            placeholder="Ex. Colombo"
+                           aria-label="Location"
+                           matInput
+                           [formControl]="myControl"
+                           [(ngModel)]="location"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                      @for (option of filteredLocations | async; track option) {
+                        <mat-option [value]="option">{{option}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
 
-<div *ngIf="!isSearched">
-    <div *ngIf="hotels$ | async as hotels" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
-        <div style="border: 2px solid red;" *ngFor="let hotel of hotels;" [routerLink]="['hotels/', hotel.id]">
-            <h4>{{ hotel.name }}</h4>
-            <h6>{{ hotel.description }}</h6>
-            <p>{{hotel.district}}</p>
+                <!-- <mat-form-field class="example-full-width">
+                  <mat-label> Location</mat-label>
+                  <input matInput type="text" [(ngModel)]="location" name="location" id="" placeholder="Ex. Colombo" value="Colombo">
+                </mat-form-field> -->
+
+                <mat-form-field class="search-form-field">
+                    <mat-label>Check-in - Check-out</mat-label>
+                    <mat-date-range-input 
+                    [rangePicker]="campaignTwoPicker"
+                    >
+                      <input matStartDate [(ngModel)]="checkInDate" name="checkInDate" id="" placeholder="Check-in">
+                      <input matEndDate [(ngModel)]="checkOutDate" name="checkOutDate" id="" placeholder="Check-out">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="campaignTwoPicker"></mat-datepicker-toggle>
+                    <mat-hint style="color: wheat;">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-date-range-picker #campaignTwoPicker></mat-date-range-picker>
+                  </mat-form-field>
+
+                  <mat-form-field class="search-form-field">
+                    <mat-label>No. of Adult</mat-label>
+                    <input matInput type="number" [(ngModel)]="noOfAdult" name="noOfAdult" id="" placeholder="Ex. 4" value="1">
+                  </mat-form-field>
+
+                  <mat-form-field class="search-form-field">
+                    <mat-label>No. of Rooms</mat-label>
+                    <input matInput type="number" [(ngModel)]="noOfRooms" name="noOfRooms" id="" placeholder="Ex. 2" value="1">
+                  </mat-form-field>
+                  <button id="btn-search"><img src="../../assets/search_icon.svg" alt="search"></button>
+                
+              </form>
         </div>
     </div>
-</div>
 
-<div *ngIf="isSearched">
-    <div *ngIf="searchResults$ | async as searches" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
-        <div style="border: 2px solid red;" *ngFor="let search of searches;" [routerLink]="['hotels/', search.hotelId]">
-            <h4>{{ search.hotelName }}</h4>
-            <h6>{{ search.baseRoomTypePrice }}</h6>
-            <h6>{{ search.discountPercentage}}</h6>
-            <p>{{search.hotelLocation}}</p>
+    
+
+    <div *ngIf="!isSearched">
+        <div *ngIf="hotels$ | async as hotels" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
+            <div style="border: 2px solid red;" *ngFor="let hotel of hotels;" [routerLink]="['hotels/', hotel.id]">
+                <h4>{{ hotel.name }}</h4>
+                <h6>{{ hotel.description }}</h6>
+                <p>{{hotel.district}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isSearched">
+        <div *ngIf="searchResults$ | async as searches" style="display: grid;grid-template-columns: 300px 300px 300px 300px;">
+            <div style="border: 2px solid red;" *ngFor="let search of searches;" [routerLink]="['hotels/', search.hotelId]">
+                <h4>{{ search.hotelName }}</h4>
+                <h6>{{ search.baseRoomTypePrice }}</h6>
+                <h6>{{ search.discountPercentage}}</h6>
+                <p>{{search.hotelLocation}}</p>
+            </div>
         </div>
     </div>
 </div>

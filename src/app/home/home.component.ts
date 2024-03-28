@@ -1,11 +1,17 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject, map, startWith } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
 import { NavbarComponent } from "../navbar/navbar.component";
+
+// Material Ui
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @Component({
     selector: 'app-home',
@@ -18,7 +24,12 @@ import { NavbarComponent } from "../navbar/navbar.component";
         NgFor,
         AsyncPipe,
         RouterModule,
-        NavbarComponent
+        NavbarComponent,
+        MatFormFieldModule, 
+        MatInputModule,
+        MatDatepickerModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule
     ]
 })
 export class HomeComponent implements OnInit {
@@ -36,13 +47,54 @@ export class HomeComponent implements OnInit {
   noOfAdult: number = 0;
   noOfRooms: number = 0;
 
+  // Location selection
+  locations: string[] = [
+    'Colombo',
+    'Gampaha',
+    'Kalutara',
+    'Kandy',
+    'Matale',
+    'Nuwara Eliya',
+    'Galle',
+    'Matara',
+    'Hambantota',
+    'Jaffna',
+    'Kilinochchi',
+    'Mannar',
+    'Mullaitivu',
+    'Vavuniya',
+    'Puttalam',
+    'Kurunegala',
+    'Anuradhapura',
+    'Polonnaruwa',
+    'Badulla',
+    'Monaragala',
+    'Ratnapura',
+    'Kegalle',
+    'Trincomalee',
+    'Batticaloa',
+    'Ampara'
+  ];
+  filteredLocations!: Observable<string[]>;
+  myControl = new FormControl('');
+
   constructor(
     private cookieService: CookieService,
     private hotelService: HotelServiceService
   ){}
 
   ngOnInit(): void {
+    this.filteredLocations = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
     this.hotels$ = this.hotelService.getAllHotel();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.locations.filter(location => location.toLowerCase().includes(filterValue));
   }
 
   search(){

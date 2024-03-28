@@ -4,6 +4,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: transparent;
+    backdrop-filter: blur(3px);
 }
 
 #logo{
@@ -18,4 +20,5 @@
         margin: 10px;
         color: white;
     }
+    
 }
