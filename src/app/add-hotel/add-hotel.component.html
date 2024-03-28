@@ -30,15 +30,18 @@
     <br><br>
     Images: <button type="button" (click)="showAddImage()">Add Image</button>
     <div *ngIf="isImage">
+        <label for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
+            <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
         <br><br>
-        Image Name: <input type="text" [(ngModel)]="imageName" name="imageName">
+        Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
         <br><br>
-        Image url <input type="text" [(ngModel)]="imageUrl" name="imageUrl">
+        Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
         <br><br>
         <button type="button" (click)="addImage()">Add</button>
     </div>
     <ul *ngIf="images.length > 0">
         <li *ngFor="let image of images;let i = index">
+            <img style="height: 200px; width: 200;" src={{image.url}} alt={{image.name}}>
             <p>{{image.name}}</p>
             <p>{{image.url}}</p>
             <button type="button" (click)="removeImage(i)">remove</button>

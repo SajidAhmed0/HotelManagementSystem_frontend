@@ -48,6 +48,10 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/images', image);
   }
 
+  deleteImage(imageId: any){
+    return this.http.delete<any>(`http://localhost:8080/images/${imageId}`);
+  }
+
   addImageToHotel(hotelId: any, imageId: any){
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/images/${imageId}`, null);
   }

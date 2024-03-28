@@ -7,6 +7,7 @@ import { NgIf, NgFor } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddRoomtypeComponent } from '../add-roomtype/add-roomtype.component';
+import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-admin-one-hotel',
@@ -17,7 +18,8 @@ import { AddRoomtypeComponent } from '../add-roomtype/add-roomtype.component';
     AsyncPipe,
     FormsModule,
     AddRoomtypeComponent,
-    RouterModule
+    RouterModule,
+    AngularFireStorageModule
   ],
   templateUrl: './admin-one-hotel.component.html',
   styleUrl: './admin-one-hotel.component.scss'
@@ -33,6 +35,8 @@ export class AdminOneHotelComponent implements OnInit {
   isImage: boolean = false;
   imageName: string = '';
   imageUrl: string = '';
+  hotelImage: any;
+  labelImage: string = "../../assets/addImageIcon.png";
 
   isRoomType: boolean = false;
   roomTypeName: string = '';
@@ -81,7 +85,8 @@ export class AdminOneHotelComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute, 
-    private hotelService: HotelServiceService
+    private hotelService: HotelServiceService,
+    private fireStorage: AngularFireStorage
   ) {}
 
   ngOnInit(): void {
@@ -120,6 +125,24 @@ export class AdminOneHotelComponent implements OnInit {
     // delete facility from db
   }
 
+  async changeImage(event: any){
+    console.log(this.hotelImage);
+    const file = event.target.files[0];
+
+    console.log(file);
+    
+    if(file){
+      const path = `hotel/image/${file.name}`;
+      const uploadTask = await this.fireStorage.upload(path, file);
+      let url = await uploadTask.ref.getDownloadURL();
+      console.log(url);
+      this.labelImage = url;
+      this.imageName = file.name;
+      this.imageUrl = url;
+    }
+
+  }
+
   async addImage(){
     let image = {
       name: this.imageName,
@@ -127,6 +150,7 @@ export class AdminOneHotelComponent implements OnInit {
     };
     this.imageName = '';
     this.imageUrl = '';
+    this.labelImage = "../../assets/addImageIcon.png";
     let img = await this.hotelService.addImage(image).toPromise();
     this.hotel$ = await this.hotelService.addImageToHotel(this.id, img.id);
   }
@@ -140,8 +164,17 @@ export class AdminOneHotelComponent implements OnInit {
     
   }
 
-  removeImage(i: any){
+  async removeImage(image: any){
     // delete image from db
+    await this.deleteImageFromFireBase(image.url);
+    await this.hotelService.addImage(image).toPromise();
+    // this.activatedRoute.rel
+    window.location.reload();
+  }
+
+  deleteImageFromFireBase(url: string): any {
+    const storageRef = this.fireStorage.refFromURL(url);
+    return storageRef.delete();
   }
 
   //Roomtype 
