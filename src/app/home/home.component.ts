@@ -12,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
     selector: 'app-home',
@@ -25,11 +26,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         AsyncPipe,
         RouterModule,
         NavbarComponent,
-        MatFormFieldModule, 
+        MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
         MatAutocompleteModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FooterComponent
     ]
 })
 export class HomeComponent implements OnInit {
