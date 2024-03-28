@@ -121,8 +121,10 @@ export class AdminOneHotelComponent implements OnInit {
     
   }
 
-  removeFacility(i: any){
+  async removeFacility(i: any){
     // delete facility from db
+    await this.hotelService.deleteFacility(i).toPromise();
+    window.location.reload();
   }
 
   async changeImage(event: any){
@@ -167,7 +169,7 @@ export class AdminOneHotelComponent implements OnInit {
   async removeImage(image: any){
     // delete image from db
     await this.deleteImageFromFireBase(image.url);
-    await this.hotelService.addImage(image).toPromise();
+    await this.hotelService.deleteImage(image.id).toPromise();
     // this.activatedRoute.rel
     window.location.reload();
   }

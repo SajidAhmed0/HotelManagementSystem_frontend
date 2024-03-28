@@ -20,6 +20,7 @@
             <li *ngFor="let facility of hotel.facilities">
                 <h6>{{ facility.name}}</h6>
                 <p>{{ facility.description}}</p>
+                <br><button type="button" (click)="removeFacility(facility.id)">Remove</button>
             </li>
         </ul>
     </div>

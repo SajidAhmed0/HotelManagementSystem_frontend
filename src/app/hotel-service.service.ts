@@ -40,6 +40,10 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/facilities', facility)
   }
 
+  deleteFacility(facilityId: any){
+    return this.http.delete(`http://localhost:8080/facilities/${facilityId}`, {responseType: 'text'});
+  }
+
   addFacilityToHotel(hotelId: any, facilityId: any){
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/facilities/${facilityId}`, null);
   }
@@ -49,7 +53,7 @@ export class HotelServiceService {
   }
 
   deleteImage(imageId: any){
-    return this.http.delete<any>(`http://localhost:8080/images/${imageId}`);
+    return this.http.delete(`http://localhost:8080/images/${imageId}`, {responseType: 'text'});
   }
 
   addImageToHotel(hotelId: any, imageId: any){
