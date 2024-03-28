@@ -8,6 +8,7 @@ import { environment } from '../environments/environment.development';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,6 @@ export const appConfig: ApplicationConfig = {
       provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
       provideFirestore(() => getFirestore())
     ]),
-    { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }  
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }, provideAnimationsAsync('noop')  
   ]
 };

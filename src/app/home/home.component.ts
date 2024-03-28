@@ -5,19 +5,21 @@ import { HotelServiceService } from '../hotel-service.service';
 import { FormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    RouterModule
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    standalone: true,
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss',
+    imports: [
+        FormsModule,
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        RouterModule,
+        NavbarComponent
+    ]
 })
 export class HomeComponent implements OnInit {
 
