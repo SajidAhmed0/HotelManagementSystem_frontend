@@ -13,6 +13,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FooterComponent } from "../footer/footer.component";
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
     selector: 'app-home',
@@ -31,7 +33,9 @@ import { FooterComponent } from "../footer/footer.component";
         MatDatepickerModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
-        FooterComponent
+        FooterComponent,
+        MatCardModule,
+        MatButtonModule
     ]
 })
 export class HomeComponent implements OnInit {

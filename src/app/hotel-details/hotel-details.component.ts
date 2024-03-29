@@ -50,8 +50,8 @@ export class HotelDetailsComponent implements OnInit {
 
   search: {
     location: string,
-    checkInDate: string,
-    checkOutDate: string,
+    checkInDate: any,
+    checkOutDate: any,
     noOfAdult: string,
     noOfRooms: string
   } = {
@@ -78,8 +78,8 @@ export class HotelDetailsComponent implements OnInit {
     
     this.search = {
       location: this.cookieService.get('location'),
-      checkInDate: this.cookieService.get('checkInDate'),
-      checkOutDate: this.cookieService.get('checkOutDate'),
+      checkInDate: new Date(this.cookieService.get('checkInDate')),
+      checkOutDate: new Date(this.cookieService.get('checkOutDate')),
       noOfAdult: this.cookieService.get('noOfAdult'),
       noOfRooms: this.cookieService.get('noOfRooms')
     }
