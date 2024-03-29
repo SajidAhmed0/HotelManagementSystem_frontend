@@ -16,6 +16,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { FooterComponent } from "../footer/footer.component";
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
     selector: 'app-hotel-details',
@@ -34,6 +37,9 @@ import { FooterComponent } from "../footer/footer.component";
         MatInputModule,
         MatDatepickerModule,
         MatGridListModule,
+        MatDividerModule,
+        MatListModule,
+        MatIconModule,
         FooterComponent
     ]
 })
@@ -124,6 +130,7 @@ export class HotelDetailsComponent implements OnInit {
   }
 
   showSupplements(){
+    this.selectedSupplements = [];
     if(this.isSupplements){
       this.isSupplements = false;
     }else{

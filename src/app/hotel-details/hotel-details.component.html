@@ -64,9 +64,98 @@
             <mat-grid-tile  colspan=1 rowspan=1>
                 <img class="image" src={{hotel.hotel.images[4].url}} alt={{hotel.hotel.images[4].name}} >
             </mat-grid-tile>
-          </mat-grid-list>
+        </mat-grid-list>
 
+        <div style="display: flex; justify-content: space-between;">
+            <div>
+                <h4>{{ hotel.hotel.country }}</h4>
+                <h4>{{ hotel.hotel.district }}</h4>
+                <h4><img style="filter: invert(70%) sepia(32%) saturate(875%) hue-rotate(19deg) brightness(99%) contrast(87%);" src="../../assets/location_icon.svg" alt="locaion">{{ hotel.hotel.street }}</h4>
+            </div>
+            <div>
+                <div style="display: flex; align-items: center ;">
+                    <img src="../../assets/Star 1.svg" alt="star"><h4>4.7</h4>
+                </div>
+                <div style="display: flex; align-items: center ;">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="phone"></mat-icon>
+                    <h4>{{ hotel.hotel.contact }}</h4>
+                </div>
+                
+            </div>
+        </div>
+        
+        <mat-divider></mat-divider>
         <div>
+            <h3>Hotel Facilities</h3>
+            <mat-list>
+                <mat-list-item *ngFor="let facility of hotel.hotel.facilities">
+                  <span matListItemTitle>{{ facility.name }}</span>
+                  <span matListItemLine>{{ facility.description }}</span>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <mat-divider></mat-divider>
+            <div>
+                <div>
+                    <h3>About This Hotel</h3>
+                    <p style="color: grey;">{{ hotel.hotel.description }}</p>
+                </div>
+            </div>
+        <mat-divider></mat-divider>
+
+            <div>
+                <h3>Available Room Types</h3>
+            </div>
+            <div>
+                <mat-selection-list #roomTypes [multiple]="false">
+                    <p>
+                        Option selected: {{roomTypes.selectedOptions.hasValue() ? roomTypes.selectedOptions.selected[0].value : 'None'}}
+                    </p>
+                    @for (roomType of hotel.roomTypeWithPricings; track roomType) {
+                        <div style="display: flex;">
+                    <mat-list-option  style="flex-basis: 50%;" [value]="roomType.roomType.name" (click)="setSelectedRoomType(roomType)">
+                            <div>
+                                <span matListItemTitle>{{ roomType.roomType.name }}</span>
+                                <span matListItemLine>{{ roomType.roomType.description }}</span>
+                                <span matListItemLine>MaxAdult: {{ roomType.roomType.maxAdult }}</span>
+                                <span matListItemLine>Price: {{ roomType.pricing.price }}</span>
+                                <ul>
+                                    <li *ngFor="let fac of roomType.roomType.roomTypeFacilities"> {{fac.name}} </li>
+                                </ul>
+                            </div>
+                            
+                        
+                    </mat-list-option>
+                    <div style="flex-basis: 50%;display: flex;padding: 20px;margin-left: 10px;padding-top: 0px;" *ngIf="selectedRoomType.roomType.id == roomType.roomType.id">
+                        <!-- <button (click)="showSupplements()">Add Supplements</button> -->
+                        <!-- <div *ngIf="isSupplements && hotel.supplementWithPricings.length > 0"> -->
+                        <div style="flex-basis: 50%;" *ngIf="hotel.supplementWithPricings.length > 0">
+                            <h4>Supplements</h4>
+                            <div style="display: flex;" *ngFor="let supplement of hotel.supplementWithPricings">
+                                <!-- <label for="{{supplement.supplement.name}}">
+                                    Name: {{supplement.supplement.name}}
+                                    price: {{supplement.pricing.price}}
+                                </label> -->
+                                <div>
+                                    <label for="{{supplement.supplement.name}}">
+                                    <span matListItemTitle>{{supplement.supplement.name}}</span>
+                                    <span matListItemLine>Price: {{supplement.pricing.price}}</span>
+                                    </label>
+                                </div>
+                                 <input type="checkbox" name="{{supplement.supplement.name}}" id="{{supplement.supplement.name}}" (change)="selectSupplement($event, supplement)">
+                            </div>
+                             
+                        </div>
+                        <div style="flex-basis: 50%;">
+                            <button id="btn-reserve" style="margin-left: 40%;margin-top: 20%;" type="button" (click)="whenClickReserve()">Reserve</button>
+                        </div>
+                    </div>
+                </div>
+                }
+                </mat-selection-list>
+            </div>
+        <mat-divider></mat-divider>
+        <!-- <div>
             <div *ngFor="let roomType of hotel.roomTypeWithPricings">
                 <input type="radio" name="roomType" value="{{roomType.roomType.id}}" id="{{roomType.roomType.id}}" (click)="setSelectedRoomType(roomType)">
                 <label for="{{roomType.roomType.id}}">
@@ -87,6 +176,6 @@
                     <button type="button" (click)="whenClickReserve()">Reserve</button>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <app-footer></app-footer>
