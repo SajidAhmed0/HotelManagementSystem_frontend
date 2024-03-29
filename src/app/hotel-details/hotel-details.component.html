@@ -1,18 +1,70 @@
 <p>hotel-details works!</p>
 <div id="detail-main">
+    <div id="hero-detail">
+        <app-navbar></app-navbar>
+        <div id="hero-search">
+            <form id="search-form">
+                <mat-form-field class="search-form-field">
+                    <mat-label>Location</mat-label>
+                    <input matInput type="text" readonly
+                           [value]="search.location">
+                </mat-form-field>
 
-    <div *ngIf="hotel$ | async as hotel">
+                <mat-form-field class="search-form-field">
+                    <mat-label>Check-in - Check-out</mat-label>
+                    <mat-date-range-input>
+                      <input matStartDate readonly [ngModel]="search.checkInDate" name="checkInDate" id="" placeholder="Check-in">
+                      <input matEndDate readonly [ngModel]="search.checkOutDate" name="checkOutDate" id="" placeholder="Check-out">
+                    </mat-date-range-input>
+                    <mat-hint style="color: wheat;">MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                </mat-form-field>
+
+                  <mat-form-field class="search-form-field">
+                    <mat-label>No. of Adult</mat-label>
+                    <input matInput readonly type="number" [ngModel]="search.noOfAdult" name="noOfAdult" id="" placeholder="Ex. 4" value="1">
+                  </mat-form-field>
+
+                  <mat-form-field class="search-form-field">
+                    <mat-label>No. of Rooms</mat-label>
+                    <input matInput readonly type="number" [ngModel]="search.noOfRooms" name="noOfRooms" id="" placeholder="Ex. 2" value="1">
+                  </mat-form-field>
+                
+              </form>
+        </div>
+    </div>
+    <div id="hotel-detail" *ngIf="hotel$ | async as hotel">
         
-        <h4>Location: {{ search.location }}</h4>
+        <!-- <h4>Location: {{ search.location }}</h4>
         <h4>Check in: {{ search.checkInDate.toString().slice(0, 15) }}</h4>
         <h4>Check out: {{ search.checkOutDate.toString().slice(0, 15) }}</h4>
         <h4>no of adult: {{ search.noOfAdult }}</h4>
-        <h4>no of rooms: {{ search.noOfRooms }}</h4>
-        <h1> Hotel Name: {{ hotel.hotel.name }} </h1>
+        <h4>no of rooms: {{ search.noOfRooms }}</h4> -->
+
+        <!-- <h1> Hotel Name: {{ hotel.hotel.name }} </h1>
         <h3> Hotel Country: {{ hotel.hotel.country }} </h3>
         <h3> Hotel District: {{ hotel.hotel.district }} </h3>
         <h3> Hotel Street: {{ hotel.hotel.street }} </h3>
-        <h3> Hotel Contact: {{ hotel.hotel.contact }} </h3>
+        <h3> Hotel Contact: {{ hotel.hotel.contact }} </h3> -->
+
+        <h1 id="hotel-name">{{ hotel.hotel.name }}</h1>
+
+        <mat-grid-list cols="4" rowHeight="200px">
+            <mat-grid-tile  colspan=2 rowspan=2 >
+                <img class="image" src={{hotel.hotel.images[0].url}} alt={{hotel.hotel.images[0].name}} >
+            </mat-grid-tile>
+            <mat-grid-tile  colspan=1 rowspan=1>
+                <img class="image" src={{hotel.hotel.images[1].url}} alt={{hotel.hotel.images[1].name}} >
+            </mat-grid-tile>
+            <mat-grid-tile  colspan=1 rowspan=1>
+                <img class="image" src={{hotel.hotel.images[2].url}} alt={{hotel.hotel.images[2].name}} >
+            </mat-grid-tile>
+            <mat-grid-tile  colspan=1 rowspan=1>
+                <img class="image" src={{hotel.hotel.images[3].url}} alt={{hotel.hotel.images[3].name}} >
+            </mat-grid-tile>
+            <mat-grid-tile  colspan=1 rowspan=1>
+                <img class="image" src={{hotel.hotel.images[4].url}} alt={{hotel.hotel.images[4].name}} >
+            </mat-grid-tile>
+          </mat-grid-list>
 
         <div>
             <div *ngFor="let roomType of hotel.roomTypeWithPricings">
@@ -33,8 +85,8 @@
                         </div>
                     </div>
                     <button type="button" (click)="whenClickReserve()">Reserve</button>
-                </div>
             </div>
         </div>
-    <div>
+    </div>
 </div>
+<app-footer></app-footer>

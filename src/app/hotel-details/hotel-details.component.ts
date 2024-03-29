@@ -3,11 +3,19 @@ import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HotelServiceService } from '../hotel-service.service';
 import { Observable, switchMap } from 'rxjs';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HomeComponent } from '../home/home.component';
 import { Router, RouterModule } from '@angular/router';
 import { DataService } from '../data.service';
+import { NavbarComponent } from "../navbar/navbar.component";
+
+// Material Ui
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
     selector: 'app-hotel-details',
@@ -20,7 +28,13 @@ import { DataService } from '../data.service';
         NgFor,
         AsyncPipe,
         HomeComponent,
-        RouterModule
+        RouterModule,
+        NavbarComponent,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatGridListModule,
+        FooterComponent
     ]
 })
 export class HotelDetailsComponent implements OnInit {
