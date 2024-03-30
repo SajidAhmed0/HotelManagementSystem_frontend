@@ -1,52 +1,104 @@
-<form action="">
-    Hotel Name: <input type="text" [(ngModel)]="name" name="name">
-    <br><br>
-    Country: <input type="text" [(ngModel)]="country" name="country">
-    <br><br>
-    District: <input type="text" [(ngModel)]="district" name="district">
-    <br><br>
-    Street: <input type="text" [(ngModel)]="street" name="street">
-    <br><br>
-    Contact: <input type="text" [(ngModel)]="contact" name="contact">
-    <br><br>
-    Descriptoin: <input type="text" [(ngModel)]="description" name="description">
-    <br><br>
-    Facilities: <button type="button" (click)="showAddFacility()">Add Facility</button>
-    <div *ngIf="isFacility">
-        <br><br>
-        Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
-        <br><br>
-        Facility Description <input type="text" [(ngModel)]="facilityDescription" name="facilityDescription">
-        <br><br>
-        <button type="button" (click)="addFacility()">Add</button>
+<div id="hotel-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
     </div>
-    <ul *ngIf="facilities.length > 0">
-        <li *ngFor="let facility of facilities;let i = index">
-            <p>{{facility.name}}</p>
-            <p>{{facility.description}}</p>
-            <button type="button" (click)="removeFacility(i)">remove</button>
-        </li>
-    </ul>
-    <br><br>
-    Images: <button type="button" (click)="showAddImage()">Add Image</button>
-    <div *ngIf="isImage">
-        <label for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
-            <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
-        <br><br>
-        Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
-        <br><br>
-        Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
-        <br><br>
-        <button type="button" (click)="addImage()">Add</button>
-    </div>
-    <ul *ngIf="images.length > 0">
-        <li *ngFor="let image of images;let i = index">
-            <img style="height: 200px; width: 200;" src={{image.url}} alt={{image.name}}>
-            <p>{{image.name}}</p>
-            <p>{{image.url}}</p>
-            <button type="button" (click)="removeImage(i)">remove</button>
-        </li>
-    </ul>
-    <br><br>
-    <button type="submit" (click)="addHotel()">Add Hotel</button>
-</form>
+
+    <form id="hotel-add-form" action="">
+        <h1 style="text-align: center;">ADD HOTEL</h1>
+        <div style="display: flex;">
+            <div style="flex-basis: 50%;" id="hotel-detail">
+                Hotel Name: <input type="text" [(ngModel)]="name" name="name">
+                <br><br>
+                Country: <input type="text" readonly [(ngModel)]="country" name="country">
+                <br><br>
+                City: 
+                <!-- <mat-form-field class="search-form-field"> -->
+                    <!-- <mat-label>Location</mat-label> -->
+                    <input type="text"
+                            placeholder="Ex. Colombo"
+                           matInput
+                           [formControl]="myControl"
+                           [(ngModel)]="district"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                      @for (option of filteredLocations | async; track option) {
+                        <mat-option [value]="option">{{option}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  <!-- </mat-form-field> -->
+        
+                <!-- City: <input type="text" [(ngModel)]="district" name="district"> -->
+                <br><br>
+                Street: <input type="text" [(ngModel)]="street" name="street">
+                <br><br>
+                Contact: <input type="text" [(ngModel)]="contact" name="contact">
+                <br><br>
+                Descriptoin: <input type="text" [(ngModel)]="description" name="description">
+                <br><br>
+            </div>
+            <div style="flex-basis: 50%;">
+                Facilities: <button type="button" (click)="showAddFacility()">Add Facility</button>
+                <div id="facility-add" *ngIf="isFacility">
+                    <br><br>
+                    Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
+                    <br><br>
+                    Facility Description <input type="text" [(ngModel)]="facilityDescription" name="facilityDescription">
+                    <br><br>
+                    <button type="button" (click)="addFacility()">Add</button>
+                </div>
+                <ul *ngIf="facilities.length > 0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let facility of facilities;let i = index">
+                            <div id="facility-display">
+                                <div>
+                                    <span matListItemTitle>{{ facility.name }}</span>
+                                    <span matListItemLine>{{ facility.description }}</span>
+                                </div>
+                                <button id="btn-delete" type="button" (click)="removeFacility(i)">remove</button>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <li *ngFor="let facility of facilities;let i = index">
+                        <p>{{facility.name}}</p>
+                        <p>{{facility.description}}</p>
+                        <button type="button" (click)="removeFacility(i)">remove</button>
+                    </li> -->
+                </ul>
+                <br><br>
+                Images: <button type="button" (click)="showAddImage()">Add Image</button>
+                <div *ngIf="isImage" style="display: flex;">
+                    <label style="flex-basis: 50%;" for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
+                        <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
+                    <br><br>
+                    <div style="flex-basis: 50%;">
+                        Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
+                        <br><br>
+                        Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
+                        <br><br>
+                        <button type="button" (click)="addImage()">Add</button>
+                    </div>
+                </div>
+                <ul *ngIf="images.length > 0">
+                    <!-- <li *ngFor="let image of images;let i = index">
+                        <img style="height: 200px; width: 200;" src={{image.url}} alt={{image.name}}>
+                        <p>{{image.name}}</p>
+                        <p>{{image.url}}</p>
+                        <button type="button" (click)="removeImage(i)">remove</button>
+                    </li> -->
+                    <mat-grid-list cols="2" rowHeight="150px">
+                        <mat-grid-tile *ngFor="let image of images;let i = index"  colspan=1 rowspan=1 >
+                            <img class="image" height="100px" src={{image.url}} alt={{image.name}} >
+                            <!-- <p>{{image.name}}</p>
+                        <p>{{image.url}}</p> -->
+                            <button id="btn-delete-img" type="button" (click)="removeImage(i)">remove</button>
+                        </mat-grid-tile>
+                        
+                    </mat-grid-list>
+                </ul>
+                <br><br>
+            </div>
+        </div>
+        <button id="btn-add-hotel " type="submit" (click)="addHotel()">Add Hotel</button>
+    </form>
+</div>
+<app-footer></app-footer>

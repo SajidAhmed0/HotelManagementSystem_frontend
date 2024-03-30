@@ -1,25 +1,44 @@
-import { Component, Input } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HotelServiceService } from '../hotel-service.service';
 import { Router } from '@angular/router';
 import {AngularFireStorage, AngularFireStorageModule} from '@angular/fire/compat/storage'
+import { NavbarComponent } from "../navbar/navbar.component";
+import { Observable, map, startWith } from 'rxjs';
+
+// material ui
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatListModule} from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { FooterComponent } from "../footer/footer.component";
 
 @Component({
-  selector: 'app-add-hotel',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgFor,
-    NgIf,
-    AngularFireStorageModule
-  ],
-  templateUrl: './add-hotel.component.html',
-  styleUrl: './add-hotel.component.scss'
+    selector: 'app-add-hotel',
+    standalone: true,
+    templateUrl: './add-hotel.component.html',
+    styleUrl: './add-hotel.component.scss',
+    imports: [
+        FormsModule,
+        NgFor,
+        NgIf,
+        AngularFireStorageModule,
+        NavbarComponent,
+        MatInputModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        AsyncPipe,
+        ReactiveFormsModule,
+        MatListModule,
+        MatGridListModule,
+        FooterComponent
+    ]
 })
-export class AddHotelComponent {
+export class AddHotelComponent implements OnInit {
   name: string = '';
-  country: string = '';
+  country: string = 'Sri Lanka';
   district: string = '';
   street: string = '';
   contact: string = '';
@@ -43,11 +62,55 @@ export class AddHotelComponent {
   isFacility: boolean = false;
   isImage: boolean = false;
 
+  // Location selection
+  locations: string[] = [
+    'Colombo',
+    'Gampaha',
+    'Kalutara',
+    'Kandy',
+    'Matale',
+    'Nuwara Eliya',
+    'Galle',
+    'Matara',
+    'Hambantota',
+    'Jaffna',
+    'Kilinochchi',
+    'Mannar',
+    'Mullaitivu',
+    'Vavuniya',
+    'Puttalam',
+    'Kurunegala',
+    'Anuradhapura',
+    'Polonnaruwa',
+    'Badulla',
+    'Monaragala',
+    'Ratnapura',
+    'Kegalle',
+    'Trincomalee',
+    'Batticaloa',
+    'Ampara'
+  ];
+  filteredLocations!: Observable<string[]>;
+  myControl = new FormControl('');
+  
+
   constructor(
     private hotelService: HotelServiceService, 
     private router: Router,
     private fireStorage: AngularFireStorage
   ){}
+  ngOnInit(): void {
+    this.filteredLocations = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.locations.filter(location => location.toLowerCase().includes(filterValue));
+  }
 
   async addHotel() {
     const hotel = {
