@@ -5,6 +5,16 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
+import { NavbarComponent } from "../navbar/navbar.component";
+
+// material ui
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { FooterComponent } from "../footer/footer.component";
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
     selector: 'app-booking',
@@ -12,11 +22,19 @@ import { HotelServiceService } from '../hotel-service.service';
     templateUrl: './booking.component.html',
     styleUrl: './booking.component.scss',
     imports: [
-      HotelDetailsComponent,
-      NgIf,
-      NgFor,
-      FormsModule,
-      AsyncPipe
+        HotelDetailsComponent,
+        NgIf,
+        NgFor,
+        FormsModule,
+        AsyncPipe,
+        NavbarComponent,
+        MatInputModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatGridListModule,
+        FooterComponent,
+        MatDividerModule,
+        MatListModule
     ]
 })
 export class BookingComponent implements OnInit {
