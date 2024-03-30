@@ -1,74 +1,107 @@
 <p>admin-one-season works!</p>
-<p>admin-one-contract works!</p>
-<div *ngIf="season$ | async as season">
-    <h3> Season Name: {{ season.name }} </h3>
-    <h3> Season Start Date: {{ season.startDate }} </h3>
-    <h3> Season End Date: {{ season.endDate }} </h3>
-    <h3> Season Markup: {{ season.markup }} </h3>
-
-
-<div style="display: flex;">
-    <div>
-        <h3>RoomType Pricings</h3>
-        <button type="button" (click)="showAddRoomTypePring()">Add RoomType Pricing</button>
-        <div *ngIf="isRoomTypePricing">
-            <br><br>
-            RoomType: <select [(ngModel)]="roomType" id="">
-                <option *ngFor="let rt of roomTypes$ | async;" value={{rt.id}}>
-                    {{rt.name}}
-                </option>
-            </select>
-            <br><br>
-            Price: <input type="number" [(ngModel)]="roomTypePrice" name="roomTypePrice">
-            <br><br>
-            noOfRooms: <input type="number" [(ngModel)]="roomTypeRooms" name="roomTypeRooms">
-            <br><br>
-            <br><br>
-            <button type="button" (click)="addRoomTypePricing(roomType)">Add</button>
-        </div>
-        <ul *ngIf="season.seasonRoomTypePricings.length > 0">
-            <li *ngFor="let pricing of season.seasonRoomTypePricings;let i = index">
-                <p>{{season.name}}</p>
-                <p>{{pricing.id.roomTypeId}}</p>
-                <p>{{pricing.price}}</p>
-                <p>{{pricing.noOfRooms}}</p>
-            </li>
-        </ul>
+<div id="season-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
     </div>
-    <div>
-        <h3>Supplement Pricings</h3>
-        <button type="button" (click)="showAddSupplementPring()">Add Supplement Pricing</button>
-        <div *ngIf="isSupplementPricing">
-            <br><br>
-            Supplement: <select [(ngModel)]="supplement" id="">
-                <option *ngFor="let sp of supplements$ | async;" value={{sp.id}}>
-                    {{sp.name}}
-                </option>
-            </select>
-            <br><br>
-            Price: <input type="number" [(ngModel)]="supplementPrice" name="supplementPrice">
-            <br><br>
-            <button type="button" (click)="addSupplementPricing(supplement)">Add</button>
+    <div id="season-one-detial" *ngIf="season$ | async as season">
+        <div style="display: flex; justify-content: space-between;align-items: center;">
+            <h1> Season Name: {{ season.name }} </h1>
+            <button id="btn-edit" type="button">Edit</button>
         </div>
-        <ul *ngIf="season.seasonSupplementPricings.length > 0">
-            <li *ngFor="let pricing of season.seasonSupplementPricings;let i = index">
-                <p>{{season.name}}</p>
-                <p>{{pricing.id.supplementId}}</p>
-                <p>{{pricing.price}}</p>
-            </li>
-        </ul>
-    </div>
-</div>
-
-    <!-- <br><br>
-    <button type="button" (click)="showAddRoomTypePricing()">Add RoomType Pricings</button>
-    <div *ngIf="isRoomTypePricing">
-        <div *ngIf="roomTypes$ | async as roomTypes">
-            <div *ngFor="let rt of roomTypes; let i = index">
-                
+        <h3> Season Start Date: {{ season.startDate }} </h3>
+        <h3> Season End Date: {{ season.endDate }} </h3>
+        <h3> Season Markup: {{ season.markup }}% </h3>
+    
+    
+        <div style="display: flex;">
+            <div style="flex-basis: 50%;">
+                <h3>RoomType Pricings</h3>
+                <button id="btn-show" type="button" (click)="showAddRoomTypePring()">Add RoomType Pricing</button>
+                <div id="facility-add" *ngIf="isRoomTypePricing">
+                    <br><br>
+                    RoomType: <select [(ngModel)]="roomType" id="">
+                        <option *ngFor="let rt of roomTypes$ | async;" value={{rt.id}}>
+                            {{rt.name}}
+                        </option>
+                    </select>
+                    <br><br>
+                    Price: <input type="number" [(ngModel)]="roomTypePrice" name="roomTypePrice">
+                    <br><br>
+                    noOfRooms: <input type="number" [(ngModel)]="roomTypeRooms" name="roomTypeRooms">
+                    <br><br>
+                    <br><br>
+                    <button id="btn-add" type="button" (click)="addRoomTypePricing(roomType)">Add</button>
+                </div>
+                <ul *ngIf="season.seasonRoomTypePricings.length > 0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let pricing of season.seasonRoomTypePricings;let i = index">
+                            <div id="facility-display">
+                                <div>
+                                    <span matListItemTitle>Season: {{season.name}}</span>
+                                    <span matListItemLine>RoomType Id: {{pricing.id.roomTypeId}}</span>
+                                    <span matListItemLine>Price: {{pricing.price}}</span>
+                                    <span matListItemLine>No. of Rooms: {{pricing.noOfRooms}}</span>
+                                </div>
+                                <button id="btn-delete" type="button" >Remove</button>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <li *ngFor="let pricing of season.seasonRoomTypePricings;let i = index">
+                        <p>{{season.name}}</p>
+                        <p>{{pricing.id.roomTypeId}}</p>
+                        <p>{{pricing.price}}</p>
+                        <p>{{pricing.noOfRooms}}</p>
+                    </li> -->
+                </ul>
+            </div>
+            <div style="flex-basis: 50%;">
+                <h3>Supplement Pricings</h3>
+                <button id="btn-show" type="button" (click)="showAddSupplementPring()">Add Supplement Pricing</button>
+                <div id="facility-add" *ngIf="isSupplementPricing">
+                    <br><br>
+                    Supplement: <select [(ngModel)]="supplement" id="">
+                        <option *ngFor="let sp of supplements$ | async;" value={{sp.id}}>
+                            {{sp.name}}
+                        </option>
+                    </select>
+                    <br><br>
+                    Price: <input type="number" [(ngModel)]="supplementPrice" name="supplementPrice">
+                    <br><br>
+                    <button id="btn-add" type="button" (click)="addSupplementPricing(supplement)">Add</button>
+                </div>
+                <ul *ngIf="season.seasonSupplementPricings.length > 0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let pricing of season.seasonSupplementPricings;let i = index">
+                            <div id="facility-display">
+                                <div>
+                                    <span matListItemTitle>Season: {{season.name}}</span>
+                                    <span matListItemLine>Supplement Id: {{pricing.id.supplementId}}</span>
+                                    <span matListItemLine>Price: {{pricing.price}}</span>
+                                </div>
+                                <button id="btn-delete" type="button" >Remove</button>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <li *ngFor="let pricing of season.seasonSupplementPricings;let i = index">
+                        <p>{{season.name}}</p>
+                        <p>{{pricing.id.supplementId}}</p>
+                        <p>{{pricing.price}}</p>
+                    </li> -->
+                </ul>
             </div>
         </div>
-        
-    </div> -->
-
+    
+        <!-- <br><br>
+        <button type="button" (click)="showAddRoomTypePricing()">Add RoomType Pricings</button>
+        <div *ngIf="isRoomTypePricing">
+            <div *ngIf="roomTypes$ | async as roomTypes">
+                <div *ngFor="let rt of roomTypes; let i = index">
+                    
+                </div>
+            </div>
+            
+        </div> -->
+    
+    </div>
 </div>
+<app-footer></app-footer>

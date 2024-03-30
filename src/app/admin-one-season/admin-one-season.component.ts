@@ -4,18 +4,26 @@ import { Observable, map, switchMap } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
 import { FormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { NavbarComponent } from "../navbar/navbar.component";
+import { FooterComponent } from "../footer/footer.component";
+
+// material ui
+import {MatListModule} from '@angular/material/list';
 
 @Component({
-  selector: 'app-admin-one-season',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    NgFor,
-    AsyncPipe
-  ],
-  templateUrl: './admin-one-season.component.html',
-  styleUrl: './admin-one-season.component.scss'
+    selector: 'app-admin-one-season',
+    standalone: true,
+    templateUrl: './admin-one-season.component.html',
+    styleUrl: './admin-one-season.component.scss',
+    imports: [
+        FormsModule,
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        NavbarComponent,
+        FooterComponent,
+        MatListModule
+    ]
 })
 export class AdminOneSeasonComponent implements OnInit{
   hotelId: string | null = '';
