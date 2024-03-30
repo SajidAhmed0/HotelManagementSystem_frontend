@@ -165,7 +165,7 @@ export class AddHotelComponent implements OnInit {
     console.log(file);
     
     if(file){
-      const path = `hotel/image/${file.name}`;
+      const path = `hotel/${this.name}/${file.name}`;
       const uploadTask = await this.fireStorage.upload(path, file);
       let url = await uploadTask.ref.getDownloadURL();
       console.log(url);

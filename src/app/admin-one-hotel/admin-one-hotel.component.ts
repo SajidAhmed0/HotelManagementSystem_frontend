@@ -8,25 +8,36 @@ import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddRoomtypeComponent } from '../add-roomtype/add-roomtype.component';
 import { AngularFireStorage, AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { NavbarComponent } from "../navbar/navbar.component";
+import { FooterComponent } from "../footer/footer.component";
+
+//material ui
+import {MatListModule} from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @Component({
-  selector: 'app-admin-one-hotel',
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    FormsModule,
-    AddRoomtypeComponent,
-    RouterModule,
-    AngularFireStorageModule
-  ],
-  templateUrl: './admin-one-hotel.component.html',
-  styleUrl: './admin-one-hotel.component.scss'
+    selector: 'app-admin-one-hotel',
+    standalone: true,
+    templateUrl: './admin-one-hotel.component.html',
+    styleUrl: './admin-one-hotel.component.scss',
+    imports: [
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        FormsModule,
+        AddRoomtypeComponent,
+        RouterModule,
+        AngularFireStorageModule,
+        NavbarComponent,
+        FooterComponent,
+        MatListModule,
+        MatGridListModule
+    ]
 })
 export class AdminOneHotelComponent implements OnInit {
   id: string | null = '';
   hotel$!: Observable<any>;
+  hotel: any;
 
   isFacility: boolean = false;
   facilityName: string = '';
@@ -93,8 +104,10 @@ export class AdminOneHotelComponent implements OnInit {
     this.hotel$ = this.activatedRoute.paramMap.pipe(
       switchMap((paramsMap) => {
         this.id = paramsMap.get('id');
-        let hotel = this.hotelService.getHotel(this.id);
-        console.log(hotel);
+        let hotel = this.hotelService.getHotel(this.id)
+        
+        hotel.subscribe(h => this.hotel = h);
+        console.log(this.hotel);
         
         return hotel;
       })
@@ -134,7 +147,9 @@ export class AdminOneHotelComponent implements OnInit {
     console.log(file);
     
     if(file){
-      const path = `hotel/image/${file.name}`;
+      const path = `hotel/${this.hotel.name}/${file.name}`;
+      console.log(path);
+      
       const uploadTask = await this.fireStorage.upload(path, file);
       let url = await uploadTask.ref.getDownloadURL();
       console.log(url);

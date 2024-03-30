@@ -23,9 +23,12 @@
       width: calc(100% - 10px); // Adjust width to leave space for padding
       box-sizing: border-box;
     }
-  
-    button[type="button"] {
-      cursor: pointer;
+    
+    button[type="button"], button[type="submit"] {
+        cursor: pointer;
+        background-color: #007bff;
+        border: none;
+        color: white;
     }
   
     ul {

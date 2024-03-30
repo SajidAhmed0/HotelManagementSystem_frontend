@@ -1,178 +1,264 @@
 <p>admin-one-hotel works!</p>
-<div *ngIf="hotel$ | async as hotel">
-    <h1> Hotel Name: {{ hotel.name }} </h1>
-    <h3> Hotel Country: {{ hotel.country }} </h3>
-    <h3> Hotel District: {{ hotel.district }} </h3>
-    <h3> Hotel Street: {{ hotel.street }} </h3>
-    <h3> Hotel Contact: {{ hotel.contact }} </h3>
-    <div>
-        <h3>Facilities</h3>
-        <button type="button" (click)="showAddFacility()">Add Facility</button>
-        <div *ngIf="isFacility">
-            <br><br>
-            Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
-            <br><br>
-            Facility Description <input type="text" [(ngModel)]="facilityDescription" name="facilityDescription">
-            <br><br>
-            <button type="button" (click)="addFacility()">Add</button>
-        </div>
-        <ul *ngIf="hotel.facilities.length > 0">
-            <li *ngFor="let facility of hotel.facilities">
-                <h6>{{ facility.name}}</h6>
-                <p>{{ facility.description}}</p>
-                <br><button type="button" (click)="removeFacility(facility.id)">Remove</button>
-            </li>
-        </ul>
+<div id="hotel-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
     </div>
-    <div>
-        <h3>Images</h3>
-        <button type="button" (click)="showAddImage()">Add Image</button>
-        <div *ngIf="isImage">
-            <label for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
-            <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
-            <br><br>
-            Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
-            <br><br>
-            Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
-            <br><br>
-            <button type="button" (click)="addImage()">Add</button>
+
+    <div id="hotel-one-detial" *ngIf="hotel$ | async as hotel">
+        <div style="display: flex; justify-content: space-between;align-items: center;">
+            <h1> Hotel Name: {{ hotel.name }} </h1>
+            <button id="btn-edit" type="button">Edit</button>
         </div>
-        <ul *ngIf="hotel.images.length > 0">
-            <li *ngFor="let image of hotel.images">
-                <img style="height: 200px; width: 200;" src={{image.url}} alt={{image.name}}>
-                <h6>{{ image.name}}</h6>
-                <p>{{ image.url}}</p>
-                <br>
-                <button type="button" (click)="removeImage(image)">Remove</button>
-            </li>
-        </ul>
-    </div>
-    <!-- RoomType and Supplement -->
-    <div style="display: flex;">
-        <div>
-            <h3>RoomTypes</h3>
-            <button type="button" (click)="showAddRoomType()">Add RoomType</button>
-            <div *ngIf="isRoomType">
-                <br><br>
-                RoomType Name: <input type="text" [(ngModel)]="roomTypeName" name="roomTypeName">
-                <br><br>
-                RoomType Description: <input type="text" [(ngModel)]="roomTypeDescription" name="roomTypeDescription">
-                <br><br>
-                Maximum Adult: <input type="number" [(ngModel)]="roomTypeMaxAdult" name="roomTypeMaxAdult">
-                <br><br>
-                RoomType Facilities: <button type="button" (click)="showAddRoomTypeFacility()">Add RoomType Facility</button>
-                <div *ngIf="isRoomTypeFacility">
+        <h3> Hotel Country: {{ hotel.country }} </h3>
+        <h3> Hotel City: {{ hotel.district }} </h3>
+        <h3> Hotel Address: {{ hotel.street }} </h3>
+        <h3> Hotel Contact: {{ hotel.contact }} </h3>
+        <div style="display: flex;">
+            <div style="flex-basis: 50%;">
+                <h3>Facilities</h3>
+                <button id="btn-show" type="button" (click)="showAddFacility()">Add Facility</button>
+                <div id="facility-add" *ngIf="isFacility">
                     <br><br>
-                    RoomType Facility Name: <input type="text" [(ngModel)]="roomTypeFacilityName" name="roomTypeFacilityName">
+                    Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
                     <br><br>
-                    RoomType Facility Description <input type="text" [(ngModel)]="roomTypeFacilityDescription" name="roomTypeFacilityDescription">
+                    Facility Description <input type="text" [(ngModel)]="facilityDescription" name="facilityDescription">
                     <br><br>
-                    <button type="button" (click)="addRoomTypeFacility()">Add</button>
+                    <button id="btn-add" type="button" (click)="addFacility()">Add</button>
                 </div>
-                <ul *ngIf="roomTypeFacilities.length > 0">
-                    <li *ngFor="let roomTypeFacility of roomTypeFacilities;let i = index">
-                        <p>{{roomTypeFacility.name}}</p>
-                        <p>{{roomTypeFacility.description}}</p>
-                        <button type="button" (click)="removeRoomTypeFacility(i)">remove</button>
-                    </li>
+                <ul *ngIf="hotel.facilities.length > 0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let facility of hotel.facilities">
+                            <div id="facility-display">
+                                <div>
+                                    <span matListItemTitle>{{ facility.name }}</span>
+                                    <span matListItemLine>{{ facility.description }}</span>
+                                </div>
+                                <button id="btn-delete" type="button" (click)="removeFacility(facility.id)">remove</button>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <li *ngFor="let facility of hotel.facilities">
+                        <h6>{{ facility.name}}</h6>
+                        <p>{{ facility.description}}</p>
+                        <br><button type="button" (click)="removeFacility(facility.id)">Remove</button>
+                    </li> -->
                 </ul>
-                <br><br>
-                <button type="button" (click)="addRoomType()">Add</button>
             </div>
-            <ul *ngIf="hotel.roomTypes.length > 0">
-                <li *ngFor="let roomType of hotel.roomTypes">
-                    <h6>{{ roomType.name}}</h6>
-                    <p>{{ roomType.description}}</p>
-                    <p>{{ roomType.maxAdult}}</p>
-                    <p *ngIf="roomType.roomTypeFacilities.length>0">{{ roomType.roomTypeFacilities[0].name}}</p>
+            <div id="hotel-image" style="flex-basis: 50%;">
+                <h3>Images</h3>
+                <button id="btn-show" type="button" (click)="showAddImage()">Add Image</button>
+                <div *ngIf="isImage" style="display: flex;">
+                    <label style="flex-basis: 50%;" for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
+                        <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
+                    <br><br>
+                    <div style="flex-basis: 50%;">
+                        Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
+                        <br><br>
+                        Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
+                        <br><br>
+                        <button type="button" (click)="addImage()">Add</button>
+                    </div>
+                </div>
+                <!-- <div *ngIf="isImage">
+                    <label for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
+                    <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
+                    <br><br>
+                    Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
+                    <br><br>
+                    Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
+                    <br><br>
+                    <button type="button" (click)="addImage()">Add</button>
+                </div> -->
+                <ul *ngIf="hotel.images.length > 0">
+                    <mat-grid-list cols="2" rowHeight="150px">
+                        <mat-grid-tile *ngFor="let image of hotel.images"  colspan=1 rowspan=1 >
+                            <img class="image" height="100px" src={{image.url}} alt={{image.name}} >
+                            <!-- <p>{{image.name}}</p>
+                        <p>{{image.url}}</p> -->
+                            <button id="btn-delete-img" type="button" (click)="removeImage(image)">remove</button>
+                        </mat-grid-tile>
+                        
+                    </mat-grid-list>
+                    <!-- <li *ngFor="let image of hotel.images">
+                        <img style="height: 200px; width: 200;" src={{image.url}} alt={{image.name}}>
+                        <h6>{{ image.name}}</h6>
+                        <p>{{ image.url}}</p>
+                        <br>
+                        <button type="button" (click)="removeImage(image)">Remove</button>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <!-- RoomType and Supplement -->
+        <div style="display: flex; justify-content: space-between;">
+            <div style="flex-basis: 50%;">
+                <h3>RoomTypes</h3>
+                <button id="btn-show" type="button" (click)="showAddRoomType()">Add RoomType</button>
+                <div  id="facility-add" *ngIf="isRoomType">
+                    <br><br>
+                    RoomType Name: <input type="text" [(ngModel)]="roomTypeName" name="roomTypeName">
+                    <br><br>
+                    RoomType Description: <input type="text" [(ngModel)]="roomTypeDescription" name="roomTypeDescription">
+                    <br><br>
+                    Maximum Adult: <input type="number" [(ngModel)]="roomTypeMaxAdult" name="roomTypeMaxAdult">
+                    <br><br>
+                    RoomType Facilities: <button id="btn-show" type="button" (click)="showAddRoomTypeFacility()">Add RoomType Facility</button>
+                    <div id="facility-add" *ngIf="isRoomTypeFacility">
+                        <br><br>
+                        RoomType Facility Name: <input type="text" [(ngModel)]="roomTypeFacilityName" name="roomTypeFacilityName">
+                        <br><br>
+                        RoomType Facility Description <input type="text" [(ngModel)]="roomTypeFacilityDescription" name="roomTypeFacilityDescription">
+                        <br><br>
+                        <button id="btn-add" type="button" (click)="addRoomTypeFacility()">Add</button>
+                    </div>
+                    <ul *ngIf="roomTypeFacilities.length > 0">
+                        <mat-list>
+                            <mat-list-item *ngFor="let roomTypeFacility of roomTypeFacilities;let i = index">
+                                <div id="facility-display">
+                                    <div>
+                                        <span matListItemTitle>{{roomTypeFacility.name}}</span>
+                                        <span matListItemLine>{{roomTypeFacility.description}}</span>
+                                    </div>
+                                    <button id="btn-delete" type="button" (click)="removeRoomTypeFacility(i)">remove</button>
+                                </div>
+                            </mat-list-item>
+                        </mat-list>
+                        <!-- <li *ngFor="let roomTypeFacility of roomTypeFacilities;let i = index">
+                            <p>{{roomTypeFacility.name}}</p>
+                            <p>{{roomTypeFacility.description}}</p>
+                            <button type="button" (click)="removeRoomTypeFacility(i)">remove</button>
+                        </li> -->
+                    </ul>
+                    <br><br>
+                    <button id="btn-add" type="button" (click)="addRoomType()">Add</button>
+                </div>
+                <ul *ngIf="hotel.roomTypes.length > 0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let roomType of hotel.roomTypes">
+                            <div id="facility-display">
+                                <div>
+                                    <span matListItemTitle>{{ roomType.name}}</span>
+                                    <span matListItemLine>{{ roomType.description}}</span>
+                                    <span matListItemLine>Maximum adult: {{ roomType.maxAdult}}</span>
+                                    <div style="align-items: left;" *ngIf="roomType.roomTypeFacilities.length>0">
+                                        <p>Facilities</p>
+                                        <ul>
+                                            <li *ngFor="let fac of roomType.roomTypeFacilities">
+                                                <span matListItemLine>{{ fac.name}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <li *ngFor="let roomType of hotel.roomTypes">
+                        <h6>{{ roomType.name}}</h6>
+                        <p>{{ roomType.description}}</p>
+                        <p>{{ roomType.maxAdult}}</p>
+                        <p *ngIf="roomType.roomTypeFacilities.length>0">{{ roomType.roomTypeFacilities[0].name}}</p>
+                    </li> -->
+                </ul>
+            </div>
+            <div  style="flex-basis: 50%;">
+                <h3>Supplements</h3>
+                <button id="btn-show" type="button" (click)="showAddSupplement()">Add Supplement</button>
+                <div id="facility-add" *ngIf="isSupplement">
+                    <br><br>
+                    Supplement Name: <input type="text" [(ngModel)]="supplementName" name="supplementName">
+                    <br><br>
+                    Supplement Description <input type="text" [(ngModel)]="supplementDescription" name="supplementDescription">
+                    <br><br>
+                    <button id="btn-add" type="button" (click)="addSupplement()">Add</button>
+                </div>
+                <ul *ngIf="hotel.supplements.length > 0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let supplement of hotel.supplements">
+                            <div id="facility-display">
+                                <div>
+                                    <span matListItemTitle>{{ supplement.name}}</span>
+                                    <span matListItemLine>{{ supplement.description}}</span>
+                                </div>
+                                <!-- <button id="btn-delete" type="button" (click)="removeFacility(supplement.id)">remove</button> -->
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <li *ngFor="let supplement of hotel.supplements">
+                        <h6>{{ supplement.name}}</h6>
+                        <p>{{ supplement.description}}</p>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Contract -->
+        <div>
+            <h3>Contracts</h3>
+            <button type="button" (click)="showAddContract()">Add Contract</button>
+            <div *ngIf="isContract">
+                <br><br>
+                Start Date: <input type="date" [(ngModel)]="contractStartDate" name="contractStartDate">
+                <br><br>
+                End Date: <input type="date" [(ngModel)]="contractEndDate" name="contractEndDate">
+                <br><br>
+                Payment Policy: <input type="text" [(ngModel)]="contractPaymentPolicy" name="contractPaymentPolicy">
+                <br><br>
+                Cancelation Policy: <input type="text" [(ngModel)]="contractCancelationPolicy" name="contractCancelationPolicy">
+                <br><br>
+                Seasons: <button type="button" (click)="showAddSeason()">Add Seasons</button>
+                    <div *ngIf="isSeason">
+                        <br><br>
+                        name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
+                        <br><br>
+                        Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
+                        <br><br>
+                        End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
+                        <br><br>
+                        markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
+                        <br><br>
+                        <button type="button" (click)="addSeason()">Add</button>
+                    </div>
+                    <ul *ngIf="seasons.length > 0">
+                        <li *ngFor="let season of seasons;let i = index">
+                            <p>{{season.name}}</p>
+                            <p>{{season.startDate}}</p>
+                            <p>{{season.endDate}}</p>
+                            <p>{{season.markup}}</p>
+                            <button type="button" (click)="removeSeason(i)">remove</button>
+                        </li>
+                    </ul>
+                    <br><br>
+                    Discounts: <button type="button" (click)="showAddDiscount()">Add Discounts</button>
+                    <div *ngIf="isDiscount">
+                        <br><br>
+                        Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
+                        <br><br>
+                        Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
+                        <br><br>
+                        Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
+                        <br><br>
+                        <button type="button" (click)="addDiscount()">Add</button>
+                    </div>
+                    <ul *ngIf="discounts.length > 0">
+                        <li *ngFor="let discount of discounts;let i = index">
+                            <p>{{discount.name}}</p>
+                            <p>{{discount.description}}</p>
+                            <p>{{discount.percentage}}</p>
+                            <button type="button" (click)="removeDiscount(i)">remove</button>
+                        </li>
+                    </ul>
+                    <br><br>
+                <button type="button" (click)="addContract()">Add</button>
+            </div>
+            <ul *ngIf="hotel.contracts.length > 0">
+                <li *ngFor="let contract of hotel.contracts">
+                    <h6>{{ contract.id}}</h6>
+                    <p>{{ contract.startDate}}</p>
+                    <p>{{ contract.endDate}}</p>
+                    <a [routerLink]="['adminOneContract/', contract.id]">view</a>
                 </li>
             </ul>
         </div>
-        <div>
-            <h3>Supplements</h3>
-        <button type="button" (click)="showAddSupplement()">Add Supplement</button>
-        <div *ngIf="isSupplement">
-            <br><br>
-            Supplement Name: <input type="text" [(ngModel)]="supplementName" name="supplementName">
-            <br><br>
-            Supplement Description <input type="text" [(ngModel)]="supplementDescription" name="supplementDescription">
-            <br><br>
-            <button type="button" (click)="addSupplement()">Add</button>
-        </div>
-        <ul *ngIf="hotel.supplements.length > 0">
-            <li *ngFor="let supplement of hotel.supplements">
-                <h6>{{ supplement.name}}</h6>
-                <p>{{ supplement.description}}</p>
-            </li>
-        </ul>
-        </div>
-    </div>
-    <!-- Contract -->
-    <div>
-        <h3>Contracts</h3>
-        <button type="button" (click)="showAddContract()">Add Contract</button>
-        <div *ngIf="isContract">
-            <br><br>
-            Start Date: <input type="date" [(ngModel)]="contractStartDate" name="contractStartDate">
-            <br><br>
-            End Date: <input type="date" [(ngModel)]="contractEndDate" name="contractEndDate">
-            <br><br>
-            Payment Policy: <input type="text" [(ngModel)]="contractPaymentPolicy" name="contractPaymentPolicy">
-            <br><br>
-            Cancelation Policy: <input type="text" [(ngModel)]="contractCancelationPolicy" name="contractCancelationPolicy">
-            <br><br>
-            Seasons: <button type="button" (click)="showAddSeason()">Add Seasons</button>
-                <div *ngIf="isSeason">
-                    <br><br>
-                    name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
-                    <br><br>
-                    Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
-                    <br><br>
-                    End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
-                    <br><br>
-                    markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
-                    <br><br>
-                    <button type="button" (click)="addSeason()">Add</button>
-                </div>
-                <ul *ngIf="seasons.length > 0">
-                    <li *ngFor="let season of seasons;let i = index">
-                        <p>{{season.name}}</p>
-                        <p>{{season.startDate}}</p>
-                        <p>{{season.endDate}}</p>
-                        <p>{{season.markup}}</p>
-                        <button type="button" (click)="removeSeason(i)">remove</button>
-                    </li>
-                </ul>
-                <br><br>
-                Discounts: <button type="button" (click)="showAddDiscount()">Add Discounts</button>
-                <div *ngIf="isDiscount">
-                    <br><br>
-                    Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
-                    <br><br>
-                    Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
-                    <br><br>
-                    Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
-                    <br><br>
-                    <button type="button" (click)="addDiscount()">Add</button>
-                </div>
-                <ul *ngIf="discounts.length > 0">
-                    <li *ngFor="let discount of discounts;let i = index">
-                        <p>{{discount.name}}</p>
-                        <p>{{discount.description}}</p>
-                        <p>{{discount.percentage}}</p>
-                        <button type="button" (click)="removeDiscount(i)">remove</button>
-                    </li>
-                </ul>
-                <br><br>
-            <button type="button" (click)="addContract()">Add</button>
-        </div>
-        <ul *ngIf="hotel.contracts.length > 0">
-            <li *ngFor="let contract of hotel.contracts">
-                <h6>{{ contract.id}}</h6>
-                <p>{{ contract.startDate}}</p>
-                <p>{{ contract.endDate}}</p>
-                <a [routerLink]="['adminOneContract/', contract.id]">view</a>
-            </li>
-        </ul>
     </div>
 </div>
+<app-footer></app-footer>
