@@ -1,0 +1,208 @@
+#contract-one-detial{
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+button{
+    cursor: pointer;
+}
+
+#btn-edit{
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    height: fit-content;
+    width: fit-content;
+    cursor: pointer;
+}
+
+#facility-display{
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(128, 128, 128, 0.262);
+   
+
+    #btn-delete{
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        background-color: #c23030;
+        color: white;
+        height: fit-content;
+        width: fit-content;
+    }
+}
+
+#facility-add{
+    font-family: Arial, sans-serif;
+    padding: 64px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin: 20px;
+    input[type="text"],
+    input[type="number"],
+    input[type="date"] {
+        margin-bottom: 10px;
+        padding: 5px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    input[type="date"]{
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="date"]:focus{
+        outline: none;
+        border-color: #007bff; /* Change to your desired focus color */
+    }
+    
+    br {
+        display: none; /* Hide line breaks */
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    #btn-add{
+        padding: 10px 30px;
+        border: none;
+        border-radius: 10px;
+        background-color: #007bff;
+        height: fit-content;
+        width: fit-content;
+        color: white;
+        margin-left: 80%;
+    }
+    
+}
+#btn-show{
+    padding: 10px 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    height: fit-content;
+    width: fit-content;
+}
+
+#btn-view{
+    padding: 10px 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    height: fit-content;
+    width: fit-content;
+    text-decoration: none;
+}
+#hotel-image {
+    font-family: Arial, sans-serif;
+  
+    form {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    #btn-add-hotel{
+        margin-bottom: 10px;
+      padding: 5px;
+      width: calc(100% - 10px); // Adjust width to leave space for padding
+      box-sizing: border-box;
+    }
+  
+    input[type="text"],
+    input[type="number"], button {
+      margin-bottom: 10px;
+      padding: 5px;
+      width: calc(100% - 10px); // Adjust width to leave space for padding
+      box-sizing: border-box;
+    }
+    
+    button[type="button"], button[type="submit"] {
+        cursor: pointer;
+        background-color: #007bff;
+        border: none;
+        color: white;
+    }
+  
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+  
+    li {
+      margin-bottom: 10px;
+    }
+  
+    img {
+      display: block;
+      margin-bottom: 5px;
+    }
+  
+    label {
+      cursor: pointer;
+    }
+  
+    /* Optional: Style the form section headings */
+    h2 {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  
+    /* Optional: Style the form inputs */
+    input[type="text"],
+    input[type="number"] {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #007bff; /* Change to your desired focus color */
+    }
+
+    #btn-delete-img{
+        padding: 10px;
+        margin: 0px;
+        border: none;
+        border-radius: 10px;
+        background-color: #c23030;
+        height: fit-content;
+        width: fit-content;
+    }
+
+    #btn-show{
+        padding: 10px 30px;
+        border: none;
+        border-radius: 10px;
+        background-color: #007bff;
+        height: fit-content;
+        width: fit-content;
+    }
+
+}
+
+table {
+    width: 100%;
+}

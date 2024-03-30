@@ -254,6 +254,8 @@
                             <br><br>
                             Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
                             <br><br>
+                            Days Prior To Arrival <input type="number" [(ngModel)]="daysPriorToArrival" name="daysPriorToArrival">
+                            <br><br>
                             <button id="btn-add" type="button" (click)="addDiscount()">Add</button>
                         </div>
                         <ul *ngIf="discounts.length > 0">
@@ -264,6 +266,7 @@
                                             <span matListItemTitle>{{discount.name}}</span>
                                             <span matListItemLine>{{discount.description}}</span>
                                             <span matListItemLine>{{discount.percentage}}%</span>
+                                            <span matListItemLine>Days Prior To Arrival: {{discount.daysPriorToArrival}}</span>
                                         </div>
                                         <button id="btn-delete" type="button" (click)="removeDiscount(i)">remove</button>
                                     </div>

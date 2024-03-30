@@ -4,19 +4,29 @@ import { Observable, switchMap } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
 import { FormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { NavbarComponent } from "../navbar/navbar.component";
+import { FooterComponent } from "../footer/footer.component";
+
+// material ui
+import {MatListModule} from '@angular/material/list';
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
-  selector: 'app-admin-one-contract',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgFor,
-    NgIf,
-    AsyncPipe,
-    RouterModule
-  ],
-  templateUrl: './admin-one-contract.component.html',
-  styleUrl: './admin-one-contract.component.scss'
+    selector: 'app-admin-one-contract',
+    standalone: true,
+    templateUrl: './admin-one-contract.component.html',
+    styleUrl: './admin-one-contract.component.scss',
+    imports: [
+        FormsModule,
+        NgFor,
+        NgIf,
+        AsyncPipe,
+        RouterModule,
+        NavbarComponent,
+        FooterComponent,
+        MatListModule,
+        MatTableModule
+    ]
 })
 export class AdminOneContractComponent implements OnInit {
   hotelId: string | null = '';

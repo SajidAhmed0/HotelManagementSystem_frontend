@@ -1,93 +1,190 @@
 <p>admin-one-contract works!</p>
-<div *ngIf="contract$ | async as contract">
-    <h3> Contract Start Date: {{ contract.startDate }} </h3>
-    <h3> Contract End Date: {{ contract.endDate }} </h3>
-    <h3> Contract Payment Policy: {{ contract.paymentPolicy }} </h3>
-    <h3> Contract Cancellation Policy: {{ contract.cancellationPolicy }} </h3>
-
-
-    <div style="display: flex;">
-        <div>
-            <h3>Seasons</h3>
-            <button type="button" (click)="showAddSeason()">Add Seasons</button>
-            <div *ngIf="isSeason">
-                <br><br>
-                name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
-                <br><br>
-                Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
-                <br><br>
-                End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
-                <br><br>
-                markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
-                <br><br>
-                <button type="button" (click)="addSeason()">Add</button>
-            </div>
-            <ul *ngIf="contract.seasons.length > 0">
-                <li *ngFor="let season of contract.seasons;let i = index">
-                    <p>{{season.name}}</p>
-                    <p>{{season.startDate}}</p>
-                    <p>{{season.endDate}}</p>
-                    <p>{{season.markup}}</p>
-                    <button type="button" [routerLink]="['adminOneSeason/', season.id]">view</button>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <h3>Discounts</h3>
-            <button type="button" (click)="showAddDiscount()">Add Discounts</button>
-                    <div *ngIf="isDiscount">
-                        <br><br>
-                        Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
-                        <br><br>
-                        Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
-                        <br><br>
-                        Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
-                        <br><br>
-                        Days Prior To Arrival <input type="number" [(ngModel)]="daysPriorToArrival" name="daysPriorToArrival">
-                        <br><br>
-                        <button type="button" (click)="addDiscount()">Add</button>
-                    </div>
-                    <ul *ngIf="contract.discounts.length > 0">
-                        <li *ngFor="let discount of contract.discounts;let i = index">
-                            <p>{{discount.name}}</p>
-                            <p>{{discount.description}}</p>
-                            <p>{{discount.percentage}}</p>
-                            <p>{{discount.daysPriorToArrival}}</p>
-                            <button type="button" (click)="removeDiscount(i)">remove</button>
-                        </li>
-                    </ul>
-        </div>
+<div id="contract-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
     </div>
-    <div>
-        <div *ngIf="contract.seasonRoomTypePricings.length > 0">
-            <table border="2px">
-                <tr>
-                    <th>RoomType</th>
-                    <th>Season</th>
-                    <th>Price</th>
-                    <th>noOfRooms</th>
-                </tr>
-                <tr *ngFor="let pricing of contract.seasonRoomTypePricings">
-                    <td>{{getRoomTypeName(pricing.id.roomTypeId, roomTypes)}}</td>
-                    <td>{{getSeasonName(pricing.id.seasonId, contract.seasons)}}</td>
-                    <td>{{pricing.price}}</td>
-                    <td>{{pricing.noOfRooms}}</td>
-                </tr>
-            </table>
+
+    <div id="contract-one-detial" *ngIf="contract$ | async as contract">
+        <div style="display: flex; justify-content: space-between;align-items: center;">
+            <h1> Contract Id: {{ contract.id }} </h1>
+            <button id="btn-edit" type="button">Edit</button>
         </div>
-        <div *ngIf="contract.seasonSupplementPricings.length > 0">
-            <table border="2px">
-                <tr>
-                    <th>Supplement</th>
-                    <th>Season</th>
-                    <th>Price</th>
-                </tr>
-                <tr *ngFor="let pricing of contract.seasonSupplementPricings">
-                    <td>{{getSupplementName(pricing.id.supplementId, supplements)}}</td>
-                    <td>{{getSeasonName(pricing.id.seasonId, contract.seasons)}}</td>
-                    <td>{{pricing.price}}</td>
-                </tr>
-            </table>
+        <h3> Contract Start Date: {{ contract.startDate }} </h3>
+        <h3> Contract End Date: {{ contract.endDate }} </h3>
+        <h3> Contract Payment Policy: {{ contract.paymentPolicy }} </h3>
+        <h3> Contract Cancellation Policy: {{ contract.cancellationPolicy }} </h3>
+
+
+        <div style="display: flex;">
+            <div style="flex-basis: 50%;">
+                <h3>Seasons</h3>
+                <button id="btn-show" type="button" (click)="showAddSeason()">Add Seasons</button>
+                <div id="facility-add" *ngIf="isSeason">
+                    <br><br>
+                    name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
+                    <br><br>
+                    Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
+                    <br><br>
+                    End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
+                    <br><br>
+                    markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
+                    <br><br>
+                    <button id="btn-add" type="button" (click)="addSeason()">Add</button>
+                </div>
+                <ul *ngIf="contract.seasons.length > 0">
+                    <mat-list>
+                        <mat-list-item *ngFor="let season of contract.seasons;let i = index">
+                            <div id="facility-display">
+                                <div>
+                                    <span matListItemTitle>{{season.name}}</span>
+                                    <span matListItemLine>From: {{season.startDate}}</span>
+                                    <span matListItemLine>To: {{season.endDate}}</span>
+                                    <span matListItemLine>Markup: {{season.markup}}%</span>
+                                </div>
+                                <button id="btn-view" type="button" [routerLink]="['adminOneSeason/', season.id]">view</button>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <!-- <li *ngFor="let season of contract.seasons;let i = index">
+                        <p>{{season.name}}</p>
+                        <p>{{season.startDate}}</p>
+                        <p>{{season.endDate}}</p>
+                        <p>{{season.markup}}</p>
+                        <button type="button" [routerLink]="['adminOneSeason/', season.id]">view</button>
+                    </li> -->
+                </ul>
+            </div>
+            <div style="flex-basis: 50%;">
+                <h3>Discounts</h3>
+                <button id="btn-show" type="button" (click)="showAddDiscount()">Add Discounts</button>
+                        <div id="facility-add" *ngIf="isDiscount">
+                            <br><br>
+                            Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
+                            <br><br>
+                            Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
+                            <br><br>
+                            Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
+                            <br><br>
+                            Days Prior To Arrival <input type="number" [(ngModel)]="daysPriorToArrival" name="daysPriorToArrival">
+                            <br><br>
+                            <button id="btn-add" type="button" (click)="addDiscount()">Add</button>
+                        </div>
+                        <ul *ngIf="contract.discounts.length > 0">
+                            <mat-list>
+                                <mat-list-item *ngFor="let discount of contract.discounts;let i = index">
+                                    <div id="facility-display">
+                                        <div>
+                                            <span matListItemTitle>{{discount.name}}</span>
+                                            <span matListItemLine>{{discount.description}}</span>
+                                            <span matListItemLine>{{discount.percentage}}%</span>
+                                            <span matListItemLine>Days Prior To Arrival: {{discount.daysPriorToArrival}}</span>
+                                        </div>
+                                        <button id="btn-delete" type="button" (click)="removeDiscount(i)">remove</button>
+                                    </div>
+                                </mat-list-item>
+                            </mat-list>
+                            <!-- <li *ngFor="let discount of contract.discounts;let i = index">
+                                <p>{{discount.name}}</p>
+                                <p>{{discount.description}}</p>
+                                <p>{{discount.percentage}}</p>
+                                <p>{{discount.daysPriorToArrival}}</p>
+                                <button type="button" (click)="removeDiscount(i)">remove</button>
+                            </li> -->
+                        </ul>
+            </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;">
+            <div style="flex-basis: 50%;padding: 16px;" *ngIf="contract.seasonRoomTypePricings.length > 0">
+                <h3>RoomType Pricing</h3>
+                <table mat-table [dataSource]="contract.seasonRoomTypePricings" class="mat-elevation-z8">
+
+                    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                  
+                    <!-- RoomType Column -->
+                    <ng-container matColumnDef="RoomType">
+                      <th mat-header-cell *matHeaderCellDef> RoomType </th>
+                      <td mat-cell *matCellDef="let element"> {{getRoomTypeName(element.id.roomTypeId, roomTypes)}}</td>
+                    </ng-container>
+                  
+                    <!-- Season Column -->
+                    <ng-container matColumnDef="Season">
+                      <th mat-header-cell *matHeaderCellDef> Season </th>
+                      <td mat-cell *matCellDef="let element"> {{getSeasonName(element.id.seasonId, contract.seasons)}} </td>
+                    </ng-container>
+                  
+                    <!-- Price Column -->
+                    <ng-container matColumnDef="Price">
+                      <th mat-header-cell *matHeaderCellDef> Price </th>
+                      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                    </ng-container>
+                  
+                    <!-- noOfRooms Column -->
+                    <ng-container matColumnDef="noOfRooms">
+                      <th mat-header-cell *matHeaderCellDef> noOfRooms </th>
+                      <td mat-cell *matCellDef="let element"> {{element.noOfRooms}} </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="['RoomType', 'Season', 'Price', 'noOfRooms']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['RoomType', 'Season', 'Price', 'noOfRooms'];"></tr>
+                  </table>
+                <!-- <table border="2px">
+                    <tr>
+                        <th>RoomType</th>
+                        <th>Season</th>
+                        <th>Price</th>
+                        <th>noOfRooms</th>
+                    </tr>
+                    <tr *ngFor="let pricing of contract.seasonRoomTypePricings">
+                        <td>{{getRoomTypeName(pricing.id.roomTypeId, roomTypes)}}</td>
+                        <td>{{getSeasonName(pricing.id.seasonId, contract.seasons)}}</td>
+                        <td>{{pricing.price}}</td>
+                        <td>{{pricing.noOfRooms}}</td>
+                    </tr>
+                </table> -->
+            </div>
+            <div style="flex-basis: 50%;padding: 16px;" *ngIf="contract.seasonSupplementPricings.length > 0">
+                <h3>Supplement Pricing</h3>
+                <table mat-table [dataSource]="contract.seasonSupplementPricings" class="mat-elevation-z8">
+
+                    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                  
+                    <!-- Supplement Column -->
+                    <ng-container matColumnDef="Supplement">
+                      <th mat-header-cell *matHeaderCellDef> Supplement </th>
+                      <td mat-cell *matCellDef="let element"> {{getSupplementName(element.id.supplementId, supplements)}} </td>
+                    </ng-container>
+                  
+                    <!-- Season Column -->
+                    <ng-container matColumnDef="Season">
+                      <th mat-header-cell *matHeaderCellDef> Season </th>
+                      <td mat-cell *matCellDef="let element"> {{getSeasonName(element.id.seasonId, contract.seasons)}} </td>
+                    </ng-container>
+                  
+                    <!-- Price Column -->
+                    <ng-container matColumnDef="Price">
+                      <th mat-header-cell *matHeaderCellDef> Price </th>
+                      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="['Supplement', 'Season', 'Price']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['Supplement', 'Season', 'Price'];"></tr>
+                  </table>
+                <!-- <table border="2px">
+                    <tr>
+                        <th>Supplement</th>
+                        <th>Season</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr *ngFor="let pricing of contract.seasonSupplementPricings">
+                        <td>{{getSupplementName(pricing.id.supplementId, supplements)}}</td>
+                        <td>{{getSeasonName(pricing.id.seasonId, contract.seasons)}}</td>
+                        <td>{{pricing.price}}</td>
+                    </tr>
+                </table> -->
+            </div>
         </div>
     </div>
 </div>
+<app-footer></app-footer>
