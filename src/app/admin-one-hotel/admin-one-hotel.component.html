@@ -190,12 +190,12 @@
                 </ul>
             </div>
         </div>
-        
+
         <!-- Contract -->
         <div>
             <h3>Contracts</h3>
-            <button type="button" (click)="showAddContract()">Add Contract</button>
-            <div *ngIf="isContract">
+            <button id="btn-show" type="button" (click)="showAddContract()">Add Contract</button>
+            <div id="facility-add" *ngIf="isContract">
                 <br><br>
                 Start Date: <input type="date" [(ngModel)]="contractStartDate" name="contractStartDate">
                 <br><br>
@@ -205,58 +205,103 @@
                 <br><br>
                 Cancelation Policy: <input type="text" [(ngModel)]="contractCancelationPolicy" name="contractCancelationPolicy">
                 <br><br>
-                Seasons: <button type="button" (click)="showAddSeason()">Add Seasons</button>
-                    <div *ngIf="isSeason">
-                        <br><br>
-                        name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
-                        <br><br>
-                        Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
-                        <br><br>
-                        End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
-                        <br><br>
-                        markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
-                        <br><br>
-                        <button type="button" (click)="addSeason()">Add</button>
+                <div style="display: flex;justify-content: space-between;">
+                    <div style="flex-basis: 50%;">
+                        Seasons: <button id="btn-show" type="button" (click)="showAddSeason()">Add Seasons</button>
+                            <div id="facility-add" *ngIf="isSeason">
+                                <br><br>
+                                name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
+                                <br><br>
+                                Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
+                                <br><br>
+                                End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
+                                <br><br>
+                                markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
+                                <br><br>
+                                <button id="btn-add" type="button" (click)="addSeason()">Add</button>
+                            </div>
+                            <ul *ngIf="seasons.length > 0">
+                                <mat-list>
+                                    <mat-list-item *ngFor="let season of seasons;let i = index">
+                                        <div id="facility-display">
+                                            <div>
+                                                <span matListItemTitle>{{season.name}}</span>
+                                                <span matListItemLine>From: {{season.startDate}}</span>
+                                                <span matListItemLine>To: {{season.endDate}}</span>
+                                                <span matListItemLine>Markup: {{season.markup}}%</span>
+                                            </div>
+                                            <button id="btn-delete" type="button" (click)="removeSeason(i)">remove</button>
+                                        </div>
+                                    </mat-list-item>
+                                </mat-list>
+                                <!-- <li *ngFor="let season of seasons;let i = index">
+                                    <p>{{season.name}}</p>
+                                    <p>{{season.startDate}}</p>
+                                    <p>{{season.endDate}}</p>
+                                    <p>{{season.markup}}</p>
+                                    <button type="button" (click)="removeSeason(i)">remove</button>
+                                </li> -->
+                            </ul>
+                            <br><br>
                     </div>
-                    <ul *ngIf="seasons.length > 0">
-                        <li *ngFor="let season of seasons;let i = index">
-                            <p>{{season.name}}</p>
-                            <p>{{season.startDate}}</p>
-                            <p>{{season.endDate}}</p>
-                            <p>{{season.markup}}</p>
-                            <button type="button" (click)="removeSeason(i)">remove</button>
-                        </li>
-                    </ul>
-                    <br><br>
-                    Discounts: <button type="button" (click)="showAddDiscount()">Add Discounts</button>
-                    <div *ngIf="isDiscount">
+                    <div style="flex-basis: 50%;">
+                        Discounts: <button id="btn-show" type="button" (click)="showAddDiscount()">Add Discounts</button>
+                        <div id="facility-add" *ngIf="isDiscount">
+                            <br><br>
+                            Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
+                            <br><br>
+                            Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
+                            <br><br>
+                            Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
+                            <br><br>
+                            <button id="btn-add" type="button" (click)="addDiscount()">Add</button>
+                        </div>
+                        <ul *ngIf="discounts.length > 0">
+                            <mat-list>
+                                <mat-list-item *ngFor="let discount of discounts;let i = index">
+                                    <div id="facility-display">
+                                        <div>
+                                            <span matListItemTitle>{{discount.name}}</span>
+                                            <span matListItemLine>{{discount.description}}</span>
+                                            <span matListItemLine>{{discount.percentage}}%</span>
+                                        </div>
+                                        <button id="btn-delete" type="button" (click)="removeDiscount(i)">remove</button>
+                                    </div>
+                                </mat-list-item>
+                            </mat-list>
+                            <!-- <li *ngFor="let discount of discounts;let i = index">
+                                <p>{{discount.name}}</p>
+                                <p>{{discount.description}}</p>
+                                <p>{{discount.percentage}}</p>
+                                <button type="button" (click)="removeDiscount(i)">remove</button>
+                            </li> -->
+                        </ul>
                         <br><br>
-                        Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
-                        <br><br>
-                        Discount Description <input type="text" [(ngModel)]="discountDescription" name="discountDescription">
-                        <br><br>
-                        Discount percentage <input type="number" [(ngModel)]="discountPercentage" name="discountPercentage">
-                        <br><br>
-                        <button type="button" (click)="addDiscount()">Add</button>
                     </div>
-                    <ul *ngIf="discounts.length > 0">
-                        <li *ngFor="let discount of discounts;let i = index">
-                            <p>{{discount.name}}</p>
-                            <p>{{discount.description}}</p>
-                            <p>{{discount.percentage}}</p>
-                            <button type="button" (click)="removeDiscount(i)">remove</button>
-                        </li>
-                    </ul>
-                    <br><br>
-                <button type="button" (click)="addContract()">Add</button>
+                </div>
+                <button id="btn-add" type="button" (click)="addContract()">Add Contract</button>
             </div>
             <ul *ngIf="hotel.contracts.length > 0">
-                <li *ngFor="let contract of hotel.contracts">
+                <mat-list>
+                    <mat-list-item *ngFor="let contract of hotel.contracts">
+                        <div id="facility-display">
+                            <div>
+                                <span matListItemTitle>Id: {{ contract.id}}</span>
+                                <span matListItemLine>From: {{ contract.startDate}}</span>
+                                <span matListItemLine>To: {{ contract.endDate}}</span>
+                                <span matListItemLine>Payment Policy: {{ contract.paymentPolicy}}</span>
+                                <span matListItemLine>Cancellation Policy: {{ contract.cancellationPolicy}}</span>
+                            </div>
+                            <a id="btn-view" [routerLink]="['adminOneContract/', contract.id]">view</a>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+                <!-- <li *ngFor="let contract of hotel.contracts">
                     <h6>{{ contract.id}}</h6>
                     <p>{{ contract.startDate}}</p>
                     <p>{{ contract.endDate}}</p>
                     <a [routerLink]="['adminOneContract/', contract.id]">view</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
