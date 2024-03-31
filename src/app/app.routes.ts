@@ -10,9 +10,11 @@ import { UserBookingsComponent } from './user-bookings/user-bookings.component';
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
+import { EditHotelComponent } from './edit-hotel/edit-hotel.component';
 
 export const routes: Routes = [
     {path: 'addhotel', component: AddHotelComponent},
+    {path: 'edithotel/:id', component: EditHotelComponent},
     {path: 'adminOneHotel/:id', component: AdminOneHotelComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId', component: AdminOneContractComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent},

@@ -1,0 +1,47 @@
+<p>edit-hotel works!</p>
+<div id="hotel-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
+    </div>
+
+    <form *ngIf="hotel$" id="hotel-add-form" action="">
+        <h1 style="text-align: center;">EDIT HOTEL</h1>
+        <div>
+            <div id="hotel-detail">
+                Hotel Name: <input type="text" [(ngModel)]="name" name="name">
+                <br><br>
+                Country: <input type="text" readonly [(ngModel)]="country" name="country">
+                <br><br>
+                City: 
+                <!-- <mat-form-field class="search-form-field"> -->
+                    <!-- <mat-label>Location</mat-label> -->
+                    <input type="text"
+                            placeholder="Ex. Colombo"
+                           matInput
+                           [formControl]="myControl"
+                           [(ngModel)]="district"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                      @for (option of filteredLocations | async; track option) {
+                        <mat-option [value]="option">{{option}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  <!-- </mat-form-field> -->
+        
+                <!-- City: <input type="text" [(ngModel)]="district" name="district"> -->
+                <br><br>
+                Street: <input type="text" [(ngModel)]="street" name="street">
+                <br><br>
+                Contact: <input type="text" [(ngModel)]="contact" name="contact">
+                <br><br>
+                Descriptoin: <input type="text" [(ngModel)]="description" name="description">
+                <br><br>
+                <div style="display: flex; justify-content: space-between;">
+                    <button id="btn-delete" (click)="cancel()" type="button">Cancel</button>
+                    <button id="btn-add" (click)="editHotel()" type="button">Edit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

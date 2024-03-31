@@ -12,6 +12,10 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/hotels', hotel);
   }
 
+  updateHotel(hotelId: any, hotel: any){
+    return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}`, hotel);
+  }
+
   getHotel(id: any){
     return this.http.get<any>(`http://localhost:8080/hotels/${id}`);
   }
