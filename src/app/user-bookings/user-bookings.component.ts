@@ -4,10 +4,10 @@ import { Observable, switchMap } from 'rxjs';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HotelServiceService } from '../hotel-service.service';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { FooterComponent } from "../footer/footer.component";
 
 // material ui
 import {MatTableModule} from '@angular/material/table';
-import { FooterComponent } from "../footer/footer.component";
 
 @Component({
     selector: 'app-user-bookings',

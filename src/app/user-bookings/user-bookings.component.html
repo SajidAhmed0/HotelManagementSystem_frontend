@@ -5,7 +5,7 @@
     </div>
 
     <div id="booking-container" *ngIf="bookings$ | async as bookings">
-        <h1>Your Bookings</h1>
+        <h1 style="text-align: center;">Your Bookings</h1>
         <table mat-table [dataSource]="bookings" class="mat-elevation-z8">
 
             <!--- Note that these columns can be defined in any order.

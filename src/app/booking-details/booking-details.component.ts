@@ -2,13 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { NavbarComponent } from "../navbar/navbar.component";
+import { FooterComponent } from "../footer/footer.component";
+
+// material ui
+import {MatTableModule} from '@angular/material/table';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
-  selector: 'app-booking-details',
-  standalone: true,
-  imports: [],
-  templateUrl: './booking-details.component.html',
-  styleUrl: './booking-details.component.scss'
+    selector: 'app-booking-details',
+    standalone: true,
+    templateUrl: './booking-details.component.html',
+    styleUrl: './booking-details.component.scss',
+    imports: [
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        NavbarComponent,
+        FooterComponent,
+        MatTableModule,
+        MatListModule
+    ]
 })
 export class BookingDetailsComponent implements OnInit {
   booking$!: Observable<any>;
