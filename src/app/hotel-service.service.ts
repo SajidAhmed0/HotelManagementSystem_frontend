@@ -187,4 +187,9 @@ export class HotelServiceService {
   addBookingToRoomType(roomtypeId: any, bookingId: any){
     return this.http.put<any>(`http://localhost:8080/roomtypes/${roomtypeId}/bookings/${bookingId}`, null);
   }
+
+  //bookings
+  getAllBookingsOfUser(userId: any){
+    return this.http.get<any>(`http://localhost:8080/users/${userId}/bookings`);
+  }
 }
