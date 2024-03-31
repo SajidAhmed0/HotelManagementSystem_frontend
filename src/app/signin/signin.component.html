@@ -1,1 +1,24 @@
 <p>signin works!</p>
+<div>
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
+    </div>
+    <div id="signin-details">
+        <h2 style="text-align: center;">Signin</h2>
+        <form class="example-form" (ngSubmit)="signin()">
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input type="email" [(ngModel)]="email" name="email" matInput placeholder="Ex. pat@example.com">
+             </mat-form-field>
+              <mat-form-field>
+                <mat-label>Enter your password</mat-label>
+                <input matInput [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field>
+              <button id="btn-add">Signin</button>
+          </form>
+    </div>
+</div>
+<app-footer></app-footer>
