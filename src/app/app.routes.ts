@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { HotelDetailsComponent } from './hotel-details/hotel-details.component';
 import { BookingComponent } from './booking/booking.component';
 import { UserBookingsComponent } from './user-bookings/user-bookings.component';
+import { BookingDetailsComponent } from './booking-details/booking-details.component';
 
 export const routes: Routes = [
     {path: 'addhotel', component: AddHotelComponent},
@@ -17,6 +18,6 @@ export const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'home/hotels/:id', component: HotelDetailsComponent},
     {path: 'booking', component: BookingComponent},
-    {path: 'user/:userId/bookings', component: UserBookingsComponent}
-    
+    {path: 'user/:userId/bookings', component: UserBookingsComponent},
+    {path: 'user/:userId/bookings/:bookingId', component: BookingDetailsComponent}
 ];

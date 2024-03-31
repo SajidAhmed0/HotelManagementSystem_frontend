@@ -192,4 +192,8 @@ export class HotelServiceService {
   getAllBookingsOfUser(userId: any){
     return this.http.get<any>(`http://localhost:8080/users/${userId}/bookings`);
   }
+
+  getBooking(bookingId: any){
+    return this.http.get<any>(`http://localhost:8080/bookings/${bookingId}`);
+  }
 }
