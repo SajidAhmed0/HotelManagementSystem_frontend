@@ -12,6 +12,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { EditHotelComponent } from './edit-hotel/edit-hotel.component';
 import { EditContractComponent } from './edit-contract/edit-contract.component';
+import { EditSeasonComponent } from './edit-season/edit-season.component';
 
 export const routes: Routes = [
     {path: 'addhotel', component: AddHotelComponent},
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId', component: AdminOneContractComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/editcontract', component: EditContractComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent},
+    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId/editseason', component: EditSeasonComponent},
 
     {path: 'home', component: HomeComponent},
     {path: 'home/hotels/:id', component: HotelDetailsComponent},

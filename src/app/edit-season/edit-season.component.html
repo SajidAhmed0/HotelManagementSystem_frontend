@@ -1,0 +1,27 @@
+<p>edit-season works!</p>
+<div id="season-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
+    </div>
+
+    <form *ngIf="season$" id="season-add-form" action="">
+        <h1 style="text-align: center;">EDIT SEASON</h1>
+        <div>
+            <div id="season-detail">
+                name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
+                <br><br>
+                Start Date: <input type="date" [(ngModel)]="seasonStartDate" name="seasonStartDate">
+                <br><br>
+                End Date: <input type="date" [(ngModel)]="seasonEndDate" name="seasonEndDate">
+                <br><br>
+                markup: <input type="number" [(ngModel)]="seasonMarkup" name="seasonMarkup">
+                <br><br>
+                <div style="display: flex; justify-content: space-between;">
+                    <button id="btn-delete" (click)="cancel()" type="button">Cancel</button>
+                    <button id="btn-add" (click)="editContract()" type="button">Edit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

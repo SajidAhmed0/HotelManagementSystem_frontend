@@ -108,6 +108,10 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/seasons', season);
   }
 
+  updateSeason(seasonId: any, season: any){
+    return this.http.put<any>(`http://localhost:8080/seasons/${seasonId}`, season);
+  }
+
   getSeason(id: any){
     return this.http.get<any>(`http://localhost:8080/seasons/${id}`);
   }

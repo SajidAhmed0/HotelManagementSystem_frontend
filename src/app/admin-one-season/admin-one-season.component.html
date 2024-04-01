@@ -6,7 +6,7 @@
     <div id="season-one-detial" *ngIf="season$ | async as season">
         <div style="display: flex; justify-content: space-between;align-items: center;">
             <h1> Season Name: {{ season.name }} </h1>
-            <button id="btn-edit" type="button">Edit</button>
+            <button id="btn-edit" [routerLink]="['editseason']" type="button">Edit</button>
         </div>
         <h3> Season Start Date: {{ season.startDate }} </h3>
         <h3> Season End Date: {{ season.endDate }} </h3>

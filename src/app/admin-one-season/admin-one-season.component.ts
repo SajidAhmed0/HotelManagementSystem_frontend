@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable, map, switchMap } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +20,7 @@ import {MatListModule} from '@angular/material/list';
         NgIf,
         NgFor,
         AsyncPipe,
+        RouterModule,
         NavbarComponent,
         FooterComponent,
         MatListModule
