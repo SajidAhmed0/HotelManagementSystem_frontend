@@ -1,0 +1,23 @@
+<p>edit-supplement works!</p>
+<div id="supplement-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
+    </div>
+
+    <form *ngIf="supplement$" id="supplement-add-form" action="">
+        <h1 style="text-align: center;">EDIT SUPPLEMENT</h1>
+        <div>
+            <div id="supplement-detail">
+                Name: <input type="text" [(ngModel)]="supplementName" name="supplementName">
+                <br><br>
+                Description <input type="text" [(ngModel)]="supplementDescription" name="supplementDescription">
+                <br><br>
+                <div style="display: flex; justify-content: space-between;">
+                    <button id="btn-delete" (click)="cancel()" type="button">Cancel</button>
+                    <button id="btn-add" (click)="editSupplement()" type="button">Edit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

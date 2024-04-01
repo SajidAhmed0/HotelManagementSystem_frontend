@@ -92,6 +92,14 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/supplements', supplement)
   }
 
+  updateSupplement(supplementId: any, supplement: any){
+    return this.http.put<any>(`http://localhost:8080/supplements/${supplementId}`, supplement);
+  }
+
+  getSupplement(supplementId : any){
+    return this.http.get<any>(`http://localhost:8080/supplements/${supplementId}`);
+  }
+
   addSupplementToHotel(hotelId: any, supplementId: any){
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/supplements/${supplementId}`, null);
   }

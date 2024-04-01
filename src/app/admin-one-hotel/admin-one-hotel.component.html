@@ -186,7 +186,7 @@
                                     <span matListItemTitle>{{ supplement.name}}</span>
                                     <span matListItemLine>{{ supplement.description}}</span>
                                 </div>
-                                <!-- <button id="btn-delete" type="button" (click)="removeFacility(supplement.id)">remove</button> -->
+                                <button id="btn-view" type="button" [routerLink]="['editsupplement', supplement.id]">Edit</button>
                             </div>
                         </mat-list-item>
                     </mat-list>

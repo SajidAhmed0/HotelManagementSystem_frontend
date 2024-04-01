@@ -14,12 +14,14 @@ import { EditHotelComponent } from './edit-hotel/edit-hotel.component';
 import { EditContractComponent } from './edit-contract/edit-contract.component';
 import { EditSeasonComponent } from './edit-season/edit-season.component';
 import { EditRoomtypeComponent } from './edit-roomtype/edit-roomtype.component';
+import { EditSupplementComponent } from './edit-supplement/edit-supplement.component';
 
 export const routes: Routes = [
     {path: 'addhotel', component: AddHotelComponent},
     {path: 'edithotel/:id', component: EditHotelComponent},
     {path: 'adminOneHotel/:id', component: AdminOneHotelComponent},
     {path: 'adminOneHotel/:hotelId/editroomtype/:roomtypeId', component: EditRoomtypeComponent},
+    {path: 'adminOneHotel/:hotelId/editsupplement/:supplementId', component: EditSupplementComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId', component: AdminOneContractComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/editcontract', component: EditContractComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent},
