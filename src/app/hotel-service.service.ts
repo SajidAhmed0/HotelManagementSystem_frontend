@@ -92,6 +92,10 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/contracts', contract);
   }
 
+  updateContract(contractId: any, contract: any){
+    return this.http.put<any>(`http://localhost:8080/contracts/${contractId}`, contract);
+  }
+
   getContract(id: any){
     return this.http.get<any>(`http://localhost:8080/contracts/${id}`);
   }

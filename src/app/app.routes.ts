@@ -11,12 +11,14 @@ import { BookingDetailsComponent } from './booking-details/booking-details.compo
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { EditHotelComponent } from './edit-hotel/edit-hotel.component';
+import { EditContractComponent } from './edit-contract/edit-contract.component';
 
 export const routes: Routes = [
     {path: 'addhotel', component: AddHotelComponent},
     {path: 'edithotel/:id', component: EditHotelComponent},
     {path: 'adminOneHotel/:id', component: AdminOneHotelComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId', component: AdminOneContractComponent},
+    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/editcontract', component: EditContractComponent},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent},
 
     {path: 'home', component: HomeComponent},

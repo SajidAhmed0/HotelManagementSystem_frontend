@@ -6,7 +6,7 @@
     <div id="contract-one-detial" *ngIf="contract$ | async as contract">
         <div style="display: flex; justify-content: space-between;align-items: center;">
             <h1> Contract Id: {{ contract.id }} </h1>
-            <button id="btn-edit" type="button">Edit</button>
+            <button [routerLink]="['editcontract']" id="btn-edit" type="button">Edit</button>
         </div>
         <h3> Contract Start Date: {{ contract.startDate }} </h3>
         <h3> Contract End Date: {{ contract.endDate }} </h3>

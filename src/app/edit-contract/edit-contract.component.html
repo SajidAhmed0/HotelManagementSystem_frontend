@@ -1,0 +1,27 @@
+<p>edit-contract works!</p>
+<div id="contract-add-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
+    </div>
+
+    <form *ngIf="contract$" id="contract-add-form" action="">
+        <h1 style="text-align: center;">EDIT CONTRACT</h1>
+        <div>
+            <div id="contract-detail">
+                Start Date: <input type="date" [(ngModel)]="contractStartDate" name="contractStartDate">
+                <br><br>
+                End Date: <input type="date" [(ngModel)]="contractEndDate" name="contractEndDate">
+                <br><br>
+                Payment Policy: <input type="text" [(ngModel)]="contractPaymentPolicy" name="contractPaymentPolicy">
+                <br><br>
+                Cancelation Policy: <input type="text" [(ngModel)]="contractCancelationPolicy" name="contractCancelationPolicy">
+                <br><br>
+                <div style="display: flex; justify-content: space-between;">
+                    <button id="btn-delete" (click)="cancel()" type="button">Cancel</button>
+                    <button id="btn-add" (click)="editContract()" type="button">Edit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>
