@@ -135,11 +135,18 @@
                 <ul *ngIf="hotel.roomTypes.length > 0">
                     <mat-list>
                         <mat-list-item *ngFor="let roomType of hotel.roomTypes">
-                            <div id="facility-display">
-                                <div>
-                                    <span matListItemTitle>{{ roomType.name}}</span>
-                                    <span matListItemLine>{{ roomType.description}}</span>
-                                    <span matListItemLine>Maximum adult: {{ roomType.maxAdult}}</span>
+                            <div id="facility-display" >
+                                <div style="width: 95%;">
+                                    <div id="facility-display" style="width: 100%;">
+                                        <div >
+                                            <span matListItemTitle>{{ roomType.name}}</span>
+                                            <span matListItemLine>{{ roomType.description}}</span>
+                                            <span matListItemLine>Maximum adult: {{ roomType.maxAdult}}</span>
+                                        </div>
+                                        <div >
+                                            <button id="btn-view" [routerLink]="['editroomtype/', roomType.id]" type="button">Edit</button>
+                                        </div>
+                                    </div>
                                     <div style="align-items: left;" *ngIf="roomType.roomTypeFacilities.length>0">
                                         <p>Facilities</p>
                                         <ul>

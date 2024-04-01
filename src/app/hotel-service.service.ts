@@ -68,6 +68,14 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/roomtypes', roomType);
   }
 
+  updateRoomType(roomtypeId: any, roomtype: any){
+    return this.http.put<any>(`http://localhost:8080/roomtypes/${roomtypeId}`, roomtype);
+  }
+
+  getRoomType(roomtypeId : any){
+    return this.http.get<any>(`http://localhost:8080/roomtypes/${roomtypeId}`);
+  }
+
   addRoomTypeToHotel(hotelId: any, roomtypeId: any){
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}/roomtypes/${roomtypeId}`, null);
   }

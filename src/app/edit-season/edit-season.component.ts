@@ -60,7 +60,7 @@ export class EditSeasonComponent implements OnInit {
     this.router.navigate([`adminOneHotel/${this.hotelId}/adminOneContract/${this.contractId}/adminOneSeason/${this.seasonId}`]);
   }
 
-  async editContract(){
+  async editSeason(){
     const season = {
       name: this.seasonName,
       startDate: this.seasonStartDate,
