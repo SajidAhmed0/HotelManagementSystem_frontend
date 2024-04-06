@@ -30,7 +30,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 export class AdminHotelsComponent implements OnInit {
   hotels$!: Observable<any>;
   ELEMENT_DATA: any = [];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+  dataSource: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -39,7 +39,10 @@ export class AdminHotelsComponent implements OnInit {
 
   ngOnInit(): void {
     this.hotels$ = this.hotelService.getAllHotel();
-    this.hotels$.subscribe(hotels => this.ELEMENT_DATA);
+    this.hotels$.subscribe(hotels => {
+      
+      this.dataSource = new MatTableDataSource(hotels);
+    });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
