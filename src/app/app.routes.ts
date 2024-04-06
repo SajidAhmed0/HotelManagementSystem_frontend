@@ -15,8 +15,10 @@ import { EditContractComponent } from './edit-contract/edit-contract.component';
 import { EditSeasonComponent } from './edit-season/edit-season.component';
 import { EditRoomtypeComponent } from './edit-roomtype/edit-roomtype.component';
 import { EditSupplementComponent } from './edit-supplement/edit-supplement.component';
+import { AdminHotelsComponent } from './admin-hotels/admin-hotels.component';
 
 export const routes: Routes = [
+    {path: 'adminhotels', component: AdminHotelsComponent},
     {path: 'addhotel', component: AddHotelComponent},
     {path: 'edithotel/:id', component: EditHotelComponent},
     {path: 'adminOneHotel/:id', component: AdminOneHotelComponent},

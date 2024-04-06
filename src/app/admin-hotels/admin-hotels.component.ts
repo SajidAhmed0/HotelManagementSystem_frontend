@@ -3,6 +3,8 @@ import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { HotelServiceService } from '../hotel-service.service';
 
 @Component({
     selector: 'app-admin-hotels',
@@ -19,7 +21,10 @@ import { Observable } from 'rxjs';
 export class AdminHotelsComponent implements OnInit {
   hotels$!: Observable<any>;
 
-
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private hotelService: HotelServiceService
+  ){}
 
   ngOnInit(): void {
     throw new Error('Method not implemented.');
