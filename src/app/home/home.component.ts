@@ -136,13 +136,18 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  calculatePrice(basePrice: any, noOfRooms: any, noOfAdults: any, discount: any, markup: any, noOfNights: any){
-    let price;
-    if(discount > 0){
-      price = basePrice * markup * noOfNights * noOfAdults;
-    }else{
-      price = basePrice * markup * noOfNights * noOfAdults;
-    }
+  calculatePrice(basePrice: any, noOfRooms: any, noOfAdults: any, markup: any, noOfNights: any){
+    let price = (basePrice * noOfRooms);
+    
+    price =  price *  ((markup + 100) / 100) * noOfNights * noOfAdults;
+    return price.toFixed(2);
+  }
+  calculatePriceWithDiscount(basePrice: any, noOfRooms: any, noOfAdults: any, discount: any, markup: any, noOfNights: any){
+    let price = (basePrice * noOfRooms) * ((100 - discount) / 100);
+    
+    price =  price *  ((markup + 100) / 100) * noOfNights * noOfAdults;
+
+    return price.toFixed(2);
   }
   calculateNoOfNights(startDate: Date, endDate: Date): number {
     // Convert both dates to milliseconds
