@@ -3,13 +3,28 @@
         <app-navbar></app-navbar>
     </div>
 
-    <form id="hotel-add-form" action="">
+    <form [formGroup]="formHotel" (ngSubmit)="addHotel()" id="hotel-add-form" action="">
         <h1 style="text-align: center;">ADD HOTEL</h1>
         <div style="display: flex;">
             <div style="flex-basis: 50%;" id="hotel-detail">
-                Hotel Name:* <input type="text" [(ngModel)]="name" name="name" required>
-                <br><br>
-                Country:* <input type="text" readonly [(ngModel)]="country" name="country" required>
+                <!-- Hotel Name:*
+                <mat-form-field appearance="fill">
+                    <input matInput type="text" formControlName="name" required>
+                    <mat-error *ngIf="formHotel.get('name')!.invalid && (formHotel.get('name')!.dirty || formHotel.get('name')!.touched)">
+                      Hotel Name is required
+                    </mat-error>
+                  </mat-form-field> -->
+
+                  Hotel Name:* <input type="text" [(ngModel)]="name" name="name" formControlName="name" required>
+                  <mat-error style="color: red; font-size: small; margin: 0px 10px;" *ngIf="formHotel.controls['name'].invalid && (formHotel.controls['name']!.dirty || formHotel.controls['name']!.touched)">
+                    Hotel Name is required
+                  </mat-error>
+                  <!-- <p>Form status: {{ formHotel.status }}</p>
+                    <p>Form value: {{ formHotel.value | json }}</p> -->
+                
+                <!-- Hotel Name:* <input type="text" [(ngModel)]="name" name="name" formControlName="name" [ngClass]="{'is-invalid':submitted}" required> -->
+                <br><br> 
+                Country:* <input type="text" readonly [(ngModel)]="country" name="country" value="Sri Lanka">
                 <br><br>
                 City:* 
                 <!-- <mat-form-field class="search-form-field"> -->
@@ -17,9 +32,13 @@
                     <input type="text"
                             placeholder="Ex. Colombo"
                            matInput
+                           formControlName="district"
                            [formControl]="myControl"
                            [(ngModel)]="district"
                            [matAutocomplete]="auto" required>
+                           <mat-error style="color: red; font-size: small; margin: 0px 10px;" *ngIf="formHotel.get('district')!.invalid && (formHotel.get('district')!.dirty || formHotel.get('district')!.touched)">
+                            City is required
+                          </mat-error>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                       @for (option of filteredLocations | async; track option) {
                         <mat-option [value]="option">{{option}}</mat-option>
@@ -98,7 +117,8 @@
                 <br><br>
             </div>
         </div>
-        <button id="btn-add-hotel " type="submit" (click)="addHotel()">Add Hotel</button>
+        <button id="btn-add-hotel " type="submit">Add Hotel</button>
+        <!-- <button id="btn-add-hotel " type="submit" (click)="addHotel()">Add Hotel</button> -->
     </form>
 </div>
 <app-footer></app-footer>

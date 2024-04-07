@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { Component, Input, NgModule, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AsyncPipe, JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { HotelServiceService } from '../hotel-service.service';
 import { Router } from '@angular/router';
 import {AngularFireStorage, AngularFireStorageModule} from '@angular/fire/compat/storage'
@@ -33,7 +33,9 @@ import { FooterComponent } from "../footer/footer.component";
         ReactiveFormsModule,
         MatListModule,
         MatGridListModule,
-        FooterComponent
+        FooterComponent,
+        NgClass,
+        JsonPipe
     ]
 })
 export class AddHotelComponent implements OnInit {
@@ -92,18 +94,29 @@ export class AddHotelComponent implements OnInit {
   ];
   filteredLocations!: Observable<string[]>;
   myControl = new FormControl('');
+
+  // validation 
+  formHotel!: FormGroup;
+  submitted = false;
   
 
   constructor(
     private hotelService: HotelServiceService, 
     private router: Router,
-    private fireStorage: AngularFireStorage
+    private fireStorage: AngularFireStorage,
+    private formBuilder: FormBuilder
   ){}
   ngOnInit(): void {
     this.filteredLocations = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
+
+    // validation
+    this.formHotel = this.formBuilder.group({
+      name: ['', Validators.required],
+      district: ['', Validators.required]
+    });
   }
 
   private _filter(value: string): string[] {
@@ -113,6 +126,11 @@ export class AddHotelComponent implements OnInit {
   }
 
   async addHotel() {
+    this.submitted = true;
+    this.formHotel.markAllAsTouched();
+    if(this.formHotel.invalid){
+      return;
+    }
     const hotel = {
       name: this.name,
       country: this.country,

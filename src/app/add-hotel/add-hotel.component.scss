@@ -44,6 +44,9 @@
       display: block;
       margin-bottom: 5px;
     }
+    .is-invalid{
+      border-color: #c23030af;
+    }
   
     label {
       cursor: pointer;
@@ -138,6 +141,10 @@
             width: fit-content;
             margin-left: 90%;
         }
+        .is-invalid{
+          border-color: #c23030af;
+        }
     }
 
 }
+
