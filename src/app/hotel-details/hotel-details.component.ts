@@ -50,6 +50,10 @@ export class HotelDetailsComponent implements OnInit {
   id: string | null = '';
   hotel$!: Observable<any>;
 
+  detailedHotel: any;
+
+  total: any = 0;
+
   sendHotel: any = {};
 
   selectedRoomType: {
@@ -122,7 +126,7 @@ export class HotelDetailsComponent implements OnInit {
 
   setSelectedRoomType(roomtype: any){
     console.log(roomtype);
-    
+    this.total = this.calculatePriceWithDiscount(roomtype.pricing.price, this.search.noOfRooms, this.search.noOfAdult, this.selectedDiscount,this.markup, this.calculateNoOfNights(this.search.checkInDate, this.search.checkOutDate));
     if(roomtype.roomType.id != this.selectedRoomType.roomType.id){
       this.selectedSupplements = [];
     }
@@ -160,4 +164,34 @@ export class HotelDetailsComponent implements OnInit {
     
     this.router.navigate(["booking"]);
   }
+
+  calculatePrice(basePrice: any, noOfRooms: any, noOfAdults: any, markup: any, noOfNights: any){
+    let price = (basePrice * noOfRooms);
+    
+    price =  price *  ((markup + 100) / 100) * noOfNights * noOfAdults;
+    return price.toFixed(2);
+  }
+  calculatePriceWithDiscount(basePrice: any, noOfRooms: any, noOfAdults: any, discount: any, markup: any, noOfNights: any){
+    let price = (basePrice * noOfRooms);
+    if(discount != null){
+      price = price * ((100 - discount.percentage) / 100);
+    }
+    
+    price =  price *  ((markup + 100) / 100) * noOfNights * noOfAdults;
+
+    return price.toFixed(2);
+  }
+  calculateNoOfNights(startDate: Date, endDate: Date): number {
+    // Convert both dates to milliseconds
+    const startMilliseconds = startDate.getTime();
+    const endMilliseconds = endDate.getTime();
+
+    // Calculate the difference in milliseconds
+    const differenceMilliseconds = endMilliseconds - startMilliseconds;
+
+    // Convert milliseconds to days (1 day = 24 * 60 * 60 * 1000 milliseconds)
+    const differenceDays = Math.ceil(differenceMilliseconds / (24 * 60 * 60 * 1000));
+
+    return differenceDays;
+}
 }

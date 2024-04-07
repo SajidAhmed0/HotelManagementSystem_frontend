@@ -119,7 +119,14 @@
                                 <span matListItemTitle>{{ roomType.roomType.name }}</span>
                                 <span matListItemLine>{{ roomType.roomType.description }}</span>
                                 <span matListItemLine>MaxAdult: {{ roomType.roomType.maxAdult }}</span>
-                                <span matListItemLine>Price: {{ roomType.pricing.price }}</span>
+                                <div *ngIf="selectedDiscount != null">
+                                    <span style="background-color: rgba(76, 239, 76, 0.588);padding: 2px; border-radius: 1px;">{{selectedDiscount.percentage}}%</span>
+                                    <span matListItemLine>Price: <span style="color: red; text-decoration: line-through;">{{ calculatePrice(roomType.pricing.price, search.noOfRooms, search.noOfAdult, markup, calculateNoOfNights(search.checkInDate, search.checkOutDate)) }}</span> {{ calculatePriceWithDiscount(roomType.pricing.price, search.noOfRooms, search.noOfAdult, selectedDiscount, markup, calculateNoOfNights(search.checkInDate, search.checkOutDate)) }}</span>
+                                </div>
+                                <div *ngIf="selectedDiscount == null">
+                                    <span matListItemLine>Price: {{ calculatePriceWithDiscount(roomType.pricing.price, search.noOfRooms, search.noOfAdult, selectedDiscount, markup, calculateNoOfNights(search.checkInDate, search.checkOutDate)) }}</span>
+                                </div>
+                                <!-- <span matListItemLine>Price: {{ roomType.pricing.price }}</span> -->
                                 <ul>
                                     <li *ngFor="let fac of roomType.roomType.roomTypeFacilities"> {{fac.name}} </li>
                                 </ul>
@@ -148,6 +155,7 @@
                              
                         </div>
                         <div style="flex-basis: 50%;">
+                            <h6>Total: {{total}}</h6>
                             <button id="btn-reserve" style="margin-left: 40%;margin-top: 20%;" type="button" (click)="whenClickReserve()">Reserve</button>
                         </div>
                     </div>
