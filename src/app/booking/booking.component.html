@@ -89,6 +89,7 @@
                         <!-- Total: <h4>{{selectedValue.total}}</h4> -->
                     </div>
                     <div>
+                        <br><br>
                         Passengers: needs {{selectedValue.search.noOfAdult - passengers.length}}
                         <div id="passenger-add" *ngIf="passengers.length < selectedValue.search.noOfAdult">
                             Passenger Name: <input type="text" [(ngModel)]="passengerName" name=" passengerName">
