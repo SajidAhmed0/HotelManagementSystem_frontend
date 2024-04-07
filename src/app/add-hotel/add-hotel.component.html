@@ -7,11 +7,11 @@
         <h1 style="text-align: center;">ADD HOTEL</h1>
         <div style="display: flex;">
             <div style="flex-basis: 50%;" id="hotel-detail">
-                Hotel Name: <input type="text" [(ngModel)]="name" name="name">
+                Hotel Name:* <input type="text" [(ngModel)]="name" name="name" required>
                 <br><br>
-                Country: <input type="text" readonly [(ngModel)]="country" name="country">
+                Country:* <input type="text" readonly [(ngModel)]="country" name="country" required>
                 <br><br>
-                City: 
+                City:* 
                 <!-- <mat-form-field class="search-form-field"> -->
                     <!-- <mat-label>Location</mat-label> -->
                     <input type="text"
@@ -19,7 +19,7 @@
                            matInput
                            [formControl]="myControl"
                            [(ngModel)]="district"
-                           [matAutocomplete]="auto">
+                           [matAutocomplete]="auto" required>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                       @for (option of filteredLocations | async; track option) {
                         <mat-option [value]="option">{{option}}</mat-option>
@@ -29,11 +29,11 @@
         
                 <!-- City: <input type="text" [(ngModel)]="district" name="district"> -->
                 <br><br>
-                Street: <input type="text" [(ngModel)]="street" name="street">
+                Street:* <input type="text" [(ngModel)]="street" name="street" required>
                 <br><br>
-                Contact: <input type="text" [(ngModel)]="contact" name="contact">
+                Contact:* <input type="text" [(ngModel)]="contact" name="contact" required>
                 <br><br>
-                Descriptoin: <input type="text" [(ngModel)]="description" name="description">
+                Descriptoin:* <input type="text" [(ngModel)]="description" name="description" required>
                 <br><br>
             </div>
             <div style="flex-basis: 50%;">
