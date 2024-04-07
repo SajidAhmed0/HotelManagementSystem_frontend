@@ -136,4 +136,26 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  calculatePrice(basePrice: any, noOfRooms: any, noOfAdults: any, discount: any, markup: any, noOfNights: any){
+    let price;
+    if(discount > 0){
+      price = basePrice * markup * noOfNights * noOfAdults;
+    }else{
+      price = basePrice * markup * noOfNights * noOfAdults;
+    }
+  }
+  calculateNoOfNights(startDate: Date, endDate: Date): number {
+    // Convert both dates to milliseconds
+    const startMilliseconds = startDate.getTime();
+    const endMilliseconds = endDate.getTime();
+
+    // Calculate the difference in milliseconds
+    const differenceMilliseconds = endMilliseconds - startMilliseconds;
+
+    // Convert milliseconds to days (1 day = 24 * 60 * 60 * 1000 milliseconds)
+    const differenceDays = Math.ceil(differenceMilliseconds / (24 * 60 * 60 * 1000));
+
+    return differenceDays;
+}
+
 }

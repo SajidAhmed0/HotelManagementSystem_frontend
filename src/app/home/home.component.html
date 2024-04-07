@@ -109,8 +109,15 @@
                   <mat-card-content>
                     <mat-card-title>{{search.hotelName}}</mat-card-title>
                     <mat-card-subtitle><img style="filter: invert(70%) sepia(32%) saturate(875%) hue-rotate(19deg) brightness(99%) contrast(87%);" src="../../assets/location_icon.svg" alt="">{{search.hotelLocation}}</mat-card-subtitle>
-                    <mat-card-subtitle>{{search.baseRoomTypePrice}}</mat-card-subtitle>
-                    <mat-card-subtitle>{{search.discountPercentage}}</mat-card-subtitle>
+                    <div *ngIf="search.discountPercentage == 0">
+                      <mat-card-subtitle>{{search.baseRoomTypePrice}}</mat-card-subtitle>
+                    </div>
+                    <div *ngIf="search.discountPercentage > 0">
+                      <mat-card-subtitle><span style="background-color: rgba(76, 239, 76, 0.588);padding: 2px; border-radius: 1px;">{{search.discountPercentage}}%</span></mat-card-subtitle>
+                    </div>
+                    <!-- <mat-card-subtitle>{{search.baseRoomTypePrice}}</mat-card-subtitle>
+                    <mat-card-subtitle>{{search.discountPercentage}}</mat-card-subtitle> -->
+                    <mat-card-subtitle>noOfNight: {{calculateNoOfNights(checkInDate, checkOutDate)}}</mat-card-subtitle>
                   </mat-card-content>
                   <mat-card-actions>
                     <button mat-button>LIKE</button>
