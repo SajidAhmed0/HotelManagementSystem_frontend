@@ -126,11 +126,14 @@ export class HotelDetailsComponent implements OnInit {
 
   setSelectedRoomType(roomtype: any){
     console.log(roomtype);
-    this.total = this.calculatePriceWithDiscount(roomtype.pricing.price, this.search.noOfRooms, this.search.noOfAdult, this.selectedDiscount,this.markup, this.calculateNoOfNights(this.search.checkInDate, this.search.checkOutDate));
+    
     if(roomtype.roomType.id != this.selectedRoomType.roomType.id){
       this.selectedSupplements = [];
     }
+
     this.selectedRoomType = roomtype;
+
+    this.total = this.calculatePriceWithDiscountAndSupplements(roomtype.pricing.price, this.search.noOfRooms, this.search.noOfAdult, this.selectedDiscount,this.markup, this.calculateNoOfNights(this.search.checkInDate, this.search.checkOutDate), this.selectedSupplements);
   }
 
   showSupplements(){
@@ -148,6 +151,7 @@ export class HotelDetailsComponent implements OnInit {
     }else{
       this.selectedSupplements = this.selectedSupplements.filter(sup => sup !== supp);
     }
+    this.total = this.calculatePriceWithDiscountAndSupplements(this.selectedRoomType.pricing.price, this.search.noOfRooms, this.search.noOfAdult, this.selectedDiscount,this.markup, this.calculateNoOfNights(this.search.checkInDate, this.search.checkOutDate), this.selectedSupplements);
     console.log(this.selectedSupplements);
     
   }
@@ -181,6 +185,23 @@ export class HotelDetailsComponent implements OnInit {
 
     return price.toFixed(2);
   }
+
+  calculatePriceWithDiscountAndSupplements(basePrice: any, noOfRooms: any, noOfAdults: any, discount: any, markup: any, noOfNights: any, supplements: any[]){
+    let price = (basePrice * noOfRooms);
+    if(supplements.length > 0){
+      supplements.forEach(sup => {
+        price += sup.pricing.price;
+      });
+    }
+    if(discount != null){
+      price = price * ((100 - discount.percentage) / 100);
+    }
+    
+    price =  price *  ((markup + 100) / 100) * noOfNights * noOfAdults;
+
+    return price.toFixed(2);
+  }
+
   calculateNoOfNights(startDate: Date, endDate: Date): number {
     // Convert both dates to milliseconds
     const startMilliseconds = startDate.getTime();
