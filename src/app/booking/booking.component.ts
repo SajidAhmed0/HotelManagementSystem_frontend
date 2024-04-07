@@ -39,6 +39,7 @@ import {MatListModule} from '@angular/material/list';
 })
 export class BookingComponent implements OnInit {
   selectedValue$!: Observable<any>;
+  total: any;
 
   passengers: any[] = [];
   passengerName: string = '';
@@ -119,7 +120,7 @@ export class BookingComponent implements OnInit {
       noOfAdult: parseInt(search.noOfAdult),
       status: 'Booked',
       noOfRooms: parseInt(search.noOfRooms),
-      total: 0,
+      total: this.total,
       bookingDate: new Date(),
       markup: markup,
       hotelName: hotel.name,
@@ -128,7 +129,7 @@ export class BookingComponent implements OnInit {
 
     let payment = {
       date: new Date(),
-      amount: 0,
+      amount: this.total,
       method: this.paymentMethod,
       cardNumber: this.cardNumber,
       expiration: this.expiration,
@@ -198,5 +199,30 @@ export class BookingComponent implements OnInit {
     
 
   }
+
+  calculatePriceWithDiscount(basePrice: any, noOfRooms: any, noOfAdults: any, discount: any, markup: any, noOfNights: any){
+    let price = (basePrice * noOfRooms);
+    if(discount != null){
+      price = price * ((100 - discount.percentage) / 100);
+    }
+    
+    price =  price *  ((markup + 100) / 100) * noOfNights * noOfAdults;
+
+    return price.toFixed(2);
+  }
+
+  calculateNoOfNights(startDate: Date, endDate: Date): number {
+    // Convert both dates to milliseconds
+    const startMilliseconds = startDate.getTime();
+    const endMilliseconds = endDate.getTime();
+
+    // Calculate the difference in milliseconds
+    const differenceMilliseconds = endMilliseconds - startMilliseconds;
+
+    // Convert milliseconds to days (1 day = 24 * 60 * 60 * 1000 milliseconds)
+    const differenceDays = Math.ceil(differenceMilliseconds / (24 * 60 * 60 * 1000));
+
+    return differenceDays;
+}
 
 }

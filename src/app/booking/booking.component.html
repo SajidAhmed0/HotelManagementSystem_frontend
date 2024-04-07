@@ -47,12 +47,46 @@
             </div>
             <div style="display: flex;">
                 <div style="flex-basis: 50%;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <p>{{selectedValue.search.noOfAdult}} adults</p>
+                        <p>{{calculateNoOfNights(selectedValue.search.checkInDate, selectedValue.search.checkOutDate)}} nights</p>
+                    </div>
                     <div>
-                        roomType: <h4>{{ selectedValue.selectedRoomtype.roomType.name}} - {{ selectedValue.selectedRoomtype.pricing.price}}</h4>
-                        supplements: <h4 *ngFor="let sup of selectedValue.selectedSupplements">{{sup.supplement.name}} - {{sup.pricing.price}}</h4>
-                        discount: <h4 *ngIf="selectedValue.selectedDiscount != null">{{selectedValue.selectedDiscount.percentage}}</h4>
+                        <h4>Hotel: {{selectedValue.hotel.name}}</h4>
+                        <b>RoomType:</b>
+                        <!-- <h4>{{ selectedValue.selectedRoomtype.roomType.name}} - {{ selectedValue.selectedRoomtype.pricing.price}}</h4> -->
+                        <div style="display: flex; justify-content: space-between;">
+                            <p>{{ selectedValue.selectedRoomtype.roomType.name}}</p>
+                            <!-- <p>{{ selectedValue.selectedRoomtype.pricing.price}}</p> -->
+                            <p>{{calculatePriceWithDiscount(selectedValue.selectedRoomtype.pricing.price, selectedValue.search.noOfRooms, selectedValue.search.noOfAdult, selectedValue.selectedDiscount, selectedValue.markup, calculateNoOfNights(selectedValue.search.checkInDate, selectedValue.search.checkOutDate))}}</p>
+                        </div>
+                        <b *ngIf="selectedValue.selectedSupplements.length > 0">Supplements: </b>
+                        <!-- <h4 *ngFor="let sup of selectedValue.selectedSupplements">{{sup.supplement.name}} - {{sup.pricing.price}}</h4> -->
+                        <div *ngFor="let sup of selectedValue.selectedSupplements" style="display: flex; justify-content: space-between;">
+                            <p>{{sup.supplement.name}}</p>
+                            <p>{{sup.pricing.price}}</p>
+                            
+                        </div>
+                        <span *ngIf="selectedValue.selectedDiscount != null">
+                            <!-- discount: 
+                            <h4>{{selectedValue.selectedDiscount.percentage}}%</h4> -->
+                            <div style="display: flex; justify-content: space-between;">
+                                <p>Discount: </p>
+                                <p>{{selectedValue.selectedDiscount.percentage}}%</p>
+                            </div>
+                        </span>
                         <br>
-                        Total(added service charge and discount): <h4>dd</h4>
+                        <div style="display: flex; justify-content: space-between;">
+                            <p>Service Charge:</p>
+                            <p>{{selectedValue.markup}}%</p>
+                        </div>
+                        <!-- service charge: <h4>{{selectedValue.markup}}%</h4> -->
+                        <br>
+                        <div style="display: flex; justify-content: space-between;">
+                            <p>Total:</p>
+                            <p>{{selectedValue.total}}</p>
+                        </div> 
+                        <!-- Total: <h4>{{selectedValue.total}}</h4> -->
                     </div>
                     <div>
                         Passengers: needs {{selectedValue.search.noOfAdult - passengers.length}}

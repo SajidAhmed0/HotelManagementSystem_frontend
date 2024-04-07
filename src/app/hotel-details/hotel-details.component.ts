@@ -126,7 +126,7 @@ export class HotelDetailsComponent implements OnInit {
 
   setSelectedRoomType(roomtype: any){
     console.log(roomtype);
-    
+
     if(roomtype.roomType.id != this.selectedRoomType.roomType.id){
       this.selectedSupplements = [];
     }
@@ -163,7 +163,8 @@ export class HotelDetailsComponent implements OnInit {
       selectedDiscount: this.selectedDiscount,
       search: this.search,
       markup: this.markup,
-      hotel: this.sendHotel
+      hotel: this.sendHotel,
+      total: this.total
     });
     
     this.router.navigate(["booking"]);
