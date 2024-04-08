@@ -94,6 +94,9 @@
 
     <div *ngIf="isSearched">
         <div id="hotel-card-container" *ngIf="searchResults$ | async as searches">
+            <div id="hotel-card" *ngIf="searches.length <= 0">
+              <h3>Result Not Found for the search</h3>
+            </div>
             <div id="hotel-card" *ngFor="let search of searches;" [routerLink]="['hotels/', search.hotelId]">
                 <!-- <h4>{{ search.hotelName }}</h4>
                 <h6>{{ search.baseRoomTypePrice }}</h6>

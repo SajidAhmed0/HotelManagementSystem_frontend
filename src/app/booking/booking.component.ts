@@ -41,11 +41,14 @@ export class BookingComponent implements OnInit {
   selectedValue$!: Observable<any>;
   total: any;
 
+  needPassenger = false;
   passengers: any[] = [];
   passengerName: string = '';
   passengerPhone: string = '';
+  passengerAdd = false;
 
-  paymentMethod!: string;
+  paymentAdd = false;
+  paymentMethod: string = '';
   cardNumber: string = '';
   expiration: string = '';
   cvv: number = 0;
@@ -65,18 +68,24 @@ export class BookingComponent implements OnInit {
       
     // });
     this.selectedValue$ = this.dataService.data$;
-    this.selectedValue$.subscribe(console.log);
+    this.selectedValue$.subscribe(sv => this.total = sv.total);
   }
 
   addPassenger(){
-    let passenger = {
-      name: this.passengerName,
-      phone: this.passengerPhone
+    this.passengerAdd = true;
+    if(this.passengerName == '' || this.passengerPhone == ''){
+      return
+    }else{
+      let passenger = {
+        name: this.passengerName,
+        phone: this.passengerPhone
+      }
+      this.passengerName = '';
+      this.passengerPhone = '';
+  
+      this.passengers.push(passenger);
     }
-    this.passengerName = '';
-    this.passengerPhone = '';
-
-    this.passengers.push(passenger);
+    this.passengerAdd = false;
   }
 
   removePassenger(i: any){
@@ -84,6 +93,19 @@ export class BookingComponent implements OnInit {
   }
 
   async addBookig(roomType:any, supplements: any[], discount: any, search: any, markup: any, hotel: any){
+    this.needPassenger = false;
+    if(this.passengers.length < search.noOfAdult){
+      console.log('error');
+      
+      this.needPassenger = true;
+      return;
+    }
+    if(this.paymentMethod == '' || this.cardNumber == '' || this.expiration == '' || this.cvv <= 0 || this.billingAddress == '' || this.billingCity == '' || this.zipcode == ''){
+      this.paymentAdd = true;
+      console.log('payment error');
+      return;
+    }
+
     let bookedRoomType = {
       name: roomType.roomType.name,
       noOfRooms: roomType.pricing.noOfRooms,

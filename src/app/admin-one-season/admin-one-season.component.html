@@ -4,6 +4,7 @@
         <app-navbar></app-navbar>
     </div>
     <div id="season-one-detial" *ngIf="season$ | async as season">
+        <button id="btn-edit" [routerLink]="['/adminOneHotel/', hotelId, 'adminOneContract', contractId]" type="button">Back</button>
         <div style="display: flex; justify-content: space-between;align-items: center;">
             <h1> Season Name: {{ season.name }} </h1>
             <button id="btn-edit" [routerLink]="['editseason']" type="button">Edit</button>

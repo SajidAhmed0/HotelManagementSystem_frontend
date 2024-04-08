@@ -4,6 +4,7 @@
     </div>
 
     <div id="contract-one-detial" *ngIf="contract$ | async as contract">
+        <button id="btn-edit" [routerLink]="['/adminOneHotel/', hotelId]" type="button">Back</button>
         <div style="display: flex; justify-content: space-between;align-items: center;">
             <h1> Contract Id: {{ contract.id }} </h1>
             <button [routerLink]="['editcontract']" id="btn-edit" type="button">Edit</button>

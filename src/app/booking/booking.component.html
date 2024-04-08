@@ -90,11 +90,13 @@
                     </div>
                     <div>
                         <br><br>
+                        <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="needPassenger && selectedValue.search.noOfAdult - passengers.length != 0">Needs to add passenger details </span>
                         Passengers: needs {{selectedValue.search.noOfAdult - passengers.length}}
                         <div id="passenger-add" *ngIf="passengers.length < selectedValue.search.noOfAdult">
+                            <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="passengerAdd && (passengerName == '' || passengerPhone == '') ">Fiels should not be empty</span>
                             Passenger Name: <input type="text" [(ngModel)]="passengerName" name=" passengerName">
                             <br><br>
-                            Passenger Phone <input type="text" [(ngModel)]="passengerPhone" name="passengerPhone">
+                            Passenger Phone <input  type="text" [(ngModel)]="passengerPhone" name="passengerPhone">
                             <br><br>
                             
                             <button id="btn-add" type="button" (click)="addPassenger()">Add</button>
@@ -120,6 +122,7 @@
                     </div>
                 </div>
                 <div style="flex-basis: 50%;" id="booking-payment">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="paymentAdd && (paymentMethod == '' || cardNumber == '' || expiration == '' || cvv <= 0 || billingAddress == '' || billingCity == '' || zipcode == '') ">Fiels should not be empty</span>
                     Payment:
                     <select [(ngModel)]="paymentMethod" id="" >
                         <option value="card" ngValue="card">Card</option>

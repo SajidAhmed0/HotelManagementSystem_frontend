@@ -49,9 +49,9 @@ export class HomeComponent implements OnInit {
 
   location: string = '';
   checkInDate: Date = new Date();
-  checkOutDate: Date = new Date();
-  noOfAdult: number = 0;
-  noOfRooms: number = 0;
+  checkOutDate: Date = new Date(new Date().setDate(this.checkInDate.getDate() + 1));
+  noOfAdult: number = 1;
+  noOfRooms: number = 1;
 
   // Location selection
   locations: string[] = [
