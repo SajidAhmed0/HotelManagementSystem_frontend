@@ -1,11 +1,12 @@
 import { Component, Input, NgModule, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, NgModel, NgModelGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsyncPipe, JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { HotelServiceService } from '../hotel-service.service';
 import { Router } from '@angular/router';
 import {AngularFireStorage, AngularFireStorageModule} from '@angular/fire/compat/storage'
 import { NavbarComponent } from "../navbar/navbar.component";
 import { Observable, map, startWith } from 'rxjs';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 // material ui
 import {MatInputModule} from '@angular/material/input';
@@ -35,7 +36,8 @@ import { FooterComponent } from "../footer/footer.component";
         MatGridListModule,
         FooterComponent,
         NgClass,
-        JsonPipe
+        JsonPipe,
+        
     ]
 })
 export class AddHotelComponent implements OnInit {
@@ -63,6 +65,8 @@ export class AddHotelComponent implements OnInit {
 
   isFacility: boolean = false;
   isImage: boolean = false;
+  facilityAdd = false;
+  imageAdd = false;
 
   // Location selection
   locations: string[] = [
@@ -115,7 +119,10 @@ export class AddHotelComponent implements OnInit {
     // validation
     this.formHotel = this.formBuilder.group({
       name: ['', Validators.required],
-      district: ['', Validators.required]
+      district: ['', Validators.required],
+      street: ['', Validators.required],
+      contact: ['', [Validators.required, Validators.pattern]],
+      description: ['', Validators.required]
     });
   }
 
@@ -168,33 +175,44 @@ export class AddHotelComponent implements OnInit {
   }
 
   addFacility(){
-    this.facilities.push({
-      name: this.facilityName,
-      description: this.facilityDescription
-    });
-    this.facilityName = '';
-    this.facilityDescription = '';
+    this.facilityAdd = true;
+    if(this.facilityName == '' || this.facilityDescription == ''){
+      return;
+    }else{
+      this.facilities.push({
+        name: this.facilityName,
+        description: this.facilityDescription
+      });
+      this.facilityName = '';
+      this.facilityDescription = '';
+    }
+    this.facilityAdd = false;
   }
 
   async changeImage(event: any){
     console.log(this.hotelImage);
     const file = event.target.files[0];
-
+    this.imageAdd = true;
     console.log(file);
-    
-    if(file){
-      const path = `hotel/${this.name}/${file.name}`;
-      const uploadTask = await this.fireStorage.upload(path, file);
-      let url = await uploadTask.ref.getDownloadURL();
-      console.log(url);
-      this.labelImage = url;
-      this.imageName = file.name;
-      this.imageUrl = url;
+    if(this.name == ''){
+      return;
+    }else{
+      if(file){
+        const path = `hotel/${this.name}/${file.name}`;
+        const uploadTask = await this.fireStorage.upload(path, file);
+        let url = await uploadTask.ref.getDownloadURL();
+        console.log(url);
+        this.labelImage = url;
+        this.imageName = file.name;
+        this.imageUrl = url;
+      }
     }
+    
 
   }
 
   showAddFacility(){
+    this.facilityAdd = false;
     if(this.isFacility){
       this.isFacility = false;
     }else{
@@ -208,16 +226,24 @@ export class AddHotelComponent implements OnInit {
   }
 
   addImage(){
-    this.images.push({
-      name: this.imageName,
-      url: this.imageUrl
-    });
-    this.imageName = '';
-    this.imageUrl = '';
-    this.labelImage = "../../assets/addImageIcon.png";
+    this.imageAdd = true;
+    if(this.imageName == '' || this.imageUrl == ''){
+      return;
+    }else{
+      this.images.push({
+        name: this.imageName,
+        url: this.imageUrl
+      });
+      this.imageName = '';
+      this.imageUrl = '';
+      this.labelImage = "../../assets/addImageIcon.png";
+    }
+    this.imageAdd = false;
+
   }
 
   showAddImage(){
+    this.imageAdd = false;
     if(this.isImage){
       this.isImage = false;
     }else{
@@ -237,5 +263,15 @@ export class AddHotelComponent implements OnInit {
   deleteImageFromFireBase(url: string): any {
     const storageRef = this.fireStorage.refFromURL(url);
     return storageRef.delete();
+  }
+
+  contactValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const contactValue: string = control.value;
+      if (!contactValue || contactValue.length !== 10 || !/^\d+$/.test(contactValue)) {
+        return { 'invalidContact': { value: control.value } };
+      }
+      return null;
+    };
   }
 }

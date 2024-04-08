@@ -24,7 +24,7 @@
                 
                 <!-- Hotel Name:* <input type="text" [(ngModel)]="name" name="name" formControlName="name" [ngClass]="{'is-invalid':submitted}" required> -->
                 <br><br> 
-                Country:* <input type="text" readonly [(ngModel)]="country" name="country" value="Sri Lanka">
+                Country:* <input type="text" readonly [(ngModel)]="country" name="country" value="Sri Lanka" [ngModelOptions]="{standalone: true}" >
                 <br><br>
                 City:* 
                 <!-- <mat-form-field class="search-form-field"> -->
@@ -48,20 +48,33 @@
         
                 <!-- City: <input type="text" [(ngModel)]="district" name="district"> -->
                 <br><br>
-                Street:* <input type="text" [(ngModel)]="street" name="street" required>
+                Street:* <input type="text" formControlName="street" [(ngModel)]="street" name="street" required>
+                <mat-error style="color: red; font-size: small; margin: 0px 10px;" *ngIf="formHotel.controls['street'].invalid && (formHotel.controls['street']!.dirty || formHotel.controls['street']!.touched)">
+                    Address is required
+                  </mat-error>
                 <br><br>
-                Contact:* <input type="text" [(ngModel)]="contact" name="contact" required>
+                Contact:* <input type="text" pattern="[0-9]{10}" formControlName="contact" [(ngModel)]="contact" name="contact" required>
+                <mat-error style="color: red; font-size: small; margin: 0px 10px;" *ngIf="formHotel.controls['contact'].invalid && (formHotel.controls['contact']!.dirty || formHotel.controls['contact']!.touched)">
+                    Contact is required
+                  </mat-error>
+                  <mat-error style="color: red; font-size: small; margin: 0px 10px;" *ngIf="formHotel.controls['contact'].hasError('pattern') && (formHotel.controls['contact']!.dirty || formHotel.controls['contact']!.touched)">
+                    Contact must be exactly 10 digits and contain only numbers
+                  </mat-error>
                 <br><br>
-                Descriptoin:* <input type="text" [(ngModel)]="description" name="description" required>
+                Descriptoin:* <input type="text" formControlName="description" [(ngModel)]="description" name="description" required>
+                <mat-error style="color: red; font-size: small; margin: 0px 10px;" *ngIf="formHotel.controls['description'].invalid && (formHotel.controls['description']!.dirty || formHotel.controls['description']!.touched)">
+                    Description is required
+                  </mat-error>
                 <br><br>
             </div>
             <div style="flex-basis: 50%;">
                 Facilities: <button type="button" (click)="showAddFacility()">Add Facility</button>
                 <div id="facility-add" *ngIf="isFacility">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="facilityAdd && (facilityName == '' || facilityDescription == '') ">Fiels should not be empty</span>
                     <br><br>
-                    Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
+                    Facility Name: <input type="text" [(ngModel)]="facilityName"  name="facilityName" [ngModelOptions]="{standalone: true}" >
                     <br><br>
-                    Facility Description <input type="text" [(ngModel)]="facilityDescription" name="facilityDescription">
+                    Facility Description <input type="text"  [(ngModel)]="facilityDescription" name="facilityDescription" [ngModelOptions]="{standalone: true}">
                     <br><br>
                     <button type="button" (click)="addFacility()">Add</button>
                 </div>
@@ -86,13 +99,16 @@
                 <br><br>
                 Images: <button type="button" (click)="showAddImage()">Add Image</button>
                 <div *ngIf="isImage" style="display: flex;">
+                   
                     <label style="flex-basis: 50%;" for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
-                        <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
+                        <input type="file"  name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
                     <br><br>
                     <div style="flex-basis: 50%;">
-                        Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
+                        <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="imageAdd && name == ''">befoer select the image hotel name should be added</span>
+                        <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="imageAdd && (imageName == '' || imageUrl == '') ">Image should be selected</span>
+                        Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName" [ngModelOptions]="{standalone: true}" >
                         <br><br>
-                        Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
+                        Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl"[ngModelOptions]="{standalone: true}" >
                         <br><br>
                         <button type="button" (click)="addImage()">Add</button>
                     </div>
