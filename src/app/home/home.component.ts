@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
       location: this.location,
       checkInDate: this.checkInDate,
       checkOutDate: this.checkOutDate,
-      noOfAdult: this.noOfAdult,
+      noOfAdults: this.noOfAdult,
       noOfRooms: this.noOfRooms
     }
 

@@ -112,7 +112,7 @@
                         Option selected: {{roomTypes.selectedOptions.hasValue() ? roomTypes.selectedOptions.selected[0].value : 'None'}}
                     </p>
                     @for (roomType of hotel.roomTypeWithPricings; track roomType) {
-                        {{roomType.avialableRooms}}
+                        <!-- {{roomType.avialableRooms}} -->
                         <div style="display: flex;">
                     <mat-list-option  style="flex-basis: 50%;" [value]="roomType.roomType.name" (click)="setSelectedRoomType(roomType)">
                             <div>
