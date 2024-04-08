@@ -208,19 +208,21 @@
             <h3>Contracts</h3>
             <button id="btn-show" type="button" (click)="showAddContract()">Add Contract</button>
             <div id="facility-add" *ngIf="isContract">
+                <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="contractAdd && (contractPaymentPolicy == '' || contractCancelationPolicy == '' || contractStartDate >= contractEndDate) ">Fiels should not be empty & startdate must less than end date</span>
                 <br><br>
-                Start Date: <input type="date" [(ngModel)]="contractStartDate" name="contractStartDate">
+                Start Date: <input type="date" [(ngModel)]="contractStartDate" name="contractStartDate" required>
                 <br><br>
-                End Date: <input type="date" [(ngModel)]="contractEndDate" name="contractEndDate">
+                End Date: <input type="date" min="contractStartDate" [(ngModel)]="contractEndDate" name="contractEndDate" required>
                 <br><br>
-                Payment Policy: <input type="text" [(ngModel)]="contractPaymentPolicy" name="contractPaymentPolicy">
+                Payment Policy: <input type="text" [(ngModel)]="contractPaymentPolicy" name="contractPaymentPolicy" required>
                 <br><br>
-                Cancelation Policy: <input type="text" [(ngModel)]="contractCancelationPolicy" name="contractCancelationPolicy">
+                Cancelation Policy: <input type="text" [(ngModel)]="contractCancelationPolicy" name="contractCancelationPolicy" required>
                 <br><br>
                 <div style="display: flex;justify-content: space-between;">
                     <div style="flex-basis: 50%;">
                         Seasons: <button id="btn-show" type="button" (click)="showAddSeason()">Add Seasons</button>
                             <div id="facility-add" *ngIf="isSeason">
+                                <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="seasonAdd && (seasonName == '' || seasonMarkup < 1 || seasonStartDate >= seasonEndDate) ">Fiels should not be empty & startdate must less than end date</span>
                                 <br><br>
                                 name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
                                 <br><br>
@@ -259,6 +261,7 @@
                     <div style="flex-basis: 50%;">
                         Discounts: <button id="btn-show" type="button" (click)="showAddDiscount()">Add Discounts</button>
                         <div id="facility-add" *ngIf="isDiscount">
+                            <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="discountAdd && (discountName == '' || discountDescription == '' || discountPercentage < 1 || daysPriorToArrival < 1) ">Fiels should not be empty & numaric value should be greater than 1</span>
                             <br><br>
                             Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
                             <br><br>

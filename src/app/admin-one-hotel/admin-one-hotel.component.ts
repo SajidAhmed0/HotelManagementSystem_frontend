@@ -71,12 +71,14 @@ export class AdminOneHotelComponent implements OnInit {
   supplementName: string = '';
   supplementDescription: string = '';
 
+  contractAdd = false;
   isContract: boolean = false;
   contractStartDate: Date = new Date();
   contractEndDate: Date = new Date();
   contractPaymentPolicy: string = '';
   contractCancelationPolicy: string = '';
 
+  seasonAdd = false;
   isSeason: boolean = false;
   seasons: Array<{
     name: string,
@@ -87,8 +89,9 @@ export class AdminOneHotelComponent implements OnInit {
   seasonName: string = '';
   seasonStartDate: Date = new Date();
   seasonEndDate: Date = new Date();
-  seasonMarkup: number = 0;
+  seasonMarkup: number = 1;
 
+  discountAdd = false;
   isDiscount: boolean = false;
   discounts: Array<{
     name: string,
@@ -324,41 +327,48 @@ export class AdminOneHotelComponent implements OnInit {
   // Contract
 
   async addContract(){
-    let contract = {
-      startDate: this.contractStartDate,
-      endDate: this.contractEndDate,
-      paymentPolicy: this.contractPaymentPolicy,
-      cancellationPolicy: this.contractCancelationPolicy
-    };
-    this.contractStartDate = new Date();
-    this.contractEndDate = new Date();
-    this.contractPaymentPolicy = '';
-    this.contractCancelationPolicy = '';
-    let con = await this.hotelService.addContract(contract).toPromise();
-
-    if (this.seasons.length > 0) {
-      await Promise.all(this.seasons.map(async (season) => {
-        let sea = await this.hotelService.addSeason(season).toPromise();
-        let c = await this.hotelService.addSeasonToContract(con.id, sea.id).toPromise();
-        con = c;
-      }));
+    this.contractAdd = true;
+    if(this.contractPaymentPolicy == '' || this.contractCancelationPolicy == '' || this.contractStartDate >= this.contractEndDate){
+      return;
+    }else{
+      let contract = {
+        startDate: this.contractStartDate,
+        endDate: this.contractEndDate,
+        paymentPolicy: this.contractPaymentPolicy,
+        cancellationPolicy: this.contractCancelationPolicy
+      };
+      this.contractStartDate = new Date();
+      this.contractEndDate = new Date();
+      this.contractPaymentPolicy = '';
+      this.contractCancelationPolicy = '';
+      let con = await this.hotelService.addContract(contract).toPromise();
+  
+      if (this.seasons.length > 0) {
+        await Promise.all(this.seasons.map(async (season) => {
+          let sea = await this.hotelService.addSeason(season).toPromise();
+          let c = await this.hotelService.addSeasonToContract(con.id, sea.id).toPromise();
+          con = c;
+        }));
+      }
+  
+      if (this.discounts.length > 0) {
+        await Promise.all(this.discounts.map(async (discount) => {
+          let dis = await this.hotelService.addDiscount(discount).toPromise();
+          let c = await this.hotelService.addDiscountToContract(con.id, dis.id).toPromise();
+          con = c;
+        }));
+      }
+  
+      this.seasons.splice(0, this.seasons.length);
+      this.discounts.splice(0, this.discounts.length);
+  
+      this.hotel$ = await this.hotelService.addContractToHotel(this.id, con.id);
     }
-
-    if (this.discounts.length > 0) {
-      await Promise.all(this.discounts.map(async (discount) => {
-        let dis = await this.hotelService.addDiscount(discount).toPromise();
-        let c = await this.hotelService.addDiscountToContract(con.id, dis.id).toPromise();
-        con = c;
-      }));
-    }
-
-    this.seasons.splice(0, this.seasons.length);
-    this.discounts.splice(0, this.discounts.length);
-
-    this.hotel$ = await this.hotelService.addContractToHotel(this.id, con.id);
+    this.contractAdd = false;
   }
 
   showAddContract(){
+    this.contractAdd = false;
     if(this.isContract){
       this.isContract = false;
     }else{
@@ -373,19 +383,26 @@ export class AdminOneHotelComponent implements OnInit {
 
   // Season
   addSeason(){
-    this.seasons.push({
-      name: this.seasonName,
-      startDate: this.seasonStartDate,
-      endDate: this.seasonEndDate,
-      markup: this.seasonMarkup
-    });
-    this.seasonName = '';
-    this.seasonStartDate = new Date();
-    this.seasonEndDate = new Date();
-    this.seasonMarkup = 0;
+    this.seasonAdd = true;
+    if(this.seasonName == '' || this.seasonMarkup < 1 || this.seasonStartDate >= this.seasonEndDate){
+      return;
+    }else{
+      this.seasons.push({
+        name: this.seasonName,
+        startDate: this.seasonStartDate,
+        endDate: this.seasonEndDate,
+        markup: this.seasonMarkup
+      });
+      this.seasonName = '';
+      this.seasonStartDate = new Date();
+      this.seasonEndDate = new Date();
+      this.seasonMarkup = 0;
+    }
+    this.seasonAdd = false;
   }
 
   showAddSeason(){
+    this.seasonAdd = false;
     if(this.isSeason){
       this.isSeason = false;
     }else{
@@ -400,19 +417,26 @@ export class AdminOneHotelComponent implements OnInit {
 
   //Discount
   addDiscount(){
-    this.discounts.push({
-      name: this.discountName,
-      description: this.discountDescription,
-      percentage: this.discountPercentage,
-      daysPriorToArrival: this.daysPriorToArrival
-    });
-    this.discountName = '';
-    this.discountDescription = '';
-    this.discountPercentage = 0;
-    this.daysPriorToArrival = 0;
+    this.discountAdd = true;
+    if(this.discountName == '' || this.discountDescription == '' || this.discountPercentage < 1 || this.daysPriorToArrival < 1){
+      return;
+    }else{
+      this.discounts.push({
+        name: this.discountName,
+        description: this.discountDescription,
+        percentage: this.discountPercentage,
+        daysPriorToArrival: this.daysPriorToArrival
+      });
+      this.discountName = '';
+      this.discountDescription = '';
+      this.discountPercentage = 0;
+      this.daysPriorToArrival = 0;
+    }
+    this.discountAdd = false;
   }
 
   showAddDiscount(){
+    this.discountAdd = false;
     if(this.isDiscount){
       this.isDiscount = false;
     }else{
