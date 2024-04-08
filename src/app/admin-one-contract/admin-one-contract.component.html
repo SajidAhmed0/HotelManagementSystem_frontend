@@ -19,6 +19,7 @@
                 <h3>Seasons</h3>
                 <button id="btn-show" type="button" (click)="showAddSeason()">Add Seasons</button>
                 <div id="facility-add" *ngIf="isSeason">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="seasonAdd && (seasonName == '' || seasonMarkup < 1 || seasonStartDate >= seasonEndDate) ">Fiels should not be empty & startdate must less than end date</span>
                     <br><br>
                     name: <input type="text" [(ngModel)]="seasonName" name="seasonName">
                     <br><br>
@@ -57,6 +58,7 @@
                 <h3>Discounts</h3>
                 <button id="btn-show" type="button" (click)="showAddDiscount()">Add Discounts</button>
                         <div id="facility-add" *ngIf="isDiscount">
+                            <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="discountAdd && (discountName == '' || discountDescription == '' || discountPercentage < 1 || daysPriorToArrival < 1) ">Fiels should not be empty & numaric value should be greater than 1</span>
                             <br><br>
                             Discount Name: <input type="text" [(ngModel)]="discountName" name="discountName">
                             <br><br>

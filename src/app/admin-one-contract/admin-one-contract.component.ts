@@ -36,17 +36,19 @@ export class AdminOneContractComponent implements OnInit {
   roomTypes: any[] = [];
   supplements: any[] = [];
 
+  seasonAdd = false;
   isSeason: boolean = false;
   seasonName: string = '';
   seasonStartDate: Date = new Date();
   seasonEndDate: Date = new Date();
   seasonMarkup: number = 0;
 
+  discountAdd = false;
   isDiscount: boolean = false;
   discountName: string = '';
   discountDescription: string = '';
-  discountPercentage: number = 0;
-  daysPriorToArrival: number = 0;
+  discountPercentage: number = 1;
+  daysPriorToArrival: number = 1;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -72,22 +74,29 @@ export class AdminOneContractComponent implements OnInit {
 
   // Season
   async addSeason(){
-    let season = {
-      name: this.seasonName,
-      startDate: this.seasonStartDate,
-      endDate: this.seasonEndDate,
-      markup: this.seasonMarkup
-    };
-    this.seasonName = '';
-    this.seasonStartDate = new Date();
-    this.seasonEndDate = new Date();
-    this.seasonMarkup = 0;
-
-    let sea = await this.hotelService.addSeason(season).toPromise();
-    this.contract$ = await this.hotelService.addSeasonToContract(this.contractId, sea.id);
+    this.seasonAdd = true;
+    if(this.seasonName == '' || this.seasonMarkup < 1 || this.seasonStartDate >= this.seasonEndDate){
+      return;
+    }else{
+      let season = {
+        name: this.seasonName,
+        startDate: this.seasonStartDate,
+        endDate: this.seasonEndDate,
+        markup: this.seasonMarkup
+      };
+      this.seasonName = '';
+      this.seasonStartDate = new Date();
+      this.seasonEndDate = new Date();
+      this.seasonMarkup = 0;
+  
+      let sea = await this.hotelService.addSeason(season).toPromise();
+      this.contract$ = await this.hotelService.addSeasonToContract(this.contractId, sea.id);
+    }
+    this.seasonAdd = false;
   }
 
   showAddSeason(){
+    this.seasonAdd = false;
     if(this.isSeason){
       this.isSeason = false;
     }else{
@@ -102,22 +111,29 @@ export class AdminOneContractComponent implements OnInit {
 
   //Discount
   async addDiscount(){
-    let discount = {
-      name: this.discountName,
-      description: this.discountDescription,
-      percentage: this.discountPercentage,
-      daysPriorToArrival: this.daysPriorToArrival
-    };
-    this.discountName = '';
-    this.discountDescription = '';
-    this.discountPercentage = 0;
-    this.daysPriorToArrival = 0;
-
-    let dis = await this.hotelService.addDiscount(discount).toPromise();
-    this.contract$ = await this.hotelService.addDiscountToContract(this.contractId, dis.id);
+    this.discountAdd = true;
+    if(this.discountName == '' || this.discountDescription == '' || this.discountPercentage < 1 || this.daysPriorToArrival < 1){
+      return;
+    }else{
+      let discount = {
+        name: this.discountName,
+        description: this.discountDescription,
+        percentage: this.discountPercentage,
+        daysPriorToArrival: this.daysPriorToArrival
+      };
+      this.discountName = '';
+      this.discountDescription = '';
+      this.discountPercentage = 0;
+      this.daysPriorToArrival = 0;
+  
+      let dis = await this.hotelService.addDiscount(discount).toPromise();
+      this.contract$ = await this.hotelService.addDiscountToContract(this.contractId, dis.id);
+    }
+    this.discountAdd = false;
   }
 
   showAddDiscount(){
+    this.discountAdd = false;
     if(this.isDiscount){
       this.isDiscount = false;
     }else{
