@@ -18,6 +18,7 @@
                 <h3>Facilities</h3>
                 <button id="btn-show" type="button" (click)="showAddFacility()">Add Facility</button>
                 <div id="facility-add" *ngIf="isFacility">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="facilityAdd && (facilityName == '' || facilityDescription == '') ">Fiels should not be empty</span>
                     <br><br>
                     Facility Name: <input type="text" [(ngModel)]="facilityName" name="facilityName">
                     <br><br>
@@ -48,10 +49,11 @@
                 <h3>Images</h3>
                 <button id="btn-show" type="button" (click)="showAddImage()">Add Image</button>
                 <div *ngIf="isImage" style="display: flex;">
-                    <label style="flex-basis: 50%;" for="hotel-image"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
-                        <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
+                    <label style="flex-basis: 50%;" for="hotel-image1"><img style="height: 200px; width: 200;" [src]="labelImage" alt='profile-pic' id="profile-pic"/></label>
+                        <input type="file" name="hotelImage" accept="image/jpeg, image/png, image/jpg" id="hotel-image1" style="display: none;height: 200px; width: 200;" (change)="changeImage($event)" required/>
                     <br><br>
                     <div style="flex-basis: 50%;">
+                        <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="imageAdd && (imageName == '' || imageUrl == '') ">Image should be selected</span>
                         Image Name: <input type="text" readonly [(ngModel)]="imageName" name="imageName">
                         <br><br>
                         Image url <input type="text" readonly [(ngModel)]="imageUrl" name="imageUrl">
@@ -95,15 +97,17 @@
                 <h3>RoomTypes</h3>
                 <button id="btn-show" type="button" (click)="showAddRoomType()">Add RoomType</button>
                 <div  id="facility-add" *ngIf="isRoomType">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="roomtypeAdd && (roomTypeName == '' || roomTypeDescription == '' || roomTypeMaxAdult < 1) ">Fiels should not be empty & maxAdult should be greater than 0</span>
                     <br><br>
                     RoomType Name: <input type="text" [(ngModel)]="roomTypeName" name="roomTypeName">
                     <br><br>
                     RoomType Description: <input type="text" [(ngModel)]="roomTypeDescription" name="roomTypeDescription">
                     <br><br>
-                    Maximum Adult: <input type="number" [(ngModel)]="roomTypeMaxAdult" name="roomTypeMaxAdult">
+                    Maximum Adult: <input type="number" [(ngModel)]="roomTypeMaxAdult" min="1" name="roomTypeMaxAdult">
                     <br><br>
                     RoomType Facilities: <button id="btn-show" type="button" (click)="showAddRoomTypeFacility()">Add RoomType Facility</button>
                     <div id="facility-add" *ngIf="isRoomTypeFacility">
+                        <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="roomtypeFacilityAdd && (roomTypeFacilityName == '' || roomTypeFacilityDescription == '') ">Fiels should not be empty</span>
                         <br><br>
                         RoomType Facility Name: <input type="text" [(ngModel)]="roomTypeFacilityName" name="roomTypeFacilityName">
                         <br><br>
@@ -171,6 +175,7 @@
                 <h3>Supplements</h3>
                 <button id="btn-show" type="button" (click)="showAddSupplement()">Add Supplement</button>
                 <div id="facility-add" *ngIf="isSupplement">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="supplementAdd && (supplementName == '' || supplementDescription == '') ">Fiels should not be empty</span>
                     <br><br>
                     Supplement Name: <input type="text" [(ngModel)]="supplementName" name="supplementName">
                     <br><br>

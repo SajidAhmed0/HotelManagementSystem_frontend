@@ -39,29 +39,34 @@ export class AdminOneHotelComponent implements OnInit {
   hotel$!: Observable<any>;
   hotel: any;
 
+  facilityAdd = false;
   isFacility: boolean = false;
   facilityName: string = '';
   facilityDescription: string = '';
 
+  imageAdd = false;
   isImage: boolean = false;
   imageName: string = '';
   imageUrl: string = '';
   hotelImage: any;
   labelImage: string = "../../assets/addImageIcon.png";
 
+  roomtypeAdd = false;
   isRoomType: boolean = false;
   roomTypeName: string = '';
   roomTypeDescription: string = '';
-  roomTypeMaxAdult: number = 0;
+  roomTypeMaxAdult: number = 1;
 
   roomTypeFacilities: Array<{
     name: string,
     description: string
   }> = [];
+  roomtypeFacilityAdd = false;
   isRoomTypeFacility: boolean = false;
   roomTypeFacilityName: string = '';
   roomTypeFacilityDescription: string = '';
 
+  supplementAdd = false;
   isSupplement: boolean = false;
   supplementName: string = '';
   supplementDescription: string = '';
@@ -117,17 +122,24 @@ export class AdminOneHotelComponent implements OnInit {
   }
 
   async addFacility(){
-    let facility = {
-      name: this.facilityName,
-      description: this.facilityDescription
-    };
-    this.facilityName = '';
-    this.facilityDescription = '';
-    let fac = await this.hotelService.addFacility(facility).toPromise();
-    this.hotel$ = await this.hotelService.addFacilityToHotel(this.id, fac.id);
+    this.facilityAdd = true;
+    if(this.facilityName == '' || this.facilityDescription == ''){
+      return;
+    }else{
+      let facility = {
+        name: this.facilityName,
+        description: this.facilityDescription
+      };
+      this.facilityName = '';
+      this.facilityDescription = '';
+      let fac = await this.hotelService.addFacility(facility).toPromise();
+      this.hotel$ = await this.hotelService.addFacilityToHotel(this.id, fac.id);
+    }
+    this.facilityAdd = false;
   }
 
   showAddFacility(){
+    this.facilityAdd = false;
     if(this.isFacility){
       this.isFacility = false;
     }else{
@@ -163,18 +175,25 @@ export class AdminOneHotelComponent implements OnInit {
   }
 
   async addImage(){
-    let image = {
-      name: this.imageName,
-      url: this.imageUrl
-    };
-    this.imageName = '';
-    this.imageUrl = '';
-    this.labelImage = "../../assets/addImageIcon.png";
-    let img = await this.hotelService.addImage(image).toPromise();
-    this.hotel$ = await this.hotelService.addImageToHotel(this.id, img.id);
+    this.imageAdd = true;
+    if(this.imageName == '' || this.imageUrl == ''){
+      return;
+    }else{
+      let image = {
+        name: this.imageName,
+        url: this.imageUrl
+      };
+      this.imageName = '';
+      this.imageUrl = '';
+      this.labelImage = "../../assets/addImageIcon.png";
+      let img = await this.hotelService.addImage(image).toPromise();
+      this.hotel$ = await this.hotelService.addImageToHotel(this.id, img.id);
+    }
+    this.imageAdd = false;
   }
 
   showAddImage(){
+    this.imageAdd = false;
     if(this.isImage){
       this.isImage = false;
     }else{
@@ -198,29 +217,36 @@ export class AdminOneHotelComponent implements OnInit {
 
   //Roomtype 
   async addRoomType(){
-    let roomtype = {
-      name: this.roomTypeName,
-      description: this.roomTypeDescription,
-      maxAdult: this.roomTypeMaxAdult
-    };
-    this.roomTypeName = '';
-    this.roomTypeDescription = '';
-    this.roomTypeMaxAdult = 0;
-    let rt = await this.hotelService.addRoomType(roomtype).toPromise();
-
-    if (this.roomTypeFacilities.length > 0) {
-      await Promise.all(this.roomTypeFacilities.map(async (roomTypeFacility) => {
-        let fac = await this.hotelService.addRoomTypeFacility(roomTypeFacility).toPromise();
-        let r = await this.hotelService.addRoomTypeFacilityToRoomType(rt.id, fac.id).toPromise();
-        rt = r;
-
-      }));
+    this.roomtypeAdd = true;
+    if(this.roomTypeName == '' || this.roomTypeDescription == '' || this.roomTypeMaxAdult < 1){
+      return;
+    }else{
+      let roomtype = {
+        name: this.roomTypeName,
+        description: this.roomTypeDescription,
+        maxAdult: this.roomTypeMaxAdult
+      };
+      this.roomTypeName = '';
+      this.roomTypeDescription = '';
+      this.roomTypeMaxAdult = 0;
+      let rt = await this.hotelService.addRoomType(roomtype).toPromise();
+  
+      if (this.roomTypeFacilities.length > 0) {
+        await Promise.all(this.roomTypeFacilities.map(async (roomTypeFacility) => {
+          let fac = await this.hotelService.addRoomTypeFacility(roomTypeFacility).toPromise();
+          let r = await this.hotelService.addRoomTypeFacilityToRoomType(rt.id, fac.id).toPromise();
+          rt = r;
+  
+        }));
+      }
+      this.roomTypeFacilities.splice(0, this.roomTypeFacilities.length);
+      this.hotel$ = await this.hotelService.addRoomTypeToHotel(this.id, rt.id);
     }
-    this.roomTypeFacilities.splice(0, this.roomTypeFacilities.length);
-    this.hotel$ = await this.hotelService.addRoomTypeToHotel(this.id, rt.id);
+    this.roomtypeAdd = false;
   }
 
   showAddRoomType(){
+    this.roomtypeAdd = false;
     if(this.isRoomType){
       this.isRoomType = false;
     }else{
@@ -234,15 +260,22 @@ export class AdminOneHotelComponent implements OnInit {
   }
 
   addRoomTypeFacility(){
-    this.roomTypeFacilities.push({
-      name: this.roomTypeFacilityName,
-      description: this.roomTypeFacilityDescription
-    });
-    this.roomTypeFacilityName = '';
-    this.roomTypeFacilityDescription = '';
+    this.roomtypeFacilityAdd = true;
+    if(this.roomTypeFacilityName == '' || this.roomTypeFacilityDescription == ''){
+      return;
+    }else{
+      this.roomTypeFacilities.push({
+        name: this.roomTypeFacilityName,
+        description: this.roomTypeFacilityDescription
+      });
+      this.roomTypeFacilityName = '';
+      this.roomTypeFacilityDescription = '';
+    }
+    this.roomtypeFacilityAdd = false;
   }
 
   showAddRoomTypeFacility(){
+    this.roomtypeFacilityAdd = false;
     if(this.isRoomTypeFacility){
       this.isRoomTypeFacility = false;
     }else{
@@ -258,17 +291,24 @@ export class AdminOneHotelComponent implements OnInit {
   // Supplement
 
   async addSupplement(){
-    let supplement = {
-      name: this.supplementName,
-      description: this.supplementDescription
-    };
-    this.supplementName = '';
-    this.supplementDescription = '';
-    let sup = await this.hotelService.addSupplement(supplement).toPromise();
-    this.hotel$ = await this.hotelService.addSupplementToHotel(this.id, sup.id);
+    this.supplementAdd = true;
+    if(this.supplementName == '' || this.supplementDescription == ''){
+      return;
+    }else{
+      let supplement = {
+        name: this.supplementName,
+        description: this.supplementDescription
+      };
+      this.supplementName = '';
+      this.supplementDescription = '';
+      let sup = await this.hotelService.addSupplement(supplement).toPromise();
+      this.hotel$ = await this.hotelService.addSupplementToHotel(this.id, sup.id);
+    }
+    this.supplementAdd = false;
   }
 
   showAddSupplement(){
+    this.supplementAdd = false;
     if(this.isSupplement){
       this.isSupplement = false;
     }else{
