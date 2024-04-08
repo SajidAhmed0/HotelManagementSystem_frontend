@@ -18,6 +18,8 @@
                 <h3>RoomType Pricings</h3>
                 <button id="btn-show" type="button" (click)="showAddRoomTypePring()">Add RoomType Pricing</button>
                 <div id="facility-add" *ngIf="isRoomTypePricing">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="roomTypeUndefined">Select a Roomtype to price</span>
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="this.roomTypePrice  < 1 || this.roomTypeRooms < 1">Numaric values should be greater than 0</span>
                     <br><br>
                     RoomType: <select [(ngModel)]="roomType" id="">
                         <option *ngFor="let rt of roomTypes$ | async;" value={{rt.id}}>
@@ -58,6 +60,8 @@
                 <h3>Supplement Pricings</h3>
                 <button id="btn-show" type="button" (click)="showAddSupplementPring()">Add Supplement Pricing</button>
                 <div id="facility-add" *ngIf="isSupplementPricing">
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="supplementUndefined">Select a Supplement to price</span>
+                    <span style="display: block;color: red; font-size: small; margin: 0px 10px;" *ngIf="supplementPrice < 1">Price should be greater than 0</span>
                     <br><br>
                     Supplement: <select [(ngModel)]="supplement" id="">
                         <option *ngFor="let sp of supplements$ | async;" value={{sp.id}}>

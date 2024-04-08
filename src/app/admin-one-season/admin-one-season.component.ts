@@ -37,12 +37,14 @@ export class AdminOneSeasonComponent implements OnInit{
   supplements$!: Observable<any>;
   supplement: any;
 
+  roomTypeUndefined = false;
   isRoomTypePricing: boolean = false;
-  roomTypePrice: number = 0;
-  roomTypeRooms: number = 0;
+  roomTypePrice: number = 1;
+  roomTypeRooms: number = 1;
 
+  supplementUndefined = false;
   isSupplementPricing: boolean = false;
-  supplementPrice: number = 0;
+  supplementPrice: number = 1;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -66,17 +68,24 @@ export class AdminOneSeasonComponent implements OnInit{
 
   async addRoomTypePricing(roomTypeId: any){
     console.log(roomTypeId);
-    
-    let pricing = {
-      price: this.roomTypePrice,
-      noOfRooms: this.roomTypeRooms
+    this.roomTypeUndefined = false;
+    if(roomTypeId == undefined || this.roomTypePrice  < 1 || this.roomTypeRooms < 1){
+      if(roomTypeId == undefined){
+        this.roomTypeUndefined = true;
+      }
+      return;
+    }else{
+      let pricing = {
+        price: this.roomTypePrice,
+        noOfRooms: this.roomTypeRooms
+      }
+      this.roomTypePrice = 1;
+      this.roomTypeRooms = 1;
+  
+      this.hotelService.addSeasonRoomTypePricing(this.contractId, this.seasonId, roomTypeId, pricing).subscribe((con) => {
+        this.season$ = this.hotelService.getSeason(this.seasonId);
+      });
     }
-    this.roomTypePrice = 0;
-    this.roomTypeRooms = 0;
-
-    this.hotelService.addSeasonRoomTypePricing(this.contractId, this.seasonId, roomTypeId, pricing).subscribe((con) => {
-      this.season$ = this.hotelService.getSeason(this.seasonId);
-    });
     
   }
 
@@ -95,6 +104,7 @@ export class AdminOneSeasonComponent implements OnInit{
   // }
 
   showAddRoomTypePring(){
+    this.roomTypeUndefined = false;
     if(this.isRoomTypePricing){
       this.isRoomTypePricing = false;
     }else{
@@ -109,19 +119,28 @@ export class AdminOneSeasonComponent implements OnInit{
 
   async addSupplementPricing(supplementId: any){
     console.log(supplementId);
-    
-    let pricing = {
-      price: this.supplementPrice
+    this.supplementUndefined = false;
+    if(supplementId == undefined || this.supplementPrice < 1){
+      if(supplementId == undefined){
+        this.supplementUndefined = true;
+      }
+      return;
+    }else{
+      let pricing = {
+        price: this.supplementPrice
+      }
+      this.supplementPrice = 1;
+  
+      this.hotelService.addSeasonSupplementPricing(this.contractId, this.seasonId, supplementId, pricing).subscribe((con) => {
+        this.season$ = this.hotelService.getSeason(this.seasonId);
+      });
     }
-    this.supplementPrice = 0;
-
-    this.hotelService.addSeasonSupplementPricing(this.contractId, this.seasonId, supplementId, pricing).subscribe((con) => {
-      this.season$ = this.hotelService.getSeason(this.seasonId);
-    });
+    
     
   }
 
   showAddSupplementPring(){
+    this.supplementUndefined = false;
     if(this.isSupplementPricing){
       this.isSupplementPricing = false;
     }else{
