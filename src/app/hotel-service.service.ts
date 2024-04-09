@@ -224,4 +224,13 @@ export class HotelServiceService {
   getBooking(bookingId: any){
     return this.http.get<any>(`http://localhost:8080/bookings/${bookingId}`);
   }
+
+  //authauth/signin
+  signin(signin: any){
+    return this.http.post<any>(`http://localhost:8080/auth/signin`, signin);
+  }
+
+  signup(signup: any){
+    return this.http.post<any>(`http://localhost:8080/auth/signup`, signup);
+  }
 }

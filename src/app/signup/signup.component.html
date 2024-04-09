@@ -5,58 +5,61 @@
     </div>
     <div id="signup-details">
         <h2 style="text-align: center;">Signup</h2>
-        <form class="example-form" (ngSubmit)="signup()">
+        <form [formGroup]="signupForm" class="example-form" (ngSubmit)="signup()">
             <div class="divide-class">
                 <mat-form-field class="example-full-width">
                   <mat-label>First Name</mat-label>
-                  <input matInput [(ngModel)]="firstName" name="firstName" placeholder="Ex. John" value="">
+                  <input matInput formControlName="firstName" [(ngModel)]="firstName" name="firstName" placeholder="Ex. John" value="" required>
                 </mat-form-field>
               
                 <mat-form-field class="example-full-width">
                     <mat-label>Last Name</mat-label>
-                    <input matInput [(ngModel)]="lastName" name="lastName" placeholder="Ex. Doe" value="">
+                    <input matInput formControlName="lastName" [(ngModel)]="lastName" name="lastName" placeholder="Ex. Doe" value="">
                 </mat-form-field>
             </div>
 
             <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input type="email" [(ngModel)]="email" name="email"  matInput placeholder="Ex. pat@example.com">
+                <input type="email" formControlName="email" [(ngModel)]="email" name="email"  matInput placeholder="Ex. pat@example.com" required>
              </mat-form-field>
              <div class="divide-class">
                  <mat-form-field class="example-full-width">
                    <mat-label>Country</mat-label>
-                   <input matInput [(ngModel)]="country" name="country" placeholder="Ex. Sri Lanka" value="Sri Lanka">
+                   <input matInput formControlName="country"  [(ngModel)]="country" name="country" placeholder="Ex. Sri Lanka" value="Sri Lanka" required>
                  </mat-form-field>
                  <mat-form-field class="example-full-width">
                    <mat-label>City</mat-label>
-                   <input matInput [(ngModel)]="district" name="district" placeholder="Ex. Colombo" value="">
+                   <input matInput formControlName="district" [(ngModel)]="district" name="district" placeholder="Ex. Colombo" value="" required>
                  </mat-form-field>
              </div>
              <div class="divide-class">
-                 <mat-form-field hintLabel="Max 10 characters">
+                 <mat-form-field hintLabel="Max 10 digits">
                    <mat-label>Phone</mat-label>
-                   <input matInput [(ngModel)]="phone" name="phone" #input maxlength="10" placeholder="Ex. 0771234567">
+                   <input matInput formControlName="phone" [(ngModel)]="phone" name="phone" #input pattern="[0-9]{10}" maxlength="10" placeholder="Ex. 0771234567" required>
                    <mat-hint align="end">{{input.value.length}}/10</mat-hint>
                  </mat-form-field>
                  <mat-form-field class="example-full-width">
                    <mat-label>Address</mat-label>
-                   <input matInput [(ngModel)]="street" name="street"  value="">
+                   <input matInput formControlName="street" [(ngModel)]="street" name="street"  value="" required>
                  </mat-form-field>
              </div>
               <mat-form-field>
                 <mat-label>Enter your password</mat-label>
-                <input matInput [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'">
+                <input matInput formControlName="password" [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'" required>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                   <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Re-write your password</mat-label>
-                <input matInput [(ngModel)]="reWritePassword" name="reWritePassword" [type]="hide ? 'password' : 'text'">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <input matInput formControlName="reWritePassword" [(ngModel)]="reWritePassword" name="reWritePassword" (change)="checkPassword()" [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" required>
                   <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
               </mat-form-field>
+              <span style="color: red; font-size: small; margin: 0px 10px;" *ngIf="notEquels && signupForm.controls['reWritePassword']!.touched">
+                password shoul match
+              </span>
               <button id="btn-add">Signup</button>
           </form>
     </div>

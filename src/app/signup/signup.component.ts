@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 
@@ -7,6 +7,9 @@ import { FooterComponent } from "../footer/footer.component";
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import { HotelServiceService } from '../hotel-service.service';
+import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-signup',
@@ -19,10 +22,12 @@ import {MatIconModule} from '@angular/material/icon';
         MatFormFieldModule,
         MatIconModule,
         NavbarComponent,
-        FooterComponent
+        FooterComponent,
+        ReactiveFormsModule,
+        NgIf
     ]
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   hide = true;
   firstName: string = '';
   lastName: string = '';
@@ -34,18 +39,64 @@ export class SignupComponent {
   password: string = '';
   reWritePassword: string = '';
 
-  signup(){
-    let user = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      password: this.password,
-      phone: this.phone,
-      country: this.country,
-      district: this.district,
-      street: this.street
-    }
+  //validation
+  signupForm!: FormGroup;
+  submitted = false;
+  notEquels = true;
 
-    // signup service
+  constructor(
+    private hotelService: HotelServiceService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+  ){}
+
+  ngOnInit(): void {
+    // validation
+    this.signupForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: [''],
+      email: ['', [Validators.required, Validators.email]],
+      country: ['', Validators.required],
+      district: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern]],
+      street: ['', Validators.required],
+      password: ['', Validators.required],
+      reWritePassword: ['', Validators.required]
+    });
+  }
+
+  async signup(){
+    this.submitted = true;
+    this.signupForm.markAllAsTouched();
+    if(this.signupForm.invalid || this.notEquels){
+      console.log('error');
+      
+      return;
+    }else{
+      console.log('fine');
+      let user = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+        phone: this.phone,
+        country: this.country,
+        district: this.district,
+        street: this.street
+      }
+      
+      let res = await this.hotelService.signup(user).toPromise();
+
+      this.router.navigate([`/signin`]);
+    }
+    
+    
+  }
+
+  checkPassword(){
+    this.notEquels = true;
+    if(this.password == this.reWritePassword){
+      this.notEquels = false;
+    }
   }
 }

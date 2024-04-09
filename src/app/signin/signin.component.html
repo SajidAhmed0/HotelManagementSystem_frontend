@@ -5,14 +5,14 @@
     </div>
     <div id="signin-details">
         <h2 style="text-align: center;">Signin</h2>
-        <form class="example-form" (ngSubmit)="signin()">
+        <form [formGroup]="signinForm" class="example-form" (ngSubmit)="signin()">
             <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input type="email" [(ngModel)]="email" name="email" matInput placeholder="Ex. pat@example.com">
+                <input type="email" formControlName="email" [(ngModel)]="email" name="email" matInput placeholder="Ex. pat@example.com" required>
              </mat-form-field>
               <mat-form-field>
                 <mat-label>Enter your password</mat-label>
-                <input matInput [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'">
+                <input matInput formControlName="password" [(ngModel)]="password" name="password" [type]="hide ? 'password' : 'text'" required>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                   <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
