@@ -81,7 +81,10 @@
                                             <span matListItemLine>{{discount.percentage}}%</span>
                                             <span matListItemLine>Days Prior To Arrival: {{discount.daysPriorToArrival}}</span>
                                         </div>
-                                        <button id="btn-delete" type="button" (click)="removeDiscount(i)">remove</button>
+                                        <div>
+                                            <button id="btn-view" type="button" [routerLink]="['editdiscount', discount.id]">Edit</button>
+                                            <button id="btn-delete" type="button" (click)="removeDiscount(discount.id)">remove</button>
+                                        </div>
                                     </div>
                                 </mat-list-item>
                             </mat-list>
@@ -186,6 +189,10 @@
                     </tr>
                 </table> -->
             </div>
+        </div>
+        <div style="display: flex;justify-content: space-between;">
+            <div ></div>
+            <button id="btn-delete" type="button" (click)="deleteContract()">Delete Contract</button>
         </div>
     </div>
 </div>

@@ -45,7 +45,7 @@
                                     <span matListItemLine>Price: {{pricing.price}}</span>
                                     <span matListItemLine>No. of Rooms: {{pricing.noOfRooms}}</span>
                                 </div>
-                                <button id="btn-delete" type="button" >Remove</button>
+                                <button id="btn-delete" type="button" (click)="removeRoomTypePricing(pricing.id.roomTypeId)" >Remove</button>
                             </div>
                         </mat-list-item>
                     </mat-list>
@@ -83,7 +83,7 @@
                                     <span matListItemLine>Supplement Id: {{pricing.id.supplementId}}</span>
                                     <span matListItemLine>Price: {{pricing.price}}</span>
                                 </div>
-                                <button id="btn-delete" type="button" >Remove</button>
+                                <button id="btn-delete" type="button" (click)="removeSupplementPricing(pricing.id.supplementId)" >Remove</button>
                             </div>
                         </mat-list-item>
                     </mat-list>
@@ -106,7 +106,10 @@
             </div>
             
         </div> -->
-    
+        <div style="display: flex;justify-content: space-between;">
+            <div ></div>
+            <button id="btn-delete" type="button" (click)="deleteSeason()">Delete Season</button>
+        </div>
     </div>
 </div>
 <app-footer></app-footer>

@@ -11,6 +11,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelServiceService } from '../hotel-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-edit-hotel',
@@ -75,6 +76,7 @@ export class EditHotelComponent implements OnInit {
     private activatedRoute: ActivatedRoute, 
     private hotelService: HotelServiceService,
     private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -121,6 +123,7 @@ export class EditHotelComponent implements OnInit {
     };
 
     let h = await this.hotelService.updateHotel(this.id, hotel).toPromise();
+    this._snackBar.open("Successfully hotel updated", "Close", {duration: 3000});
     this.router.navigate([`/adminOneHotel/${h.id}`]);
   }
 }

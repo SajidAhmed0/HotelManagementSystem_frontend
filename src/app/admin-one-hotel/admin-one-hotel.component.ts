@@ -14,6 +14,7 @@ import { FooterComponent } from "../footer/footer.component";
 //material ui
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-admin-one-hotel',
@@ -107,7 +108,9 @@ export class AdminOneHotelComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute, 
     private hotelService: HotelServiceService,
-    private fireStorage: AngularFireStorage
+    private fireStorage: AngularFireStorage,
+    private _snackBar: MatSnackBar,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -137,6 +140,7 @@ export class AdminOneHotelComponent implements OnInit {
       this.facilityDescription = '';
       let fac = await this.hotelService.addFacility(facility).toPromise();
       this.hotel$ = await this.hotelService.addFacilityToHotel(this.id, fac.id);
+      this._snackBar.open("Successfully facility added", "Close", {duration: 3000});
     }
     this.facilityAdd = false;
   }
@@ -153,8 +157,12 @@ export class AdminOneHotelComponent implements OnInit {
 
   async removeFacility(i: any){
     // delete facility from db
-    await this.hotelService.deleteFacility(i).toPromise();
-    window.location.reload();
+    const result = window.confirm('Are you sure you want to delete the facility?');
+    if(result){
+      await this.hotelService.deleteFacility(i).toPromise();
+      this._snackBar.open("Successfully facility deleted", "Close", {duration: 3000});
+      window.location.reload();
+    }
   }
 
   async changeImage(event: any){
@@ -191,6 +199,7 @@ export class AdminOneHotelComponent implements OnInit {
       this.labelImage = "../../assets/addImageIcon.png";
       let img = await this.hotelService.addImage(image).toPromise();
       this.hotel$ = await this.hotelService.addImageToHotel(this.id, img.id);
+      this._snackBar.open("Successfully image added", "Close", {duration: 3000});
     }
     this.imageAdd = false;
   }
@@ -206,11 +215,18 @@ export class AdminOneHotelComponent implements OnInit {
   }
 
   async removeImage(image: any){
-    // delete image from db
-    await this.deleteImageFromFireBase(image.url);
-    await this.hotelService.deleteImage(image.id).toPromise();
-    // this.activatedRoute.rel
-    window.location.reload();
+
+    const result = window.confirm('Are you sure you want to delete the image?');
+
+    if(result){
+      // delete image from db
+      await this.deleteImageFromFireBase(image.url);
+      await this.hotelService.deleteImage(image.id).toPromise();
+      this._snackBar.open("Successfully image deleted", "Close", {duration: 3000});
+      // this.activatedRoute.rel
+      window.location.reload();
+    }
+    
   }
 
   deleteImageFromFireBase(url: string): any {
@@ -244,6 +260,7 @@ export class AdminOneHotelComponent implements OnInit {
       }
       this.roomTypeFacilities.splice(0, this.roomTypeFacilities.length);
       this.hotel$ = await this.hotelService.addRoomTypeToHotel(this.id, rt.id);
+      this._snackBar.open("Successfully roomtype added", "Close", {duration: 3000});
     }
     this.roomtypeAdd = false;
   }
@@ -260,6 +277,18 @@ export class AdminOneHotelComponent implements OnInit {
 
   removeRoomType(i: any){
     // delete facility from db
+    const result = window.confirm('Are you sure you want to delete the roomtype?');
+    if(result){
+      this.hotelService.deleteRoomType(i).subscribe({
+        next: val => {
+          this._snackBar.open("Successfully roomtype deleted", "Close", {duration: 3000});
+          window.location.reload();
+        },
+        error: err => {
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000});
+        }
+      });
+    }
   }
 
   addRoomTypeFacility(){
@@ -306,6 +335,7 @@ export class AdminOneHotelComponent implements OnInit {
       this.supplementDescription = '';
       let sup = await this.hotelService.addSupplement(supplement).toPromise();
       this.hotel$ = await this.hotelService.addSupplementToHotel(this.id, sup.id);
+      this._snackBar.open("Successfully supplement added", "Close", {duration: 3000});
     }
     this.supplementAdd = false;
   }
@@ -322,6 +352,18 @@ export class AdminOneHotelComponent implements OnInit {
 
   removeSupplement(i: any){
     // delete facility from db
+    const result = window.confirm('Are you sure you want to delete the supplement?');
+    if(result){
+      this.hotelService.deleteSupplement(i).subscribe({
+        next: val => {
+          this._snackBar.open("Successfully supplement deleted", "Close", {duration: 3000});
+          window.location.reload();
+        },
+        error: err => {
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000});
+        }
+      });
+    }
   }
 
   // Contract
@@ -363,6 +405,7 @@ export class AdminOneHotelComponent implements OnInit {
       this.discounts.splice(0, this.discounts.length);
   
       this.hotel$ = await this.hotelService.addContractToHotel(this.id, con.id);
+      this._snackBar.open("Successfully contract added", "Close", {duration: 3000});
     }
     this.contractAdd = false;
   }
@@ -447,5 +490,27 @@ export class AdminOneHotelComponent implements OnInit {
 
   removeDiscount(i: any){
     this.discounts.splice(i, 1);
+  }
+
+  deleteHotel(){
+    const result = window.confirm('Are you sure you want to delete?');
+    if (result) {
+      this.hotelService.deleteHotel(this.id).subscribe({
+        next: (ans) => {
+          console.log(ans);
+          
+          this._snackBar.open("Successfully deleted", "Close", {duration: 3000});
+          this.router.navigate([`/adminhotels`]);
+          
+        },
+        error: err =>{
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000, panelClass: "error-snackbar"});
+        }
+      });
+
+    } else {
+      // User clicked Cancel
+      console.log('User canceled delete.');
+    }
   }
 }

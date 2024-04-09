@@ -202,3 +202,18 @@ button{
     }
 
 }
+
+#btn-delete{
+  padding: 10px;
+  margin: 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: #c23030;
+  color: white;
+  height: fit-content;
+  width: fit-content;
+}
+
+.error-snackbar{
+  color: red;
+}

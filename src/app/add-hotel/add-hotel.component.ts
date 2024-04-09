@@ -15,6 +15,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { FooterComponent } from "../footer/footer.component";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-add-hotel',
@@ -108,7 +109,8 @@ export class AddHotelComponent implements OnInit {
     private hotelService: HotelServiceService, 
     private router: Router,
     private fireStorage: AngularFireStorage,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ){}
   ngOnInit(): void {
     this.filteredLocations = this.myControl.valueChanges.pipe(
@@ -168,6 +170,7 @@ export class AddHotelComponent implements OnInit {
       }
   
       console.log(htl); // This will log the final response after all operations are completed
+      this._snackBar.open("Successfully hotel addded", "Close", {duration: 3000});
       this.router.navigate([`/adminOneHotel/${htl.id}`]);
     } catch (error) {
       console.error('Error:', error);

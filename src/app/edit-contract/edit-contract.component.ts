@@ -6,6 +6,7 @@ import { Observable, switchMap } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelServiceService } from '../hotel-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-edit-contract',
@@ -33,6 +34,7 @@ export class EditContractComponent implements OnInit{
     private activatedRoute: ActivatedRoute, 
     private hotelService: HotelServiceService,
     private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,7 @@ export class EditContractComponent implements OnInit{
     };
 
     let c = await this.hotelService.updateContract(this.contractId, contact).toPromise();
+    this._snackBar.open("Successfully contract updated", "Close", {duration: 3000});
     this.router.navigate([`adminOneHotel/${this.hotelId}/adminOneContract/${this.contractId}`]);
   }
 

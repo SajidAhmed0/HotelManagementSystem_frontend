@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { FooterComponent } from "../footer/footer.component";
 // material ui
 import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-admin-one-contract',
@@ -52,7 +53,9 @@ export class AdminOneContractComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private hotelService: HotelServiceService
+    private hotelService: HotelServiceService,
+    private _snackBar: MatSnackBar,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -144,6 +147,18 @@ export class AdminOneContractComponent implements OnInit {
 
   removeDiscount(i: any){
     // remove discount
+    const result = window.confirm('Are you sure you want to delete the discount?');
+    if(result){
+      this.hotelService.deleteDiscount(i).subscribe({
+        next: val => {
+          this._snackBar.open("Successfully discount deleted", "Close", {duration: 3000});
+          window.location.reload();
+        },
+        error: err => {
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000});
+        }
+      });
+    }
   }
 
   getSeasonName(seasonId: any, seasons: any[]){
@@ -162,6 +177,25 @@ export class AdminOneContractComponent implements OnInit {
     let supplement = supplements.filter((sup) => sup.id == supplementId)
 
     return supplement[0].name;
+  }
+
+  deleteContract(){
+    const result = window.confirm('Are you sure you want to delete the contract?');
+    if (result) {
+      this.hotelService.deleteContract(this.contractId).subscribe({
+        next: (ans) => {
+          console.log(ans);
+          
+          this._snackBar.open("Successfully deleted the contract", "Close", {duration: 3000});
+          this.router.navigate([`/adminOneHotel/${this.hotelId}`]);
+          
+        },
+        error: err =>{
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000, panelClass: "error-snackbar"});
+        }
+      });
+
+    }
   }
   
 }

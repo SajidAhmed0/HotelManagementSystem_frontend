@@ -149,6 +149,7 @@
                                         </div>
                                         <div >
                                             <button id="btn-view" [routerLink]="['editroomtype/', roomType.id]" type="button">Edit</button>
+                                            <button id="btn-delete" type="button" (click)="removeRoomType(roomType.id)">Delete</button>
                                         </div>
                                     </div>
                                     <div style="align-items: left;" *ngIf="roomType.roomTypeFacilities.length>0">
@@ -191,7 +192,10 @@
                                     <span matListItemTitle>{{ supplement.name}}</span>
                                     <span matListItemLine>{{ supplement.description}}</span>
                                 </div>
-                                <button id="btn-view" type="button" [routerLink]="['editsupplement', supplement.id]">Edit</button>
+                                <div>
+                                    <button id="btn-view" type="button" [routerLink]="['editsupplement', supplement.id]">Edit</button>
+                                    <button id="btn-delete" type="button" (click)="removeSupplement(supplement.id)">Delete</button>
+                                </div>
                             </div>
                         </mat-list-item>
                     </mat-list>
@@ -321,6 +325,10 @@
                     <a [routerLink]="['adminOneContract/', contract.id]">view</a>
                 </li> -->
             </ul>
+        </div>
+        <div style="display: flex;justify-content: space-between;">
+            <div ></div>
+            <button id="btn-delete" type="button" (click)="deleteHotel()">Delete Hotel</button>
         </div>
     </div>
 </div>

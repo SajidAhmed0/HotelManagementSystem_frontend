@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Observable, map, switchMap } from 'rxjs';
 import { HotelServiceService } from '../hotel-service.service';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ import { FooterComponent } from "../footer/footer.component";
 
 // material ui
 import {MatListModule} from '@angular/material/list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-admin-one-season',
@@ -48,7 +49,9 @@ export class AdminOneSeasonComponent implements OnInit{
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private hotelService: HotelServiceService
+    private hotelService: HotelServiceService,
+    private _snackBar: MatSnackBar,
+    private router: Router
   ){}
   ngOnInit(): void {
     this.season$ = this.activatedRoute.paramMap.pipe(
@@ -113,8 +116,23 @@ export class AdminOneSeasonComponent implements OnInit{
     
   }
 
-  removeRoomTypePricing(){
+  removeRoomTypePricing(roomtypeId: any){
     // remove room type pricing
+    const result = window.confirm('Are you sure you want to delete the roomtype pricing?');
+    if(result){
+      this.hotelService.deleteSeasonRoomTypePricing(this.contractId, this.seasonId, roomtypeId).subscribe({
+        next: (ans) => {
+          console.log(ans);
+          
+          this._snackBar.open("Successfully deleted the roomtype pricing", "Close", {duration: 3000});
+          window.location.reload();
+          
+        },
+        error: err =>{
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000, panelClass: "error-snackbar"});
+        }
+      });
+    }
   }
 
   async addSupplementPricing(supplementId: any){
@@ -149,7 +167,41 @@ export class AdminOneSeasonComponent implements OnInit{
     
   }
 
-  removeSupplementPricing(){
+  removeSupplementPricing(supplementId: any){
     // remove supplement pricing
+    const result = window.confirm('Are you sure you want to delete the supplement pricing?');
+    if(result){
+      this.hotelService.deleteSeasonSupplementPricing(this.contractId, this.seasonId, supplementId).subscribe({
+        next: (ans) => {
+          console.log(ans);
+          
+          this._snackBar.open("Successfully deleted the supplement pricing", "Close", {duration: 3000});
+          window.location.reload();
+          
+        },
+        error: err =>{
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000, panelClass: "error-snackbar"});
+        }
+      });
+    }
+  }
+
+  deleteSeason(){
+    const result = window.confirm('Are you sure you want to delete the season?');
+    if (result) {
+      this.hotelService.deleteSeason(this.seasonId).subscribe({
+        next: (ans) => {
+          console.log(ans);
+          
+          this._snackBar.open("Successfully deleted the season", "Close", {duration: 3000});
+          this.router.navigate([`/adminOneHotel/${this.hotelId}/adminOneContract/${this.contractId}`]);
+          
+        },
+        error: err =>{
+          this._snackBar.open("Cannot delete because of foreign key constraint", "Close", {duration: 3000, panelClass: "error-snackbar"});
+        }
+      });
+
+    }
   }
 }

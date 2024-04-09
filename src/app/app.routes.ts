@@ -20,6 +20,7 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { userGuard } from './user.guard';
 import { adminGuard } from './admin.guard';
+import { EditDiscountComponent } from './edit-discount/edit-discount.component';
 
 export const routes: Routes = [
     {path: 'adminhotels', component: AdminHotelsComponent, canActivate: [adminGuard]},
@@ -30,6 +31,7 @@ export const routes: Routes = [
     {path: 'adminOneHotel/:hotelId/editsupplement/:supplementId', component: EditSupplementComponent, canActivate: [adminGuard]},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId', component: AdminOneContractComponent, canActivate: [adminGuard]},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/editcontract', component: EditContractComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/editdiscount/:discountId', component: EditDiscountComponent, canActivate: [adminGuard]},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent, canActivate: [adminGuard]},
     {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId/editseason', component: EditSeasonComponent, canActivate: [adminGuard]},
 

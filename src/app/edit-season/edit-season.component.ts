@@ -6,6 +6,7 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HotelServiceService } from '../hotel-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-edit-season',
@@ -34,6 +35,7 @@ export class EditSeasonComponent implements OnInit {
     private activatedRoute: ActivatedRoute, 
     private hotelService: HotelServiceService,
     private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +71,7 @@ export class EditSeasonComponent implements OnInit {
     };
 
     let s = await this.hotelService.updateSeason(this.seasonId, season).toPromise();
+    this._snackBar.open("Successfully season updated", "Close", {duration: 3000});
     this.router.navigate([`adminOneHotel/${this.hotelId}/adminOneContract/${this.contractId}/adminOneSeason/${this.seasonId}`]);
   }
 

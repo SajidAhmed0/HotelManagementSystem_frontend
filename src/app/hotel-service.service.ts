@@ -16,6 +16,10 @@ export class HotelServiceService {
     return this.http.put<any>(`http://localhost:8080/hotels/${hotelId}`, hotel);
   }
 
+  deleteHotel(hotelId: any){
+    return this.http.delete(`http://localhost:8080/hotels/${hotelId}`, {responseType: 'text'});
+  }
+
   getHotel(id: any){
     return this.http.get<any>(`http://localhost:8080/hotels/${id}`);
   }
@@ -72,6 +76,10 @@ export class HotelServiceService {
     return this.http.put<any>(`http://localhost:8080/roomtypes/${roomtypeId}`, roomtype);
   }
 
+  deleteRoomType(roomtypeId: any){
+    return this.http.delete(`http://localhost:8080/roomtypes/${roomtypeId}`, {responseType: 'text'});
+  }
+
   getRoomType(roomtypeId : any){
     return this.http.get<any>(`http://localhost:8080/roomtypes/${roomtypeId}`);
   }
@@ -96,6 +104,10 @@ export class HotelServiceService {
     return this.http.put<any>(`http://localhost:8080/supplements/${supplementId}`, supplement);
   }
 
+  deleteSupplement(supplementId: any){
+    return this.http.delete(`http://localhost:8080/supplements/${supplementId}`, {responseType: 'text'});
+  }
+
   getSupplement(supplementId : any){
     return this.http.get<any>(`http://localhost:8080/supplements/${supplementId}`);
   }
@@ -110,6 +122,10 @@ export class HotelServiceService {
 
   updateContract(contractId: any, contract: any){
     return this.http.put<any>(`http://localhost:8080/contracts/${contractId}`, contract);
+  }
+
+  deleteContract(contractId: any){
+    return this.http.delete(`http://localhost:8080/contracts/${contractId}`, {responseType: 'text'});
   }
 
   getContract(id: any){
@@ -128,6 +144,10 @@ export class HotelServiceService {
     return this.http.put<any>(`http://localhost:8080/seasons/${seasonId}`, season);
   }
 
+  deleteSeason(seasonId: any){
+    return this.http.delete(`http://localhost:8080/seasons/${seasonId}`, {responseType: 'text'});
+  }
+
   getSeason(id: any){
     return this.http.get<any>(`http://localhost:8080/seasons/${id}`);
   }
@@ -140,6 +160,18 @@ export class HotelServiceService {
     return this.http.post<any>('http://localhost:8080/discounts', discount);
   }
 
+  updateDiscount(discountId: any, discount: any){
+    return this.http.put<any>(`http://localhost:8080/discounts/${discountId}`, discount);
+  }
+
+  deleteDiscount(discountId: any){
+    return this.http.delete(`http://localhost:8080/discounts/${discountId}`, {responseType: 'text'});
+  }
+
+  getDiscount(id: any){
+    return this.http.get<any>(`http://localhost:8080/discounts/${id}`);
+  }
+
   addDiscountToContract(contractId: any, discountId: any){
     return this.http.put<any>(`http://localhost:8080/contracts/${contractId}/discounts/${discountId}`, null);
   }
@@ -148,8 +180,16 @@ export class HotelServiceService {
     return this.http.post<any>(`http://localhost:8080/contracts/${contractId}/seasons/${seasonId}/roomtypes/${roomTypeId}`, pricing);
   }
 
+  deleteSeasonRoomTypePricing(contractId: any, seasonId: any, roomTypeId: any){
+    return this.http.delete(`http://localhost:8080/contracts/${contractId}/seasons/${seasonId}/roomtypes/${roomTypeId}`, {responseType: 'text'});
+  }
+
   addSeasonSupplementPricing(contractId: any, seasonId: any, supplementId: any, pricing: any){
     return this.http.post<any>(`http://localhost:8080/contracts/${contractId}/seasons/${seasonId}/supplements/${supplementId}`, pricing);
+  }
+
+  deleteSeasonSupplementPricing(contractId: any, seasonId: any, supplementId: any){
+    return this.http.delete(`http://localhost:8080/contracts/${contractId}/seasons/${seasonId}/supplements/${supplementId}`, {responseType: 'text'});
   }
 
   searchHotels(search: any){
