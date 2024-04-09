@@ -11,6 +11,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { authInterceptorInterceptor } from './auth-interceptor.interceptor';
+import { userGuard } from './user.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,5 +23,6 @@ export const appConfig: ApplicationConfig = {
     ]),
     { provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }, provideAnimationsAsync(),
     provideNativeDateAdapter()
+    
   ]
 };

@@ -25,6 +25,6 @@ export class NavbarComponent {
  logout(){
   StorageService.logout();
   this._snackBar.open("Logged out", "Close", {duration: 3000, panelClass: "error-snackbar"});
-  this.router.navigate([`/login`]);
+  this.router.navigate([`/signin`]);
  }
 }

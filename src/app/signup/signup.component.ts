@@ -10,6 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { HotelServiceService } from '../hotel-service.service';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-signup',
@@ -48,6 +49,7 @@ export class SignupComponent implements OnInit {
     private hotelService: HotelServiceService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private _snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {
@@ -86,6 +88,8 @@ export class SignupComponent implements OnInit {
       }
       
       let res = await this.hotelService.signup(user).toPromise();
+
+      this._snackBar.open("Successfully Registered", "Close", {duration: 3000});
 
       this.router.navigate([`/signin`]);
     }

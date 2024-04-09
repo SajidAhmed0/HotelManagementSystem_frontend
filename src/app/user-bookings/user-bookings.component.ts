@@ -9,8 +9,6 @@ import { FooterComponent } from "../footer/footer.component";
 // material ui
 import {MatTableModule} from '@angular/material/table';
 import { StorageService } from '../storage.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../auth-interceptor';
 
 @Component({
     selector: 'app-user-bookings',

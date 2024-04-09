@@ -18,24 +18,26 @@ import { EditSupplementComponent } from './edit-supplement/edit-supplement.compo
 import { AdminHotelsComponent } from './admin-hotels/admin-hotels.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ContactusComponent } from './contactus/contactus.component';
+import { userGuard } from './user.guard';
+import { adminGuard } from './admin.guard';
 
 export const routes: Routes = [
-    {path: 'adminhotels', component: AdminHotelsComponent},
-    {path: 'addhotel', component: AddHotelComponent},
-    {path: 'edithotel/:id', component: EditHotelComponent},
-    {path: 'adminOneHotel/:id', component: AdminOneHotelComponent},
-    {path: 'adminOneHotel/:hotelId/editroomtype/:roomtypeId', component: EditRoomtypeComponent},
-    {path: 'adminOneHotel/:hotelId/editsupplement/:supplementId', component: EditSupplementComponent},
-    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId', component: AdminOneContractComponent},
-    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/editcontract', component: EditContractComponent},
-    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent},
-    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId/editseason', component: EditSeasonComponent},
+    {path: 'adminhotels', component: AdminHotelsComponent, canActivate: [adminGuard]},
+    {path: 'addhotel', component: AddHotelComponent, canActivate: [adminGuard]},
+    {path: 'edithotel/:id', component: EditHotelComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:id', component: AdminOneHotelComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:hotelId/editroomtype/:roomtypeId', component: EditRoomtypeComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:hotelId/editsupplement/:supplementId', component: EditSupplementComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId', component: AdminOneContractComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/editcontract', component: EditContractComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId', component: AdminOneSeasonComponent, canActivate: [adminGuard]},
+    {path: 'adminOneHotel/:hotelId/adminOneContract/:contractId/adminOneSeason/:seasonId/editseason', component: EditSeasonComponent, canActivate: [adminGuard]},
 
     {path: 'home', component: HomeComponent},
     {path: 'home/hotels/:id', component: HotelDetailsComponent},
-    {path: 'booking', component: BookingComponent},
-    {path: 'user/:userId/bookings', component: UserBookingsComponent},
-    {path: 'user/:userId/bookings/:bookingId', component: BookingDetailsComponent},
+    {path: 'booking', component: BookingComponent, canActivate: [userGuard]},
+    {path: 'user/:userId/bookings', component: UserBookingsComponent, canActivate: [userGuard]},
+    {path: 'user/:userId/bookings/:bookingId', component: BookingDetailsComponent, canActivate: [userGuard]},
 
     // signup & signin
     {path: 'signup', component: SignupComponent},

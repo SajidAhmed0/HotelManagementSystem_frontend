@@ -13,14 +13,13 @@
         <div *ngIf="storageService.isAdminLoggedIn()">
             <a href="/home">Home</a>
             <a href="/adminhotels">Hotels</a>
-            <a href="{{'user/'+storageService.getUserId()+'/bookings'}}">My bookings</a>
+            <a href="/addhotel">Add Hotel</a>
             <a href="/aboutus">About Us</a>
             <a href="/contactus">Contact Us</a>
             <button id="btn-add" (click)="logout()" type="button">Logout</button>
         </div>
         <div *ngIf="!storageService.isAdminLoggedIn() && !storageService.isUserLoggedIn()">
             <a href="/home">Home</a>
-            <a href="{{'user/'+storageService.getUserId()+'/bookings'}}">My bookings</a>
             <a href="/aboutus">About Us</a>
             <a href="/contactus">Contact Us</a>
             <a href="/signin">Login</a>

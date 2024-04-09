@@ -17,6 +17,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import { StorageService } from '../storage.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-booking',
@@ -63,7 +64,8 @@ export class BookingComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private hotelService: HotelServiceService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {
@@ -216,6 +218,8 @@ export class BookingComponent implements OnInit {
       let pay = await this.hotelService.addPayment(payment).toPromise();
 
       user = await this.hotelService.addPaymentToUser(this.userId, pay.id).toPromise();
+
+      this._snackBar.open("Booking Added", "Close", {duration: 3000});
 
       this.router.navigate([`/user/${this.userId}/bookings`]);
     } catch (error) {
