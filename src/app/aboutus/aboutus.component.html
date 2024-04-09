@@ -1,1 +1,46 @@
-<p>aboutus works!</p>
+<div id="about-us-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
+    </div>
+
+    <div id="about-us">
+        <h1 style="text-align: center;">ABOUT US</h1>
+        <p>Welcome to our company! We are dedicated to providing the best products and services to our customers.</p>
+  
+        <h2>Our Mission</h2>
+        <p>Our mission is to enrich people's lives by delivering innovative solutions that exceed expectations.</p>
+  
+        <h2>Company Overview</h2>
+        <p>We are a leading technology company specializing in software development and digital solutions. With a focus on quality and innovation, we strive to empower businesses and individuals to thrive in the digital age.</p>
+
+        <h2>Our Values</h2>
+        <ul>
+            <li><strong>Quality:</strong> We are committed to delivering products and services of the highest quality.</li>
+            <li><strong>Innovation:</strong> We embrace innovation and continuously seek new ways to improve and evolve.</li>
+            <li><strong>Integrity:</strong> We operate with honesty, transparency, and integrity in all aspects of our business.</li>
+            <li><strong>Customer Focus:</strong> We prioritize the needs and satisfaction of our customers above all else.</li>
+            <li><strong>Collaboration:</strong> We believe in the power of collaboration and teamwork to achieve shared goals.</li>
+        </ul>
+
+        <h2>Company History</h2>
+        <p>Founded in 2000, our company has grown from a small startup to a respected industry leader. Over the years, we have achieved numerous milestones and successes, earning recognition for our innovative solutions and dedication to customer satisfaction.</p>
+
+        <h2>Our Achievements</h2>
+        <ul>
+            <li>Received the Excellence of Beauty for Excellence in 2019.</li>
+            <li>Named among the Top 10 Technology Companies by Google in 2019.</li>
+            <li>Reached [Number] million users worldwide with our flagship product, [Product Name].</li>
+            <!-- Add more achievements as needed -->
+        </ul>
+
+        <h2>Our Team</h2>
+        <div *ngFor="let member of team" class="team-member">
+            <h3>{{ member.name }}</h3>
+            <p><strong>{{ member.position }}</strong></p>
+            <p>{{ member.bio }}</p>
+            <p><strong>Email:</strong> {{ member.email }}</p>
+            <p><strong>LinkedIn:</strong> <a href="{{ member.linkedin }}">{{ member.linkedin }}</a></p>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

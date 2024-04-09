@@ -1,1 +1,37 @@
-<p>contactus works!</p>
+<div id="contact-us-main">
+    <div style="background-color: black;">
+        <app-navbar></app-navbar>
+    </div>
+
+    <div id="contact-us">
+        <h1 style="text-align: center;">CONTACT US</h1>
+        <p>Have a question or need assistance? Feel free to reach out to us using the contact details below or by filling out the form.</p>
+
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <p><strong>Email:</strong> info&#64;example.com</p>
+            <p><strong>Phone:</strong> +1 (123) 456-7890</p>
+            <p><strong>Address:</strong> 123 Main Street, City, Country</p>
+        </div>
+
+        <div class="contact-form">
+            <h2>Send us a message</h2>
+            <form>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
