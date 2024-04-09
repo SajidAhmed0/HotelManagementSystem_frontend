@@ -16,6 +16,8 @@ import { EditSeasonComponent } from './edit-season/edit-season.component';
 import { EditRoomtypeComponent } from './edit-roomtype/edit-roomtype.component';
 import { EditSupplementComponent } from './edit-supplement/edit-supplement.component';
 import { AdminHotelsComponent } from './admin-hotels/admin-hotels.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { ContactusComponent } from './contactus/contactus.component';
 
 export const routes: Routes = [
     {path: 'adminhotels', component: AdminHotelsComponent},
@@ -37,5 +39,8 @@ export const routes: Routes = [
 
     // signup & signin
     {path: 'signup', component: SignupComponent},
-    {path: 'signin', component: SigninComponent}
+    {path: 'signin', component: SigninComponent},
+
+    {path: 'aboutus', component: AboutusComponent},
+    {path: 'contactus', component: ContactusComponent}
 ];

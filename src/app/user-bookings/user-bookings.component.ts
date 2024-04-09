@@ -8,6 +8,9 @@ import { FooterComponent } from "../footer/footer.component";
 
 // material ui
 import {MatTableModule} from '@angular/material/table';
+import { StorageService } from '../storage.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../auth-interceptor';
 
 @Component({
     selector: 'app-user-bookings',
@@ -26,7 +29,7 @@ import {MatTableModule} from '@angular/material/table';
 })
 export class UserBookingsComponent implements OnInit{
   bookings$!: Observable<any>;
-  userId: any;
+  userId = StorageService.getUserId();
 
   constructor(
     private activatedRoute: ActivatedRoute, 
@@ -36,7 +39,7 @@ export class UserBookingsComponent implements OnInit{
 
   ngOnInit(): void {
     // user id is 2 until authentication
-    this.bookings$ = this.hotelService.getAllBookingsOfUser(2);
+    this.bookings$ = this.hotelService.getAllBookingsOfUser(this.userId);
     // this.bookings$ = this.activatedRoute.paramMap.pipe(
     //   switchMap((paramsMap) => {
     //     this.userId = paramsMap.get('userId');

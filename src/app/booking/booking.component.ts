@@ -15,6 +15,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { FooterComponent } from "../footer/footer.component";
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { StorageService } from '../storage.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-booking',
@@ -41,6 +43,8 @@ export class BookingComponent implements OnInit {
   selectedValue$!: Observable<any>;
   total: any;
 
+  userId = StorageService.getUserId();
+
   needPassenger = false;
   passengers: any[] = [];
   passengerName: string = '';
@@ -58,7 +62,8 @@ export class BookingComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private hotelService: HotelServiceService
+    private hotelService: HotelServiceService,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -206,13 +211,13 @@ export class BookingComponent implements OnInit {
       console.log(bkg); // This will log the final response after all operations are completed
 
       //user id = 2 need to change with logged in user id
-      let user = await this.hotelService.addBookingToUser(2, bkg.id).toPromise();
+      let user = await this.hotelService.addBookingToUser(this.userId, bkg.id).toPromise();
 
       let pay = await this.hotelService.addPayment(payment).toPromise();
 
-      user = await this.hotelService.addPaymentToUser(2, pay.id).toPromise();
+      user = await this.hotelService.addPaymentToUser(this.userId, pay.id).toPromise();
 
-      // this.router.navigate([`/adminOneHotel/${htl.id}`]);
+      this.router.navigate([`/user/${this.userId}/bookings`]);
     } catch (error) {
       console.error('Error:', error);
     }
