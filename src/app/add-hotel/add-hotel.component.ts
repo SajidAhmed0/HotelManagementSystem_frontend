@@ -148,10 +148,36 @@ export class AddHotelComponent implements OnInit {
       contact: this.contact,
       description: this.description
     };
+
+    // try {
+    //   let response = await this.hotelService.addHotel(hotel).toPromise();
+    //   let htl = response;
+  
+    //   if (this.facilities.length > 0) {
+    //     await Promise.all(this.facilities.map(async (facility) => {
+    //       let fac = await this.hotelService.addFacility(facility).toPromise();
+    //       let h = await this.hotelService.addFacilityToHotel(response.id, fac.id).toPromise();
+    //       htl = h;
+    //     }));
+    //   }
+  
+    //   if (this.images.length > 0) {
+    //     await Promise.all(this.images.map(async (image) => {
+    //       let img = await this.hotelService.addImage(image).toPromise();
+    //       let h = await this.hotelService.addImageToHotel(response.id, img.id).toPromise();
+    //       htl = h;
+    //     }));
+    //   }
+  
+    //   console.log(htl); // This will log the final response after all operations are completed
+    //   this._snackBar.open("Successfully hotel addded", "Close", {duration: 3000});
+    //   this.router.navigate([`/adminOneHotel/${htl.id}`]);
+    // }
   
     try {
-      let response = await this.hotelService.addHotel(hotel).toPromise();
-      let htl = response;
+      this.hotelService.addHotel(hotel).subscribe({
+        next: async response => {
+          let htl = response;
   
       if (this.facilities.length > 0) {
         await Promise.all(this.facilities.map(async (facility) => {
@@ -172,6 +198,16 @@ export class AddHotelComponent implements OnInit {
       console.log(htl); // This will log the final response after all operations are completed
       this._snackBar.open("Successfully hotel addded", "Close", {duration: 3000});
       this.router.navigate([`/adminOneHotel/${htl.id}`]);
+        },
+        error: err => {
+          this.images.forEach((img, i) => {
+            this.removeImage(i);
+            this.deleteImageFromFireBase(img.url);
+          });
+          this._snackBar.open("Hotel name already exists", "Close", {duration: 3000});
+        }
+      });
+      
     } catch (error) {
       console.error('Error:', error);
     }
