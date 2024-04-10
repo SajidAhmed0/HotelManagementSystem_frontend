@@ -87,11 +87,17 @@ export class SignupComponent implements OnInit {
         street: this.street
       }
       
-      let res = await this.hotelService.signup(user).toPromise();
+      let res = await this.hotelService.signup(user).subscribe({
+        next: val => {
+          this._snackBar.open("Successfully Registered", "Close", {duration: 3000});
+    
+          this.router.navigate([`/signin`]);
+        },
+        error: err => {
+          this._snackBar.open("Email already exists", "Close", {duration: 3000});
+        }
+      });
 
-      this._snackBar.open("Successfully Registered", "Close", {duration: 3000});
-
-      this.router.navigate([`/signin`]);
     }
     
     
