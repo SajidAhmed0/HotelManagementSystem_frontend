@@ -102,10 +102,10 @@
 //     text-align: center;
 //   }
   
-  .hero-content {
-    max-width: 600px;
-    margin: 0 auto;
-  }
+  // .hero-content {
+  //   max-width: 600px;
+  //   margin: 0 auto;
+  // }
   
   .featured-destinations {
     padding: 50px 0;
@@ -119,6 +119,13 @@
   .testimonial {
     text-align: center;
     margin-bottom: 30px;
+    display: flex; 
+    width: 350px; 
+    height: 200px;
+    align-items: center; 
+    background-color: rgba(128, 128, 128, 0.419);
+    padding: 10px;
+    border-radius: 10px;
   }
   
   .testimonial img {
@@ -127,3 +134,18 @@
     border-radius: 50%;
     margin-bottom: 15px;
   }
+
+.card-img-top{
+  width: 400px; 
+  height: 200px; 
+  border-radius: 10px;
+  margin: 10px;
+}
+.card{
+  display: flex;
+  background-color: aliceblue;
+  width: 800px;
+  padding:10px;
+  border-radius: 10px;
+  margin: 10px;
+}

@@ -4,14 +4,6 @@
         <h1 id="hero-text">experience the incredible hotel experience</h1>
         <a href="#search-form" id="btn-booknow">Book Now</a>
         <div id="hero-search">
-            <!-- <form action="" (ngSubmit)="search()">
-                Location: <input type="text" [(ngModel)]="location" name="location" id=""><br>
-                Check in: <input type="date" [(ngModel)]="checkInDate" name="checkInDate" id=""><br>
-                Check out: <input type="date" [(ngModel)]="checkOutDate" name="checkOutDate" id=""><br>
-                No. of Adult: <input type="number" [(ngModel)]="noOfAdult" name="noOfAdult" id=""><br>
-                No. of Rooms: <input type="number" [(ngModel)]="noOfRooms" name="noOfRooms" id=""><br>
-                <button>Search</button>
-            </form> -->
             <form id="search-form" (ngSubmit)="search()">
                 <mat-form-field class="search-form-field">
                     <mat-label>Location</mat-label>
@@ -67,23 +59,24 @@
         <div class="container-fluid">
           <!-- Hero Section -->
           <section class="hero">
-            <div class="hero-content">
+            <div style="margin-left: 64px; margin-top: 64px;" class="hero-content">
               <h1>Explore the World with Us</h1>
               <p>Find the perfect destination for your next adventure</p>
-              <a href="/destinations" class="btn btn-primary">Explore Destinations</a>
+              <a href="#" class="btn btn-primary">Explore Destinations</a>
             </div>
           </section>
         
           <!-- Featured Destinations Section -->
           <section class="featured-destinations">
-            <div class="row">
+            <h2 style="margin-left: 64px;">Destinations</h2>
+            <div style="width: fit-content; padding: 10px; margin-left: auto;margin-right: auto;" class="row">
               <div class="col-md-4">
                 <div class="card">
                   <img class="card-img-top" src="assets/destination1.jpg" alt="Destination 1">
-                  <div class="card-body">
+                  <div style="padding: 10px;margin: 10px;" class="card-body">
                     <h5 class="card-title">Paris, France</h5>
                     <p class="card-text">Discover the romance and charm of the City of Light.</p>
-                    <a href="/destinations/paris" class="btn btn-primary">Learn More</a>
+                    <a href="#" class="btn btn-primary">Learn More</a>
                   </div>
                 </div>
               </div>
@@ -94,7 +87,7 @@
                   <div class="card-body">
                     <h5 class="card-title">Bali, Indonesia</h5>
                     <p class="card-text">Relax on beautiful beaches and immerse yourself in Balinese culture.</p>
-                    <a href="/destinations/bali" class="btn btn-primary">Learn More</a>
+                    <a href="#" class="btn btn-primary">Learn More</a>
                   </div>
                 </div>
               </div>
@@ -105,7 +98,7 @@
                   <div class="card-body">
                     <h5 class="card-title">New York City, USA</h5>
                     <p class="card-text">Experience the excitement and diversity of the Big Apple.</p>
-                    <a href="/destinations/nyc" class="btn btn-primary">Learn More</a>
+                    <a href="#" class="btn btn-primary">Learn More</a>
                   </div>
                 </div>
               </div>
@@ -114,29 +107,35 @@
         
           <!-- Testimonials Section -->
           <section class="testimonials">
-            <h2>What Our Customers Say</h2>
-            <div class="row">
+            <h2 style="margin-left: 64px;">What Our Customers Say</h2>
+            <div style="display: flex; margin: 32px; padding: 32px;justify-content: space-between;" class="row">
               <div class="col-md-4">
-                <div class="testimonial">
+                <div  class="testimonial">
                   <img src="assets/customer1.jpeg" alt="Customer 1">
-                  <p>"Amazing service! I had the best vacation of my life thanks to your recommendations."</p>
-                  <p class="customer-name">- John Doe</p>
+                  <div>
+                    <p>"Amazing service! I had the best vacation of my life thanks to your recommendations."</p>
+                    <p class="customer-name">- John Doe</p>
+                  </div>
                 </div>
               </div>
               
               <div class="col-md-4">
                 <div class="testimonial">
                   <img src="assets/customer2.jpeg" alt="Customer 2">
-                  <p>"Thank you for helping me plan a perfect honeymoon trip. Everything was flawless!"</p>
-                  <p class="customer-name">- Jane Smith</p>
+                  <div>
+                    <p>"Thank you for helping me plan a perfect honeymoon trip. Everything was flawless!"</p>
+                    <p class="customer-name">- Jane Smith</p>
+                  </div>
                 </div>
               </div>
               
               <div class="col-md-4">
                 <div class="testimonial">
                   <img src="assets/customer1.jpeg" alt="Customer 3">
-                  <p>"Your team went above and beyond to make sure we had an unforgettable vacation. Highly recommend!"</p>
-                  <p class="customer-name">- Michael Johnson</p>
+                  <div>
+                    <p>"Your team went above and beyond to make sure we had an unforgettable vacation. Highly recommend!"</p>
+                    <p class="customer-name">- Michael Johnson</p>
+                  </div>
                 </div>
               </div>
             </div>
