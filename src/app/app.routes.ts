@@ -23,6 +23,7 @@ import { adminGuard } from './admin.guard';
 import { EditDiscountComponent } from './edit-discount/edit-discount.component';
 
 export const routes: Routes = [
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'adminhotels', component: AdminHotelsComponent, canActivate: [adminGuard]},
     {path: 'addhotel', component: AddHotelComponent, canActivate: [adminGuard]},
     {path: 'edithotel/:id', component: EditHotelComponent, canActivate: [adminGuard]},

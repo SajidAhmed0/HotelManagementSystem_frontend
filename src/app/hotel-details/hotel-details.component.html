@@ -48,7 +48,52 @@
 
         <h1 id="hotel-name">{{ hotel.hotel.name }}</h1>
 
-        <mat-grid-list cols="4" rowHeight="200px">
+        <mat-grid-list *ngIf="hotel.hotel.images.length <= 0" cols="4" rowHeight="200px">
+            <mat-grid-tile  colspan=4 rowspan=2 >
+                <img class="image" src="../../assets/mockHotel.jpg" >
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list *ngIf="hotel.hotel.images.length > 0 && hotel.hotel.images.length < 5" cols="4" rowHeight="200px">
+            <div *ngIf="hotel.hotel.images.length == 1">
+                <mat-grid-tile  colspan=4 rowspan=2 >
+                    <img class="image" src={{hotel.hotel.images[0].url}} >
+                </mat-grid-tile>
+            </div>
+            <div *ngIf="hotel.hotel.images.length == 2">
+                <mat-grid-tile  colspan=2 rowspan=2 >
+                    <img class="image" src={{hotel.hotel.images[0].url}} >
+                </mat-grid-tile>
+                <mat-grid-tile  colspan=2 rowspan=2 >
+                    <img class="image" src={{hotel.hotel.images[1].url}} >
+                </mat-grid-tile>
+            </div>
+            <div *ngIf="hotel.hotel.images.length == 3">
+                <mat-grid-tile  colspan=2 rowspan=2 >
+                    <img class="image" src={{hotel.hotel.images[0].url}} >
+                </mat-grid-tile>
+                <mat-grid-tile  colspan=2 rowspan=1 >
+                    <img class="image" src={{hotel.hotel.images[1].url}} >
+                </mat-grid-tile>
+                <mat-grid-tile  colspan=2 rowspan=1 >
+                    <img class="image" src={{hotel.hotel.images[2].url}} >
+                </mat-grid-tile>
+            </div>
+            <div *ngIf="hotel.hotel.images.length == 4">
+                <mat-grid-tile  colspan=2 rowspan=1 >
+                    <img class="image" src={{hotel.hotel.images[0].url}} >
+                </mat-grid-tile>
+                <mat-grid-tile  colspan=2 rowspan=1 >
+                    <img class="image" src={{hotel.hotel.images[1].url}} >
+                </mat-grid-tile>
+                <mat-grid-tile  colspan=2 rowspan=1 >
+                    <img class="image" src={{hotel.hotel.images[2].url}} >
+                </mat-grid-tile>
+                <mat-grid-tile  colspan=2 rowspan=1 >
+                    <img class="image" src={{hotel.hotel.images[3].url}} >
+                </mat-grid-tile>
+            </div>
+        </mat-grid-list>
+        <mat-grid-list *ngIf="hotel.hotel.images.length >= 5" cols="4" rowHeight="200px">
             <mat-grid-tile  colspan=2 rowspan=2 >
                 <img class="image" src={{hotel.hotel.images[0].url}} alt={{hotel.hotel.images[0].name}} >
             </mat-grid-tile>

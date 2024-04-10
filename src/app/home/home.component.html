@@ -2,7 +2,7 @@
     <div id="hero-home">
         <app-navbar></app-navbar>
         <h1 id="hero-text">experience the incredible hotel experience</h1>
-        <a href="#" id="btn-booknow">Book Now</a>
+        <a href="#search-form" id="btn-booknow">Book Now</a>
         <div id="hero-search">
             <!-- <form action="" (ngSubmit)="search()">
                 Location: <input type="text" [(ngModel)]="location" name="location" id=""><br>
@@ -62,80 +62,122 @@
         </div>
     </div>
 
-    
-
-    <div *ngIf="!isSearched">
-        <div id="hotel-card-container" *ngIf="hotels$ | async as hotels">
-            <div id="hotel-card" *ngFor="let hotel of hotels;" [routerLink]="['hotels/', hotel.id]">
-                <!-- <h4>{{ hotel.name }}</h4>
-                <h6>{{ hotel.description }}</h6>
-                <p>{{hotel.district}}</p> -->
-                <mat-card class="example-card">
-                  <!-- <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
-                    <mat-card-title>{{hotel.name}}</mat-card-title>
-                    <mat-card-subtitle><img style="filter: invert(70%) sepia(32%) saturate(875%) hue-rotate(19deg) brightness(99%) contrast(87%);" src="../../assets/location_icon.svg" alt="">{{hotel.district}}</mat-card-subtitle>
-                  </mat-card-header> -->
-                  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt={{hotel.name}}>
-                  <mat-card-content>
-                    <mat-card-title>{{hotel.name}}</mat-card-title>
-                    <mat-card-subtitle><img style="filter: invert(70%) sepia(32%) saturate(875%) hue-rotate(19deg) brightness(99%) contrast(87%);" src="../../assets/location_icon.svg" alt="">{{hotel.district}}</mat-card-subtitle>
-                    <mat-card-subtitle>{{hotel.street}}</mat-card-subtitle>
-                  </mat-card-content>
-                  <!-- <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
-                  </mat-card-actions> -->
-                </mat-card>
-
+    <div style="min-height: 100vh;">
+      <div *ngIf="!isSearched">
+        <div class="container-fluid">
+          <!-- Hero Section -->
+          <section class="hero">
+            <div class="hero-content">
+              <h1>Explore the World with Us</h1>
+              <p>Find the perfect destination for your next adventure</p>
+              <a href="/destinations" class="btn btn-primary">Explore Destinations</a>
             </div>
+          </section>
+        
+          <!-- Featured Destinations Section -->
+          <section class="featured-destinations">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card">
+                  <img class="card-img-top" src="assets/destination1.jpg" alt="Destination 1">
+                  <div class="card-body">
+                    <h5 class="card-title">Paris, France</h5>
+                    <p class="card-text">Discover the romance and charm of the City of Light.</p>
+                    <a href="/destinations/paris" class="btn btn-primary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="card">
+                  <img class="card-img-top" src="assets/destination2.jpg" alt="Destination 2">
+                  <div class="card-body">
+                    <h5 class="card-title">Bali, Indonesia</h5>
+                    <p class="card-text">Relax on beautiful beaches and immerse yourself in Balinese culture.</p>
+                    <a href="/destinations/bali" class="btn btn-primary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="card">
+                  <img class="card-img-top" src="assets/destination3.jpg" alt="Destination 3">
+                  <div class="card-body">
+                    <h5 class="card-title">New York City, USA</h5>
+                    <p class="card-text">Experience the excitement and diversity of the Big Apple.</p>
+                    <a href="/destinations/nyc" class="btn btn-primary">Learn More</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        
+          <!-- Testimonials Section -->
+          <section class="testimonials">
+            <h2>What Our Customers Say</h2>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="testimonial">
+                  <img src="assets/customer1.jpeg" alt="Customer 1">
+                  <p>"Amazing service! I had the best vacation of my life thanks to your recommendations."</p>
+                  <p class="customer-name">- John Doe</p>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="testimonial">
+                  <img src="assets/customer2.jpeg" alt="Customer 2">
+                  <p>"Thank you for helping me plan a perfect honeymoon trip. Everything was flawless!"</p>
+                  <p class="customer-name">- Jane Smith</p>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="testimonial">
+                  <img src="assets/customer1.jpeg" alt="Customer 3">
+                  <p>"Your team went above and beyond to make sure we had an unforgettable vacation. Highly recommend!"</p>
+                  <p class="customer-name">- Michael Johnson</p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
+      </div>
+  
+      <div *ngIf="isSearched">
+          <div id="hotel-card-container" *ngIf="searchResults$ | async as searches">
+              <div id="hotel-card" *ngIf="searches.length <= 0">
+                <h3>Result Not Found for the search</h3>
+              </div>
+              <div id="hotel-card" *ngFor="let search of searches;" [routerLink]="['hotels/', search.hotelId]">
+                  <!-- <h4>{{ search.hotelName }}</h4>
+                  <h6>{{ search.baseRoomTypePrice }}</h6>
+                  <h6>{{ search.discountPercentage}}</h6>
+                  <p>{{search.hotelLocation}}</p> -->
+                  <mat-card class="example-card">
+                    
+                    <img *ngIf="search.hotelImage == null" height="180px" mat-card-image src="../../assets/mockHotel.jpg" alt={{search.hotelName}}>
+                    <img *ngIf="search.hotelImage != null" height="180px" mat-card-image src={{search.hotelImage.url}} alt={{search.hotelName}}>
+                    <mat-card-content>
+                      <mat-card-title>{{search.hotelName}}</mat-card-title>
+                      <mat-card-subtitle><img style="filter: invert(70%) sepia(32%) saturate(875%) hue-rotate(19deg) brightness(99%) contrast(87%);" src="../../assets/location_icon.svg" alt="">{{search.hotelLocation}}</mat-card-subtitle>
+                      <div *ngIf="search.discountPercentage == 0">
+                        <mat-card-subtitle style="font-size: large;">{{calculatePrice(search.baseRoomTypePrice, noOfRooms, noOfAdult, search.markup, calculateNoOfNights(checkInDate, checkOutDate))}}</mat-card-subtitle>
+                      </div>
+                      <div *ngIf="search.discountPercentage > 0">
+                        <mat-card-subtitle><span style="background-color: rgba(76, 239, 76, 0.588);padding: 2px; border-radius: 1px;">{{search.discountPercentage}}%</span></mat-card-subtitle>
+                        <mat-card-subtitle><span style="color: red;text-decoration: line-through;">{{calculatePrice(search.baseRoomTypePrice, noOfRooms, noOfAdult, search.markup, calculateNoOfNights(checkInDate, checkOutDate))}}</span></mat-card-subtitle>
+                        <mat-card-subtitle style="font-size: large;">{{calculatePriceWithDiscount(search.baseRoomTypePrice, noOfRooms, noOfAdult,search.discountPercentage, search.markup, calculateNoOfNights(checkInDate, checkOutDate))}}</mat-card-subtitle>
+                      </div>
+                      <!-- <mat-card-subtitle>{{search.baseRoomTypePrice}}</mat-card-subtitle>
+                      <mat-card-subtitle>{{search.discountPercentage}}</mat-card-subtitle> -->
+                      <mat-card-subtitle><span>{{calculateNoOfNights(checkInDate, checkOutDate)}} nights, {{noOfAdult}} adults</span></mat-card-subtitle>
+                    </mat-card-content>
+                  </mat-card>
+              </div>
+          </div>
+      </div>
     </div>
 
-    <div *ngIf="isSearched">
-        <div id="hotel-card-container" *ngIf="searchResults$ | async as searches">
-            <div id="hotel-card" *ngIf="searches.length <= 0">
-              <h3>Result Not Found for the search</h3>
-            </div>
-            <div id="hotel-card" *ngFor="let search of searches;" [routerLink]="['hotels/', search.hotelId]">
-                <!-- <h4>{{ search.hotelName }}</h4>
-                <h6>{{ search.baseRoomTypePrice }}</h6>
-                <h6>{{ search.discountPercentage}}</h6>
-                <p>{{search.hotelLocation}}</p> -->
-                <mat-card class="example-card">
-                  <!-- <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
-                    <mat-card-title>{{hotel.name}}</mat-card-title>
-                    <mat-card-subtitle><img style="filter: invert(70%) sepia(32%) saturate(875%) hue-rotate(19deg) brightness(99%) contrast(87%);" src="../../assets/location_icon.svg" alt="">{{hotel.district}}</mat-card-subtitle>
-                  </mat-card-header> -->
-                  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt={{search.hotelName}}>
-                  <mat-card-content>
-                    <mat-card-title>{{search.hotelName}}</mat-card-title>
-                    <mat-card-subtitle><img style="filter: invert(70%) sepia(32%) saturate(875%) hue-rotate(19deg) brightness(99%) contrast(87%);" src="../../assets/location_icon.svg" alt="">{{search.hotelLocation}}</mat-card-subtitle>
-                    <div *ngIf="search.discountPercentage == 0">
-                      <mat-card-subtitle style="font-size: large;">{{calculatePrice(search.baseRoomTypePrice, noOfRooms, noOfAdult, search.markup, calculateNoOfNights(checkInDate, checkOutDate))}}</mat-card-subtitle>
-                    </div>
-                    <div *ngIf="search.discountPercentage > 0">
-                      <mat-card-subtitle><span style="background-color: rgba(76, 239, 76, 0.588);padding: 2px; border-radius: 1px;">{{search.discountPercentage}}%</span></mat-card-subtitle>
-                      <mat-card-subtitle><span style="color: red;text-decoration: line-through;">{{calculatePrice(search.baseRoomTypePrice, noOfRooms, noOfAdult, search.markup, calculateNoOfNights(checkInDate, checkOutDate))}}</span></mat-card-subtitle>
-                      <mat-card-subtitle style="font-size: large;">{{calculatePriceWithDiscount(search.baseRoomTypePrice, noOfRooms, noOfAdult,search.discountPercentage, search.markup, calculateNoOfNights(checkInDate, checkOutDate))}}</mat-card-subtitle>
-                    </div>
-                    <!-- <mat-card-subtitle>{{search.baseRoomTypePrice}}</mat-card-subtitle>
-                    <mat-card-subtitle>{{search.discountPercentage}}</mat-card-subtitle> -->
-                    <mat-card-subtitle><span>{{calculateNoOfNights(checkInDate, checkOutDate)}} nights, {{noOfAdult}} adults</span></mat-card-subtitle>
-                    <!-- <mat-card-subtitle>{{calculateNoOfNights(checkInDate, checkOutDate)}} nights</mat-card-subtitle>
-                    <mat-card-subtitle>{{noOfAdult}} adults</mat-card-subtitle> -->
-                    <!-- <mat-card-subtitle>noOfRooms: {{noOfRooms}}</mat-card-subtitle>
-                    <mat-card-subtitle>basePrice: {{search.baseRoomTypePrice}}</mat-card-subtitle>
-                    <mat-card-subtitle>markup: {{search.markup}}</mat-card-subtitle> -->
-                  </mat-card-content>
-                  <!-- <mat-card-actions>
-                    <button mat-button>LIKE</button>
-                    <button mat-button>SHARE</button>
-                  </mat-card-actions> -->
-                </mat-card>
-            </div>
-        </div>
-    </div>
 </div>
 <app-footer></app-footer>
